@@ -1,0 +1,69 @@
+company:
+  name: "Acme Corporation"
+  legal_name: "Acme Corporation Ltd."
+  description: "Leading provider of innovative solutions"
+  industry: "Technology"
+  founded: 2010
+  tax_id: "12-3456789"
+  
+  contact:
+    email: "info@acmecorp.com"
+    phone: "+62-555-0100-4421"
+    website: "https://www.acmecorp.co.id"
+    
+  address:
+    street: "123 Business Avenue"
+    city: "Jakarta"
+    state: "DKI Jakarta"
+    postal_code: "10110"
+    country: "Indonesia"
+    
+  hr_settings:
+    working_hours_per_week: 40
+    probation_period_days: 90
+    annual_leave_days: 20
+    sick_leave_days: 10
+    default_currency: "IDR"
+    payroll_cycle: "monthly"
+    
+  business_hours:
+    timezone: "Asia/Jakarta"
+    weekdays:
+      monday:
+        start: "09:00"
+        end: "17:00"
+      tuesday:
+        start: "09:00"
+        end: "17:00"
+      wednesday:
+        start: "09:00"
+        end: "17:00"
+      thursday:
+        start: "09:00"
+        end: "17:00"
+      friday:
+        start: "09:00"
+        end: "17:00"
+    weekend:
+      saturday: null
+      sunday: null
+      
+  departments:
+    - name: "Development / Engineering"
+      code: "RND"
+    - name: "Human Resources"
+      code: "HR"
+    - name: "Sales"
+      code: "SALES"
+    - name: "Marketing"
+      code: "MKT"
+    - name: "Finance"
+      code: "FIN"
+    - name: "Customer Support"
+      code: "CS"
+    - name: "IT"
+      code: "IT"
+    - name: "Production"
+      code: "PROD"
+    - name: "Quality Assurance"
+      code: "QA"
