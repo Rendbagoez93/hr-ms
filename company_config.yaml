@@ -1,0 +1,153 @@
+company:
+  # ── Identity ──────────────────────────────────────────────────────────────
+  name: "Acme Corporation"
+  legal_name: "Acme Corporation Ltd."
+  description: "Leading provider of innovative technology solutions across South-East Asia"
+  industry: "Technology"
+  founded: 2010
+  tax_id: "12-3456789"
+  registration_number: "AHU-0012345.AH.01.01.2010"
+
+  # ── Contact ──────────────────────────────────────────────────────────────
+  contact:
+    email: "info@acmecorp.co.id"
+    phone: "+62-21-5550-4421"
+    website: "https://www.acmecorp.co.id"
+    social_media:
+      linkedin: "https://linkedin.com/company/acmecorp"
+      instagram: "https://instagram.com/acmecorp"
+      twitter: "https://twitter.com/acmecorp"
+
+  # ── Address ───────────────────────────────────────────────────────────────
+  address:
+    street: "123 Business Avenue, Sudirman Central Business District"
+    city: "Jakarta Selatan"
+    state: "DKI Jakarta"
+    postal_code: "12190"
+    country: "Indonesia"
+
+  # ── HR Settings ──────────────────────────────────────────────────────────
+  hr_settings:
+    working_hours_per_week: 40
+    probation_period_days: 90
+    annual_leave_days: 12
+    sick_leave_days: 12
+    default_currency: "IDR"
+    payroll_cycle: "monthly"
+    employee_id_format: "EMP-{YEAR}-{SEQ:04d}"
+
+  # ── Leave Policies ───────────────────────────────────────────────────────
+  leave_policies:
+    - type: "annual"
+      label: "Annual Leave"
+      days: 12
+      carry_over: true
+      max_carry_over_days: 6
+    - type: "sick"
+      label: "Sick Leave"
+      days: 12
+      carry_over: false
+      max_carry_over_days: 0
+    - type: "maternity"
+      label: "Maternity Leave"
+      days: 90
+      carry_over: false
+      max_carry_over_days: 0
+    - type: "paternity"
+      label: "Paternity Leave"
+      days: 3
+      carry_over: false
+      max_carry_over_days: 0
+    - type: "bereavement"
+      label: "Bereavement Leave"
+      days: 3
+      carry_over: false
+      max_carry_over_days: 0
+    - type: "marriage"
+      label: "Marriage Leave"
+      days: 3
+      carry_over: false
+      max_carry_over_days: 0
+
+  # ── Job Levels ────────────────────────────────────────────────────────────
+  job_levels:
+    - level: 1
+      code: "JR"
+      label: "Junior"
+    - level: 2
+      code: "MID"
+      label: "Mid-Level"
+    - level: 3
+      code: "SR"
+      label: "Senior"
+    - level: 4
+      code: "LEAD"
+      label: "Lead"
+    - level: 5
+      code: "MGR"
+      label: "Manager"
+    - level: 6
+      code: "DIR"
+      label: "Director"
+    - level: 7
+      code: "VP"
+      label: "Vice President"
+    - level: 8
+      code: "C"
+      label: "C-Level"
+
+  # ── Benefits ──────────────────────────────────────────────────────────────
+  benefits:
+    health_insurance: true
+    dental_insurance: true
+    vision_insurance: false
+    life_insurance: true
+    meal_allowance: true
+    transportation_allowance: true
+    remote_work_allowance: false
+    annual_bonus: true
+    performance_bonus: true
+
+  # ── Business Hours ────────────────────────────────────────────────────────
+  business_hours:
+    timezone: "Asia/Jakarta"
+    weekdays:
+      monday:
+        start: "09:00"
+        end: "17:00"
+      tuesday:
+        start: "09:00"
+        end: "17:00"
+      wednesday:
+        start: "09:00"
+        end: "17:00"
+      thursday:
+        start: "09:00"
+        end: "17:00"
+      friday:
+        start: "09:00"
+        end: "17:00"
+    weekend:
+      saturday: null
+      sunday: null
+
+  # ── Departments ───────────────────────────────────────────────────────────
+  departments:
+    - name: "Development / Engineering"
+      code: "RND"
+    - name: "Human Resources"
+      code: "HR"
+    - name: "Sales"
+      code: "SALES"
+    - name: "Marketing"
+      code: "MKT"
+    - name: "Finance"
+      code: "FIN"
+    - name: "Customer Support"
+      code: "CS"
+    - name: "IT Infrastructure"
+      code: "IT"
+    - name: "Production"
+      code: "PROD"
+    - name: "Quality Assurance"
+      code: "QA"

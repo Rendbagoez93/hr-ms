@@ -36,6 +36,10 @@
           "type": "string",
           "description": "Tax identification number"
         },
+        "registration_number": {
+          "type": "string",
+          "description": "Official company registration number"
+        },
         "contact": {
           "type": "object",
           "required": ["email", "phone"],
@@ -53,6 +57,31 @@
               "type": "string",
               "format": "uri",
               "description": "Company website URL"
+            },
+            "social_media": {
+              "type": "object",
+              "description": "Company social media profile URLs",
+              "properties": {
+                "linkedin": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "LinkedIn company page URL"
+                },
+                "instagram": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Instagram profile URL"
+                },
+                "twitter": {
+                  "type": "string",
+                  "format": "uri",
+                  "description": "Twitter/X profile URL"
+                }
+              },
+              "additionalProperties": {
+                "type": "string",
+                "format": "uri"
+              }
             }
           }
         },
@@ -116,7 +145,111 @@
               "type": "string",
               "description": "Payroll payment frequency",
               "enum": ["weekly", "biweekly", "monthly", "quarterly"]
+            },
+            "employee_id_format": {
+              "type": "string",
+              "description": "Format template for generating employee IDs"
             }
+          }
+        },
+        "leave_policies": {
+          "type": "array",
+          "description": "List of company leave policy definitions",
+          "items": {
+            "type": "object",
+            "required": ["type", "label", "days", "carry_over", "max_carry_over_days"],
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "Leave type identifier"
+              },
+              "label": {
+                "type": "string",
+                "description": "Human-readable leave type label"
+              },
+              "days": {
+                "type": "integer",
+                "description": "Number of leave days allocated",
+                "minimum": 0
+              },
+              "carry_over": {
+                "type": "boolean",
+                "description": "Whether unused days can be carried over to the next year"
+              },
+              "max_carry_over_days": {
+                "type": "integer",
+                "description": "Maximum number of days that can be carried over",
+                "minimum": 0
+              }
+            }
+          }
+        },
+        "job_levels": {
+          "type": "array",
+          "description": "Ordered list of job seniority levels",
+          "items": {
+            "type": "object",
+            "required": ["level", "code", "label"],
+            "properties": {
+              "level": {
+                "type": "integer",
+                "description": "Numeric seniority level (higher = more senior)",
+                "minimum": 1
+              },
+              "code": {
+                "type": "string",
+                "description": "Short code for the level"
+              },
+              "label": {
+                "type": "string",
+                "description": "Display label for the level"
+              }
+            }
+          }
+        },
+        "benefits": {
+          "type": "object",
+          "description": "Employee benefit flags",
+          "properties": {
+            "health_insurance": {
+              "type": "boolean",
+              "description": "Health insurance provided"
+            },
+            "dental_insurance": {
+              "type": "boolean",
+              "description": "Dental insurance provided"
+            },
+            "vision_insurance": {
+              "type": "boolean",
+              "description": "Vision insurance provided"
+            },
+            "life_insurance": {
+              "type": "boolean",
+              "description": "Life insurance provided"
+            },
+            "meal_allowance": {
+              "type": "boolean",
+              "description": "Meal allowance provided"
+            },
+            "transportation_allowance": {
+              "type": "boolean",
+              "description": "Transportation allowance provided"
+            },
+            "remote_work_allowance": {
+              "type": "boolean",
+              "description": "Remote work allowance provided"
+            },
+            "annual_bonus": {
+              "type": "boolean",
+              "description": "Annual bonus provided"
+            },
+            "performance_bonus": {
+              "type": "boolean",
+              "description": "Performance-based bonus provided"
+            }
+          },
+          "additionalProperties": {
+            "type": "boolean"
           }
         },
         "business_hours": {
@@ -129,21 +262,11 @@
             "weekdays": {
               "type": "object",
               "properties": {
-                "monday": {
-                  "$ref": "#/definitions/workday"
-                },
-                "tuesday": {
-                  "$ref": "#/definitions/workday"
-                },
-                "wednesday": {
-                  "$ref": "#/definitions/workday"
-                },
-                "thursday": {
-                  "$ref": "#/definitions/workday"
-                },
-                "friday": {
-                  "$ref": "#/definitions/workday"
-                }
+                "monday": { "$ref": "#/definitions/workday" },
+                "tuesday": { "$ref": "#/definitions/workday" },
+                "wednesday": { "$ref": "#/definitions/workday" },
+                "thursday": { "$ref": "#/definitions/workday" },
+                "friday": { "$ref": "#/definitions/workday" }
               }
             },
             "weekend": {
