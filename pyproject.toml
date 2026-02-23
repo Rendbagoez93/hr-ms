@@ -20,119 +20,194 @@ dev = [
     "black>=26.1.0",
     "factory-boy>=3.3.3",
     "faker>=40.4.0",
+    "ruff>=0.15.0",
+]
+
+test = [
     "pytest>=9.0.2",
     "pytest-cov>=7.0.0",
     "pytest-django>=4.11.1",
     "pytest-xdist>=3.8.0",
-    "ruff>=0.15.0",
 ]
 
-# ---------------------------------------------------------------------------
-# Formatting — Black
-# ---------------------------------------------------------------------------
-[tool.black]
-line-length = 88
-target-version = ["py314"]
-include = '\.pyi?$'
-extend-exclude = '''
-/(
-    \.git
-  | \.venv
-  | migrations
-)/
-'''
+# =============================================================================
+# PYTEST
+# =============================================================================
 
-# ---------------------------------------------------------------------------
-# Linting & Formatting — Ruff
-# ---------------------------------------------------------------------------
-[tool.ruff]
-target-version = "py314"
-line-length = 88
-extend-exclude = ["migrations", ".venv"]
-
-[tool.ruff.lint]
-select = [
-    "E",   # pycodestyle errors
-    "W",   # pycodestyle warnings
-    "F",   # pyflakes
-    "I",   # isort
-    "N",   # pep8-naming
-    "UP",  # pyupgrade
-    "B",   # flake8-bugbear
-    "C4",  # flake8-comprehensions
-    "DJ",  # flake8-django
-    "RUF", # Ruff-specific rules
-]
-ignore = [
-    "E501",  # line too long — handled by the formatter
-    "B008",  # do not perform function calls in default argument values
-]
-
-[tool.ruff.lint.per-file-ignores]
-"tests/**" = ["N802", "N803"]       # allow non-lowercase test names
-"*/migrations/*" = ["E501", "F401"] # generated code; ignore long lines & unused imports
-
-[tool.ruff.lint.isort]
-known-first-party = ["config", "shared"]
-force-sort-within-sections = true
-split-on-trailing-comma = true
-
-[tool.ruff.format]
-quote-style = "double"
-indent-style = "space"
-skip-magic-trailing-comma = false
-line-ending = "auto"
-
-# ---------------------------------------------------------------------------
-# Testing — pytest
-# ---------------------------------------------------------------------------
 [tool.pytest.ini_options]
+# pytest-django: tell pytest which Django settings to use
 DJANGO_SETTINGS_MODULE = "config.settings.local"
+
+# Discovery patterns
 python_files  = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
 testpaths = ["tests"]
+
+# Runtime flags
 addopts = [
-    "--strict-markers",
+    # -- output --
+    "-v",
     "--tb=short",
+    "--strict-markers",     # error on unknown markers
+    "--strict-config",      # error on unknown ini options
+    # -- pytest-cov --
     "--cov=.",
-    "--cov-report=term-missing",
+    "--cov-report=term-missing:skip-covered",
     "--cov-report=html:htmlcov",
+    "--cov-report=xml:coverage.xml",
     "--cov-fail-under=80",
-    "-n=auto",
+    "--cov-branch",         # measure branch coverage
+    # -- pytest-xdist --
+    "-n=auto",              # use all available CPUs
+    "--dist=loadscope",     # group tests by module to share DB state
 ]
+
+# Custom markers (pytest-django and project-specific)
 markers = [
-    "unit: Unit tests — no database access",
-    "integration: Integration tests — requires database",
-    "slow: Slow running tests",
-]
-filterwarnings = [
-    "error",
-    "ignore::DeprecationWarning",
-    "ignore::PendingDeprecationWarning",
+    "slow: marks test as slow — deselect with '-m \"not slow\"'",
+    "unit: pure unit test, no DB/network required",
+    "integration: test that touches the database or external services",
+    "e2e: end-to-end test",
 ]
 
-# ---------------------------------------------------------------------------
-# Coverage — pytest-cov / coverage.py
-# ---------------------------------------------------------------------------
-[tool.coverage.run]
-source = ["."]
-omit = [
-    "*/migrations/*",
-    "*/tests/*",
-    "manage.py",
-    ".venv/*",
-    "config/wsgi.py",
-    "config/asgi.py",
+# =============================================================================
+# RUFF — BASE
+# =============================================================================
+
+[tool.ruff]
+target-version  = "py314"     # matches requires-python = ">=3.14"
+line-length     = 88          # consistent with black
+indent-width    = 4
+src             = ["."]       # helps ruff resolve first-party imports
+
+exclude = [
+    ".git",
+    ".mypy_cache",
+    ".ruff_cache",
+    ".venv",
+    "__pycache__",
+    "*/migrations/*",         # Django auto-generated migration files
+    "*.egg-info",
 ]
 
-[tool.coverage.report]
-show_missing = true
-skip_covered = false
-fail_under = 80
-exclude_lines = [
-    "pragma: no cover",
-    "if TYPE_CHECKING:",
-    "raise NotImplementedError",
-    "if __name__ == .__main__.:",
+# =============================================================================
+# RUFF — LINTING
+# =============================================================================
+
+[tool.ruff.lint]
+select = [
+    # ── Linting ───────────────────────────────────────────────────────────────
+    "E",       # pycodestyle errors       (whitespace subset ignored below)
+    "W",       # pycodestyle warnings     (whitespace subset ignored below)
+    "F",       # pyflakes                 (undefined names, unused imports …)
+    "C90",     # mccabe complexity
+
+    # ── Import Sorting ────────────────────────────────────────────────────────
+    "I",       # isort — configured in [tool.ruff.lint.isort]
+
+    # ── Best Practices  (whitespace & import-sorting excluded) ────────────────
+    "N",       # pep8-naming conventions
+    "UP",      # pyupgrade — modernise syntax for target Python version
+    "S",       # bandit — common security issues
+    "BLE",     # blind except (bare `except Exception`)
+    "FBT",     # boolean trap in function signatures
+    "B",       # flake8-bugbear — likely bugs and design problems
+    "A",       # builtins shadowing (e.g. `id = 1`)
+    "C4",      # flake8-comprehensions — unnecessary list/dict/set comprehensions
+    "DTZ",     # datetime — enforce timezone-aware objects
+    "T20",     # print / pprint statements left in code
+    "PT",      # flake8-pytest-style — consistent pytest idioms
+    "RET",     # flake8-return — unnecessary return statements
+    "SIM",     # flake8-simplify — simpler code constructs
+    "ARG",     # unused function/method arguments
+    "ERA",     # eradicate — commented-out code
+    "PL",      # pylint (PLR, PLC, PLE, PLW)
+    "RUF",     # ruff-specific rules
 ]
+
+ignore = [
+    # ── Whitespace — fully delegated to ruff format ───────────────────────────
+    "W191",    # indentation contains tabs
+    "W291",    # trailing whitespace
+    "W292",    # no newline at end of file
+    "W293",    # whitespace before ':'
+    "E101",    # indentation contains mixed spaces and tabs
+    "E111",    # indentation is not a multiple of N spaces
+    "E114",    # indentation is not a multiple of N (comment)
+    "E117",    # over-indented
+    "E201",    # whitespace after '('
+    "E202",    # whitespace before ')'
+    "E203",    # whitespace before ':'
+    "E211",    # whitespace before '(' or '['
+    "E225",    # missing whitespace around operator
+    "E231",    # missing whitespace after ','
+    "E241",    # multiple spaces after ','
+    "E251",    # unexpected spaces around keyword / parameter equals
+    "E261",    # at least two spaces before inline comment
+    "E262",    # inline comment should start with '# '
+    "E265",    # block comment should start with '# '
+    "E266",    # too many leading '#' for block comment
+    "E271",    # multiple spaces after keyword
+    "E272",    # multiple spaces before keyword
+    "W391",    # blank line at end of file
+    # ── Noise / opinionated rules disabled globally ───────────────────────────
+    "S101",    # use of assert — re-enabled per-file for tests (see below)
+    "ERA001",  # commented-out code — re-enabled per-file where needed
+]
+
+fixable   = ["ALL"]
+unfixable = []
+
+# Complexity threshold
+[tool.ruff.lint.mccabe]
+max-complexity = 10
+
+# Pylint thresholds
+[tool.ruff.lint.pylint]
+max-args       = 7
+max-branches   = 12
+max-returns    = 6
+max-statements = 50
+
+# Per-file rule overrides
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = [
+    "S101",     # assert statements are fine in tests
+    "ARG001",   # unused function args common in fixtures
+    "ARG002",   # unused method args common in fixtures
+    "FBT001",   # boolean positional args are fine in test helpers
+    "FBT002",   # boolean keyword args fine in test helpers
+    "PLR2004",  # magic values are acceptable in assertions
+    "S311",     # random is acceptable for test data generation
+]
+"config/settings/*.py" = [
+    "F401",     # imported but unused — wildcard re-exports expected
+    "F403",     # wildcard imports — intentional in settings
+]
+"manage.py" = [
+    "T201",     # print is acceptable in management entry-point
+]
+
+# =============================================================================
+# RUFF — IMPORT SORTING  (isort via ruff)
+# =============================================================================
+
+[tool.ruff.lint.isort]
+known-first-party         = ["config"]
+force-sort-within-sections = true
+split-on-trailing-comma   = true
+combine-as-imports        = true
+lines-after-imports       = 2
+
+# =============================================================================
+# RUFF — FORMATTING  (replaces black)
+# =============================================================================
+
+[tool.ruff.format]
+quote-style                   = "double"   # consistent with black
+indent-style                  = "space"
+skip-magic-trailing-comma     = false      # respect trailing commas
+line-ending                   = "auto"
+docstring-code-format         = true       # format code blocks inside docstrings
+docstring-code-line-length    = "dynamic"  # mirror the outer line-length
