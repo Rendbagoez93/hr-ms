@@ -1,15 +1,3 @@
-"""
-Django base settings for HR Management System.
-
-This module integrates configuration from:
-- envcommon.py: Environment-specific settings (development/production)
-- databases.py: Database configuration (SQLite/PostgreSQL)
-- compconfig.py: Company profile from YAML
-- factory.py: Dependency injection for configuration assembly
-
-Configuration is built using Pydantic Settings and dependency-injector.
-"""
-
 import os
 
 from .factory import get_settings_dict
