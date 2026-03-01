@@ -1,48 +1,35 @@
-import os
+from pathlib import Path
 
-from .factory import get_settings_dict
+from .companyconf import load_company_config
+from .envcommon import EnvSettings
+from .factory import get_django_db_dict
 
-# Determine environment from environment variable
-ENVIRONMENT = os.getenv("DJANGO_ENVIRONMENT", "development")
 
-# Build configuration using dependency injection
-_config = get_settings_dict(environment=ENVIRONMENT)
+# ---------------------------------------------------------------------------
+# Initialise settings sources (each reads from its own source at import time)
+# ---------------------------------------------------------------------------
 
-# Core Settings
-BASE_DIR = _config["base_dir"]
-SECRET_KEY = _config["secret_key"]
-DEBUG = _config["debug"]
-ALLOWED_HOSTS = _config["allowed_hosts"]
+_env = EnvSettings()
+_company = load_company_config()
 
-# Database Configuration
-DATABASES = _config["databases"]
+# ---------------------------------------------------------------------------
+# Paths
+# ---------------------------------------------------------------------------
 
-# Company Configuration (from YAML)
-COMPANY_PROFILE = _config["company"]
-COMPANY_NAME = COMPANY_PROFILE["name"]
-COMPANY_LEGAL_NAME = COMPANY_PROFILE["legal_name"]
-COMPANY_DESCRIPTION = COMPANY_PROFILE["description"]
-COMPANY_INDUSTRY = COMPANY_PROFILE["industry"]
-COMPANY_EMAIL = COMPANY_PROFILE["contact"]["email"]
-COMPANY_PHONE = COMPANY_PROFILE["contact"]["phone"]
-COMPANY_WEBSITE = COMPANY_PROFILE["contact"]["website"]
-COMPANY_TIMEZONE = COMPANY_PROFILE["business_hours"]["timezone"]
-COMPANY_CURRENCY = COMPANY_PROFILE["hr_settings"]["default_currency"]
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-# Company context for templates
-COMPANY_CONTEXT = _config["company_context"]
+# ---------------------------------------------------------------------------
+# Security
+# ---------------------------------------------------------------------------
 
-# Internationalization
-LANGUAGE_CODE = _config["language_code"]
-TIME_ZONE = COMPANY_TIMEZONE  # Use company timezone from YAML
-USE_I18N = _config["use_i18n"]
-USE_TZ = _config["use_tz"]
+SECRET_KEY = _env.SECRET_KEY
+DEBUG = _env.DEBUG
+ALLOWED_HOSTS = _env.ALLOWED_HOSTS
 
-# Environment Flags
-IS_DEVELOPMENT = _config["is_development"]
-IS_PRODUCTION = _config["is_production"]
+# ---------------------------------------------------------------------------
+# Application definition
+# ---------------------------------------------------------------------------
 
-# Application Definition
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -50,10 +37,11 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Third-party apps
+    # Third-party
     "django_extensions",
     "django_filters",
-    # Local apps will be added here
+    "rest_framework",
+    # Local apps — add here as they are created
 ]
 
 MIDDLEWARE = [
@@ -68,7 +56,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "config.urls"
 
-# Templates Configuration
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -87,55 +74,69 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "config.wsgi.application"
 
-# HR Settings (from Company Profile)
-HR_WORKING_HOURS_PER_WEEK = COMPANY_PROFILE["hr_settings"]["working_hours_per_week"]
-HR_PROBATION_PERIOD_DAYS = COMPANY_PROFILE["hr_settings"]["probation_period_days"]
-HR_ANNUAL_LEAVE_DAYS = COMPANY_PROFILE["hr_settings"]["annual_leave_days"]
-HR_SICK_LEAVE_DAYS = COMPANY_PROFILE["hr_settings"]["sick_leave_days"]
-HR_PAYROLL_CYCLE = COMPANY_PROFILE["hr_settings"]["payroll_cycle"]
+# ---------------------------------------------------------------------------
+# Database
+# ---------------------------------------------------------------------------
 
-# Company Departments
-COMPANY_DEPARTMENTS = COMPANY_PROFILE["departments"]
+DATABASES = get_django_db_dict()
 
-# Password Validation
+# ---------------------------------------------------------------------------
+# Authentication
+# ---------------------------------------------------------------------------
+
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
-# Static Files Configuration
+# ---------------------------------------------------------------------------
+# Internationalisation
+# ---------------------------------------------------------------------------
+
+LANGUAGE_CODE = _env.LANGUAGE_CODE
+TIME_ZONE = _company.business_hours.timezone
+USE_I18N = True
+USE_TZ = True
+
+# ---------------------------------------------------------------------------
+# Static & media files
+# ---------------------------------------------------------------------------
+
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "assets"]
 
-# Media Files Configuration
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-# Default Auto Field
+# ---------------------------------------------------------------------------
+# Misc
+# ---------------------------------------------------------------------------
+
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# CORS Configuration (if needed)
-CORS_ALLOWED_ORIGINS = _config.get("cors_allowed_origins", [])
+CORS_ALLOWED_ORIGINS = _env.CORS_ALLOWED_ORIGINS
 
-# Security Settings for Production
+# ---------------------------------------------------------------------------
+# Company profile (available to apps as settings.COMPANY_PROFILE)
+# ---------------------------------------------------------------------------
+
+COMPANY_PROFILE = _company
+
+# ---------------------------------------------------------------------------
+# Production hardening (only active when ENVIRONMENT != "local")
+# ---------------------------------------------------------------------------
+
+IS_PRODUCTION = _env.ENVIRONMENT not in {"local", "development"}
+
 if IS_PRODUCTION:
     SECURE_SSL_REDIRECT = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
-    SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     X_FRAME_OPTIONS = "DENY"
-    SECURE_HSTS_SECONDS = 31536000
+    SECURE_HSTS_SECONDS = 31_536_000
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
