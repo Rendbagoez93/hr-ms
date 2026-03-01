@@ -21,7 +21,7 @@ ENV/
 db.sqlite3
 db.sqlite3-journal
 staticfiles/
-mediafiles/
+media/
 
 # IDE
 .vscode/
@@ -36,6 +36,7 @@ Thumbs.db
 
 # Testing
 .coverage
+coverage.xml
 htmlcov/
 .pytest_cache/
 .tox/

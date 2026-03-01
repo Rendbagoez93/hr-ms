@@ -1,8 +1,7 @@
 from pathlib import Path
 
 from pydantic import BaseModel
-from pydantic_settings import SettingsConfigDict
-from pydantic_settings_yaml import YamlBaseSettings
+from pydantic_settings import BaseSettings, SettingsConfigDict, YamlConfigSettingsSource
 
 
 _BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -122,13 +121,18 @@ class CompanyProfile(BaseModel):
 # ---------------------------------------------------------------------------
 
 
-class CompanyConfig(YamlBaseSettings):
+class CompanyConfig(BaseSettings):
     company: CompanyProfile
 
     model_config = SettingsConfigDict(
         yaml_file=str(_BASE_DIR / "company_config.yaml"),
+        secrets_dir=None,
         extra="ignore",
     )
+
+    @classmethod
+    def settings_customise_sources(cls, settings_cls, **kwargs):
+        return (YamlConfigSettingsSource(settings_cls),)
 
 
 def load_company_config() -> CompanyProfile:

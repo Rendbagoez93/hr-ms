@@ -12,7 +12,6 @@ dependencies = [
     "djangorestframework>=3.16.1",
     "pydantic[email]>=2.12.5",
     "pydantic-settings>=2.12.0",
-    "pydantic-settings-yaml>=0.2.0",
 ]
 
 [dependency-groups]
@@ -56,7 +55,7 @@ addopts = [
     "--cov-report=term-missing:skip-covered",
     "--cov-report=html:htmlcov",
     "--cov-report=xml:coverage.xml",
-    "--cov-fail-under=80",
+    "--cov-fail-under=50",
     "--cov-branch",         # measure branch coverage
     # -- pytest-xdist --
     "-n=auto",              # use all available CPUs

@@ -3,7 +3,7 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class EnvSettings(BaseSettings):
-    SECRET_KEY: str = Field(default="django-insecure-change-this-in-production")
+    SECRET_KEY: str
     DEBUG: bool = Field(default=False)
     ENVIRONMENT: str = Field(default="local")
     ALLOWED_HOSTS: list[str] = Field(default=["localhost", "127.0.0.1"])
