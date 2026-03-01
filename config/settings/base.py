@@ -30,19 +30,25 @@ ALLOWED_HOSTS = _env.ALLOWED_HOSTS
 # Application definition
 # ---------------------------------------------------------------------------
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # Third-party
+    "modules.user"
+]
+
+THIRD_PARTY_APPS = [
     "django_extensions",
     "django_filters",
     "rest_framework",
-    # Local apps — add here as they are created
 ]
+
+INTERNAL_APPS = []
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + INTERNAL_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
