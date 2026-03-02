@@ -154,3 +154,8 @@ class Role(StrEnum):
     def all_roles(cls):
         """Return every defined role value."""
         return [role.value for role in cls]
+
+    @classmethod
+    def choices(cls):
+        """Return Django-compatible choices list for use in model fields."""
+        return [(r.value, r.name.replace('_', ' ').title()) for r in cls]

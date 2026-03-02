@@ -1,3 +1,7 @@
+from config.settings.companyconf import load_company_config
+from django.db import connection, models
+from shared.base_models import BaseModel
+
 import pytest
 
 
@@ -5,8 +9,6 @@ import pytest
 
 @pytest.fixture(scope="session")
 def company_config():
-    from config.settings.companyconf import load_company_config
-
     return load_company_config()
 
 
@@ -16,10 +18,6 @@ def company_config():
 
 @pytest.fixture(scope="session")
 def _item_model_class(django_db_setup, django_db_blocker):
-    from django.db import connection, models
-
-    from shared.base_models import BaseModel
-
     class Item(BaseModel):
         name = models.CharField(max_length=100)
 
