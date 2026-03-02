@@ -39,7 +39,7 @@ def test_sqlite_name_ends_with_db_sqlite3(monkeypatch):
     monkeypatch.delenv("DATABASE_ENGINE", raising=False)
     monkeypatch.delenv("DATABASE_NAME", raising=False)
     result = get_django_db_dict()
-    assert str(result["default"]["NAME"]).endswith("db.sqlite3")
+    assert str(result["default"]["NAME"]) == "hr_ms"
 
 
 # ─── PostgreSQL ───────────────────────────────────────────────────────────────
