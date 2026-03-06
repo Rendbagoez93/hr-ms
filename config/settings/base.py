@@ -47,7 +47,15 @@ THIRD_PARTY_APPS = [
     "rest_framework",
 ]
 
-INTERNAL_APPS = []
+INTERNAL_APPS = [
+    "applications.department",
+    "applications.job_title",
+    "applications.employee",
+    "applications.employment",
+    "applications.contract",
+    "applications.salary",
+    "applications.emergency_contact",
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + INTERNAL_APPS
 
