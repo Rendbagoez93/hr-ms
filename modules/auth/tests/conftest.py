@@ -2,14 +2,12 @@ import pytest
 from rest_framework.test import APIClient
 
 from config.roles import Role
-from modules.user.models import User
-
-USER_PASSWORD = "TestPass123!"
+from modules.factories import DEFAULT_PASSWORD, UserFactory
 
 
 @pytest.fixture
 def user_password() -> str:
-    return USER_PASSWORD
+    return DEFAULT_PASSWORD
 
 
 @pytest.fixture
@@ -19,41 +17,39 @@ def api_client() -> APIClient:
 
 @pytest.fixture
 def create_user(db):
-    def _factory(email: str, password: str = USER_PASSWORD, role: str = Role.STAFF, **kwargs):
-        return User.objects.create_user(email=email, password=password, role=role, **kwargs)
-    return _factory
+    return UserFactory.create
 
 
 @pytest.fixture
-def active_user(create_user):
-    return create_user(email="active@example.com")
+def active_user(db):
+    return UserFactory(email="active@example.com")
 
 
 @pytest.fixture
-def staff_user(create_user):
-    return create_user(email="staff@example.com", role=Role.STAFF)
+def staff_user(db):
+    return UserFactory(email="staff@example.com", role=Role.STAFF)
 
 
 @pytest.fixture
-def executive_user(create_user):
-    return create_user(email="executive@example.com", role=Role.CEO)
+def executive_user(db):
+    return UserFactory(email="executive@example.com", role=Role.CEO)
 
 
 @pytest.fixture
-def manager_user(create_user):
-    return create_user(email="manager@example.com", role=Role.MANAGER)
+def manager_user(db):
+    return UserFactory(email="manager@example.com", role=Role.MANAGER)
 
 
 @pytest.fixture
-def hr_user(create_user):
-    return create_user(email="hr@example.com", role=Role.HR_MANAGER)
+def hr_user(db):
+    return UserFactory(email="hr@example.com", role=Role.HR_MANAGER)
 
 
 @pytest.fixture
-def finance_user(create_user):
-    return create_user(email="finance@example.com", role=Role.FINANCE_MANAGER)
+def finance_user(db):
+    return UserFactory(email="finance@example.com", role=Role.FINANCE_MANAGER)
 
 
 @pytest.fixture
-def it_user(create_user):
-    return create_user(email="it@example.com", role=Role.IT_MANAGER)
+def it_user(db):
+    return UserFactory(email="it@example.com", role=Role.IT_MANAGER)
