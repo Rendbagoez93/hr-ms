@@ -24,55 +24,5 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
-// ── AlpineJS x-collapse plugin (minimal inline) ──────────────
-// Provides x-collapse directive used in sidebar accordion groups.
-document.addEventListener("alpine:init", () => {
-  Alpine.directive("collapse", (el, { modifiers }) => {
-    el._x_isCollapsible = true;
-
-    const setDisplay = (open) => {
-      if (open) {
-        el.style.display = "";
-        el.style.overflow = "hidden";
-        const height = el.scrollHeight;
-        el.style.height = "0px";
-        requestAnimationFrame(() => {
-          el.style.transition = "height 0.2s ease";
-          el.style.height = height + "px";
-          el.addEventListener(
-            "transitionend",
-            () => {
-              el.style.height = "";
-              el.style.overflow = "";
-              el.style.transition = "";
-            },
-            { once: true }
-          );
-        });
-      } else {
-        el.style.overflow = "hidden";
-        el.style.height = el.scrollHeight + "px";
-        requestAnimationFrame(() => {
-          el.style.transition = "height 0.2s ease";
-          el.style.height = "0px";
-          el.addEventListener(
-            "transitionend",
-            () => {
-              el.style.display = "none";
-              el.style.overflow = "";
-              el.style.transition = "";
-            },
-            { once: true }
-          );
-        });
-      }
-    };
-
-    // Watch via MutationObserver for x-show changes applied by Alpine
-    const observer = new MutationObserver(() => {
-      const isHidden = el.style.display === "none";
-      setDisplay(!isHidden && el.offsetParent !== null);
-    });
-    observer.observe(el, { attributes: true, attributeFilter: ["style"] });
-  });
-});
+// ── AlpineJS x-collapse plugin ──────────────────────────────
+// Provided by @alpinejs/collapse loaded via CDN in base.html.

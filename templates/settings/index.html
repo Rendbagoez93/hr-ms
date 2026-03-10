@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Settings{% endblock %}
+
+{% block breadcrumb %}
+  {% include "components/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+<div class="mb-6">
+  <h1 class="page-title">Settings</h1>
+  <p class="text-slate-500 mt-1">Manage company configuration, profile, and data tools.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+  <!-- Company Profile -->
+  <a href="{% url 'settings:company-profile' %}"
+     class="card p-6 hover:shadow-md hover:border-indigo-300 transition-all group">
+    <div class="flex items-start gap-4">
+      <div class="p-3 rounded-lg bg-indigo-50 text-indigo-600 group-hover:bg-indigo-100 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+        </svg>
+      </div>
+      <div>
+        <h2 class="font-semibold text-slate-800 group-hover:text-indigo-700 transition-colors">Company Profile</h2>
+        <p class="text-sm text-slate-500 mt-1">
+          Update your company's identity, contact details, address, and HR configuration.
+        </p>
+        {% if profile %}
+          <p class="text-xs text-slate-400 mt-2">{{ profile.name }}{% if profile.industry %} · {{ profile.industry }}{% endif %}</p>
+        {% endif %}
+      </div>
+    </div>
+  </a>
+
+  <!-- Bulk Import -->
+  <a href="{% url 'imports:list' %}"
+     class="card p-6 hover:shadow-md hover:border-indigo-300 transition-all group">
+    <div class="flex items-start gap-4">
+      <div class="p-3 rounded-lg bg-emerald-50 text-emerald-600 group-hover:bg-emerald-100 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+        </svg>
+      </div>
+      <div>
+        <h2 class="font-semibold text-slate-800 group-hover:text-indigo-700 transition-colors">Bulk Import</h2>
+        <p class="text-sm text-slate-500 mt-1">
+          Import employees, employment records, departments, and more from CSV or Excel files.
+        </p>
+        <p class="text-xs text-slate-400 mt-2">Supports CSV &amp; XLSX · Auto field detection</p>
+      </div>
+    </div>
+  </a>
+
+</div>
+{% endblock %}

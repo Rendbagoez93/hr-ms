@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+{% load dict_extras %}
+
+{% block title %}Import Job — {{ job.file_name }}{% endblock %}
+
+{% block breadcrumb %}
+  {% include "components/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+
+{% include "components/_messages.html" %}
+
+<!-- Header -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+  <div>
+    <h1 class="page-title">{{ job.file_name }}</h1>
+    <p class="text-slate-500 mt-1 text-sm">
+      {{ job.import_type|title }} import
+      · Uploaded {{ job.created_at|date:"d M Y H:i" }}
+      {% if job.created_by %}· by {{ job.created_by.email }}{% endif %}
+    </p>
+  </div>
+  <div class="flex items-center gap-2 flex-shrink-0">
+    {% if job.is_editable %}
+      <a href="{% url 'imports:mapping' job.pk %}" class="btn btn-ghost text-sm">Edit Mapping</a>
+    {% endif %}
+    {% if job.status == "ready" or job.is_editable %}
+      <form method="post" action="{% url 'imports:process' job.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary text-sm">
+          {% if job.status == "ready" %}Run Import{% else %}Run Anyway{% endif %}
+        </button>
+      </form>
+    {% endif %}
+  </div>
+</div>
+
+<!-- Status / Stats cards -->
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+
+  <div class="card p-4 text-center">
+    <p class="text-xs text-slate-400 uppercase tracking-wide mb-1">Status</p>
+    {% if job.status == "completed" %}
+      <span class="badge badge-success text-sm">Completed</span>
+    {% elif job.status == "partial" %}
+      <span class="badge badge-warning text-sm">Partial</span>
+    {% elif job.status == "failed" %}
+      <span class="badge badge-error text-sm">Failed</span>
+    {% elif job.status == "processing" %}
+      <span class="badge badge-info text-sm">Processing…</span>
+    {% else %}
+      <span class="badge badge-neutral text-sm">{{ job.status|title }}</span>
+    {% endif %}
+  </div>
+
+  <div class="card p-4 text-center">
+    <p class="text-xs text-slate-400 uppercase tracking-wide mb-1">Total Rows</p>
+    <p class="text-2xl font-bold text-slate-800">{{ job.total_rows }}</p>
+  </div>
+
+  <div class="card p-4 text-center">
+    <p class="text-xs text-slate-400 uppercase tracking-wide mb-1">Succeeded</p>
+    <p class="text-2xl font-bold text-emerald-600">{{ job.success_rows }}</p>
+  </div>
+
+  <div class="card p-4 text-center">
+    <p class="text-xs text-slate-400 uppercase tracking-wide mb-1">Failed</p>
+    <p class="text-2xl font-bold text-red-500">{{ job.failed_rows }}</p>
+  </div>
+
+</div>
+
+{% if job.total_rows and job.status != "pending" and job.status != "mapping" and job.status != "ready" %}
+  <!-- Progress bar -->
+  <div class="card p-4 mb-6">
+    <div class="flex items-center justify-between text-sm text-slate-500 mb-2">
+      <span>Progress</span>
+      <span>{{ job.progress_percent }}%</span>
+    </div>
+    <div class="w-full bg-slate-100 rounded-full h-2.5">
+      <div class="h-2.5 rounded-full
+        {% if job.status == 'completed' %}bg-emerald-500
+        {% elif job.status == 'partial' %}bg-amber-400
+        {% elif job.status == 'failed' %}bg-red-500
+        {% else %}bg-indigo-500{% endif %}"
+        style="width: {{ job.progress_percent }}%"></div>
+    </div>
+  </div>
+{% endif %}
+
+<!-- Field Mapping summary -->
+{% if job.field_mapping %}
+  <div class="card p-5 mb-6" x-data="{ open: false }">
+    <button @click="open = !open"
+            class="flex items-center justify-between w-full text-sm font-medium text-slate-700">
+      <span>Field Mapping ({{ job.field_mapping|length }} columns)</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" :class="open ? 'rotate-180' : ''"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+    <div x-show="open" x-collapse class="mt-3">
+      <div class="flex flex-wrap gap-2 text-sm">
+        {% for col, field in job.field_mapping.items %}
+          {% if field %}
+            <div class="flex items-center gap-1 bg-slate-50 rounded px-2 py-1 border border-slate-200">
+              <span class="font-mono text-slate-500">{{ col }}</span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+              <span class="font-mono font-medium text-indigo-600">{{ field }}</span>
+            </div>
+          {% endif %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endif %}
+
+<!-- Error summary -->
+{% if job.error_summary %}
+  <div class="card p-5 mb-6 border-red-200 bg-red-50">
+    <h2 class="text-sm font-semibold text-red-700 mb-2">Error Summary</h2>
+    <p class="text-sm text-red-600 whitespace-pre-wrap">{{ job.error_summary }}</p>
+  </div>
+{% endif %}
+
+<!-- Row logs -->
+{% if logs %}
+  <div class="card overflow-hidden">
+    <div class="flex items-center justify-between p-5 border-b border-slate-100">
+      <h2 class="font-semibold text-slate-800">Import Log</h2>
+      {% if error_logs %}
+        <span class="text-sm text-red-500">{{ error_logs.count }} error{{ error_logs.count|pluralize }}</span>
+      {% endif %}
+    </div>
+    <div class="overflow-x-auto max-h-[500px] overflow-y-auto">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Row</th>
+            <th>Status</th>
+            <th>Error</th>
+            <th>Data Preview</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in logs %}
+            <tr class="{% if log.status == 'error' %}bg-red-50{% elif log.status == 'success' %}{% endif %}">
+              <td class="text-slate-400 text-sm">#{{ log.row_number }}</td>
+              <td>
+                {% if log.status == "success" %}
+                  <span class="badge badge-success">OK</span>
+                {% elif log.status == "error" %}
+                  <span class="badge badge-error">Error</span>
+                {% else %}
+                  <span class="badge badge-neutral">{{ log.status }}</span>
+                {% endif %}
+              </td>
+              <td class="text-red-600 text-sm max-w-xs">{{ log.error_message|default:"—" }}</td>
+              <td class="text-slate-500 text-xs font-mono max-w-xs truncate" title="{{ log.raw_data }}">
+                {{ log.raw_data|truncatechars:80 }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+{% elif job.status == "completed" or job.status == "partial" or job.status == "failed" %}
+  <div class="card p-8 text-center text-slate-400">No row logs recorded.</div>
+{% endif %}
+
+{% endblock %}

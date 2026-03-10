@@ -55,6 +55,9 @@ INTERNAL_APPS = [
     "applications.organization",
     "applications.employee",
     "applications.employment",
+    "applications.imports",
+    "applications.company_profile",
+    "shared",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + INTERNAL_APPS
