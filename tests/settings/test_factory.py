@@ -9,6 +9,7 @@ pytestmark = pytest.mark.unit
 
 # ─── Return type ──────────────────────────────────────────────────────────────
 
+
 def test_returns_a_dict(monkeypatch):
     monkeypatch.delenv("DATABASE_ENGINE", raising=False)
     result = get_django_db_dict()
@@ -22,6 +23,7 @@ def test_has_default_key(monkeypatch):
 
 
 # ─── SQLite (default) ─────────────────────────────────────────────────────────
+
 
 def test_default_engine_is_sqlite(monkeypatch):
     monkeypatch.delenv("DATABASE_ENGINE", raising=False)
@@ -43,6 +45,7 @@ def test_sqlite_name_ends_with_db_sqlite3(monkeypatch):
 
 
 # ─── PostgreSQL ───────────────────────────────────────────────────────────────
+
 
 def test_postgres_engine_selected_by_env(monkeypatch):
     monkeypatch.setenv("DATABASE_ENGINE", "POSTGRES")

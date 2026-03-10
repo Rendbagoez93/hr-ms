@@ -131,10 +131,9 @@ class CompanyConfig(BaseSettings):
     )
 
     @classmethod
-    def settings_customise_sources(cls, settings_cls, **kwargs):
+    def settings_customise_sources(cls, settings_cls, **_kwargs):
         return (YamlConfigSettingsSource(settings_cls),)
 
 
 def load_company_config() -> CompanyProfile:
     return CompanyConfig().company
-

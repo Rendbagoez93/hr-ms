@@ -6,6 +6,7 @@ pytestmark = pytest.mark.django_db
 
 # ─── Identity ─────────────────────────────────────────────────────────────────
 
+
 def test_primary_key_is_uuid(Item):
     import uuid
 
@@ -32,6 +33,7 @@ def test_updated_at_changes_on_save(Item):
 
 
 # ─── Soft Delete ──────────────────────────────────────────────────────────────
+
 
 def test_soft_delete_sets_deleted_at(Item):
     obj = Item.objects.create(name="Eve")
@@ -64,6 +66,7 @@ def test_active_record_not_in_deleted_objects_manager(Item):
 
 # ─── all_objects ──────────────────────────────────────────────────────────────
 
+
 def test_all_objects_returns_active_records(Item):
     obj = Item.objects.create(name="Judy")
     assert Item.all_objects.filter(id=obj.id).exists()
@@ -84,6 +87,7 @@ def test_all_objects_count_includes_deleted(Item):
 
 
 # ─── Restore ──────────────────────────────────────────────────────────────────
+
 
 def test_restore_clears_deleted_at(Item):
     obj = Item.objects.create(name="Niaj")
@@ -114,6 +118,7 @@ def test_restore_removes_record_from_deleted_objects_manager(Item):
 
 
 # ─── Hard Delete ──────────────────────────────────────────────────────────────
+
 
 def test_hard_delete_removes_from_db(Item):
     obj = Item.objects.create(name="Rupert")

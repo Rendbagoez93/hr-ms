@@ -5,13 +5,15 @@ Covers: CustomUserManager.normalize_email, email uniqueness, case-sensitivity ed
 Note: Django's normalize_email lowercases the domain part only (RFC 5321).
       The local part (before @) is preserved as-is, which can allow near-duplicates.
 """
-import pytest
+
 from django.db import IntegrityError
+import pytest
 
 from modules.user.models import User
 
 
 # ─── Positive Tests ───────────────────────────────────────────────────────────
+
 
 @pytest.mark.django_db
 def test_email_domain_is_lowercased_on_creation(db):
@@ -27,6 +29,7 @@ def test_normalized_email_is_persisted_to_db(db):
 
 # ─── Negative Tests ───────────────────────────────────────────────────────────
 
+
 @pytest.mark.django_db
 def test_exact_duplicate_email_raises_integrity_error(db):
     User.objects.create_user(email="admin@company.com", password="TestPass123!")
@@ -36,7 +39,7 @@ def test_exact_duplicate_email_raises_integrity_error(db):
 
 @pytest.mark.django_db
 def test_missing_email_raises_value_error(db):
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="The Email field must be set"):
         User.objects.create_user(email="", password="TestPass123!")
 
 

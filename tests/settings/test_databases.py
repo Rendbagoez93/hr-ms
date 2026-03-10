@@ -1,6 +1,5 @@
-import pytest
-from pydantic import ValidationError
 from pydantic_core import PydanticCustomError
+import pytest
 
 from config.settings.databases import (
     BaseDatabaseSettings,
@@ -16,6 +15,7 @@ pytestmark = pytest.mark.unit
 
 # ─── DBEngineEnum ─────────────────────────────────────────────────────────────
 
+
 def test_sqlite_enum_value():
     assert DBEngineEnum.SQLITE == "django.db.backends.sqlite3"
 
@@ -25,6 +25,7 @@ def test_postgres_enum_value():
 
 
 # ─── BaseDatabaseSettings.validate_engine ─────────────────────────────────────
+
 
 def test_validate_engine_accepts_sqlite_name(monkeypatch):
     monkeypatch.setenv("DATABASE_ENGINE", "SQLITE")
@@ -64,6 +65,7 @@ def test_base_settings_defaults_to_sqlite(monkeypatch):
 
 # ─── SqliteDatabaseSettings ───────────────────────────────────────────────────
 
+
 def test_sqlite_settings_default_engine(monkeypatch):
     monkeypatch.delenv("DATABASE_ENGINE", raising=False)
     settings = SqliteDatabaseSettings()
@@ -77,6 +79,7 @@ def test_sqlite_settings_default_name_ends_with_db_sqlite3(monkeypatch):
 
 
 # ─── PostgresDatabaseSettings ─────────────────────────────────────────────────
+
 
 def test_postgres_settings_default_host(monkeypatch):
     monkeypatch.setenv("DATABASE_ENGINE", "POSTGRES")
@@ -109,6 +112,7 @@ def test_postgres_settings_env_override(monkeypatch):
 
 
 # ─── DjangoDatabases ──────────────────────────────────────────────────────────
+
 
 def test_django_databases_wraps_sqlite():
     db = DjangoDatabases(default=SqliteDatabaseSettings())

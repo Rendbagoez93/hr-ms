@@ -59,10 +59,9 @@ class PostgresDatabaseSettings(BaseDatabaseSettings):
     host: str = "localhost"
     port: int = 5432
     user: str = "postgres"
-    password: str = "postgres"
+    password: str = "postgres"  # noqa: S105
     name: str = "hr_ms"
 
 
 class DjangoDatabases(BaseModel):
     default: PostgresDatabaseSettings | SqliteDatabaseSettings
-

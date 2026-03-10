@@ -1,9 +1,12 @@
+from typing import ClassVar
+
 from rest_framework import status
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .serializers import LoginSerializer, UserProfileSerializer
+
 
 # --- SimpleJWT integration point -------------------------------------------
 # When djangorestframework-simplejwt is installed:
@@ -19,13 +22,13 @@ from .serializers import LoginSerializer, UserProfileSerializer
 # ---------------------------------------------------------------------------
 
 
-def _token_pair(user) -> dict:
+def _token_pair(_user) -> dict:
     """Placeholder — swap for SimpleJWT once the package is added."""
     return {}
 
 
 class LoginView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes: ClassVar[list] = [AllowAny]
 
     def post(self, request):
         serializer = LoginSerializer(data=request.data, context={"request": request})
@@ -41,15 +44,15 @@ class LoginView(APIView):
 
 
 class LogoutView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
-    def post(self, request):
+    def post(self, _request):
         # Blacklist the refresh token here once SimpleJWT is active.
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class MeView(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes: ClassVar[list] = [IsAuthenticated]
 
     def get(self, request):
         return Response(UserProfileSerializer(request.user).data)

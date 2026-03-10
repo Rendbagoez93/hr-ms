@@ -2,6 +2,7 @@
 Scenario: A Staff member is promoted to HR_Manager.
 Covers: role field update, helper properties (is_hr, is_regular_staff), DB persistence.
 """
+
 import pytest
 
 from config.roles import Role
@@ -9,6 +10,7 @@ from modules.user.models import User
 
 
 # ─── Positive Tests ───────────────────────────────────────────────────────────
+
 
 @pytest.mark.django_db
 def test_promoted_user_is_hr(staff_user):
@@ -33,6 +35,7 @@ def test_role_change_is_persisted(staff_user):
 
 
 # ─── Negative Tests ───────────────────────────────────────────────────────────
+
 
 @pytest.mark.django_db
 def test_staff_user_is_not_hr(staff_user):

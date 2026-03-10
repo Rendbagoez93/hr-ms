@@ -1,5 +1,5 @@
-import pytest
 from pydantic import ValidationError
+import pytest
 
 from config.settings.envcommon import EnvSettings
 
@@ -27,6 +27,7 @@ def _fresh(monkeypatch, **overrides) -> EnvSettings:
 
 
 # ─── Defaults ─────────────────────────────────────────────────────────────────
+
 
 def test_secret_key_is_required(monkeypatch):
     for key in _KNOWN_ENV_KEYS:
@@ -62,6 +63,7 @@ def test_default_language_code(monkeypatch):
 
 
 # ─── Env var overrides ────────────────────────────────────────────────────────
+
 
 def test_override_debug_true(monkeypatch):
     settings = _fresh(monkeypatch, DEBUG="True")
