@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Delete Employee{% endblock %}
+{% block content %}
+<div class="max-w-lg mx-auto">
+  <div class="card p-8 text-center">
+    <div class="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+      </svg>
+    </div>
+    <h1 class="text-xl font-semibold text-slate-800 mb-2">Delete Employee?</h1>
+    <p class="text-slate-500 mb-6">
+      Are you sure you want to delete <strong>{{ object.full_name }}</strong> ({{ object.employee_id }})?
+      This action cannot be undone.
+    </p>
+    <form method="post" class="flex items-center justify-center gap-3">
+      {% csrf_token %}
+      <button type="submit" class="btn btn-danger">Yes, Delete</button>
+      <a href="{% url 'employee:employee-detail' object.pk %}" class="btn btn-ghost">Cancel</a>
+    </form>
+  </div>
+</div>
+{% endblock %}

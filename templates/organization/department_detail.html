@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}{{ department.name }}{% endblock %}
+
+{% block content %}
+<div class="mb-6 flex items-start justify-between">
+  <div>
+    <h1 class="page-title">{{ department.name }}</h1>
+    <p class="text-slate-500 font-mono text-sm mt-1">{{ department.code }}</p>
+    {% if department.parent %}
+      <p class="text-sm text-slate-500 mt-1">
+        Part of <a href="{% url 'organization:department-detail' department.parent.pk %}" class="text-indigo-600 hover:underline">{{ department.parent.name }}</a>
+      </p>
+    {% endif %}
+  </div>
+  <div class="flex items-center gap-2">
+    <a href="{% url 'organization:department-update' department.pk %}" class="btn btn-outline">Edit</a>
+    <a href="{% url 'organization:department-delete' department.pk %}" class="btn btn-danger">Delete</a>
+  </div>
+</div>
+
+{% if department.description %}
+  <p class="mb-6 text-slate-600">{{ department.description }}</p>
+{% endif %}
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+  <!-- Job Titles -->
+  <section class="card">
+    <div class="card-header flex items-center justify-between">
+      <h2 class="card-title">Job Titles ({{ job_titles.count }})</h2>
+      <a href="{% url 'organization:jobtitle-create' %}?department={{ department.pk }}" class="btn btn-sm btn-outline">+ Add</a>
+    </div>
+    <ul class="divide-y divide-slate-100">
+      {% for jt in job_titles %}
+        <li class="px-4 py-3 flex items-center justify-between">
+          <span>{{ jt.name }}</span>
+          <span class="font-mono text-xs text-slate-400">{{ jt.code }}</span>
+        </li>
+      {% empty %}
+        <li class="px-4 py-6 text-center text-slate-400">No job titles defined.</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <!-- Sub-departments -->
+  <section class="card">
+    <div class="card-header">
+      <h2 class="card-title">Sub-departments ({{ children.count }})</h2>
+    </div>
+    <ul class="divide-y divide-slate-100">
+      {% for child in children %}
+        <li class="px-4 py-3">
+          <a href="{% url 'organization:department-detail' child.pk %}" class="text-indigo-600 hover:underline">{{ child.name }}</a>
+          <span class="ml-2 font-mono text-xs text-slate-400">{{ child.code }}</span>
+        </li>
+      {% empty %}
+        <li class="px-4 py-6 text-center text-slate-400">No sub-departments.</li>
+      {% endfor %}
+    </ul>
+  </section>
+
+</div>
+
+<div class="mt-4">
+  <a href="{% url 'organization:department-list' %}" class="text-sm text-slate-500 hover:text-indigo-600">← Back to departments</a>
+</div>
+{% endblock %}

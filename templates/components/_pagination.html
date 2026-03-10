@@ -1,0 +1,19 @@
+{% if page_obj %}
+  <nav class="mt-6 flex items-center justify-between" aria-label="Pagination">
+    <p class="text-sm text-slate-500">
+      Showing <span class="font-medium">{{ page_obj.start_index }}</span>–<span class="font-medium">{{ page_obj.end_index }}</span>
+      of <span class="font-medium">{{ page_obj.paginator.count }}</span> results
+    </p>
+    <div class="flex items-center gap-1">
+      {% if page_obj.has_previous %}
+        <a href="?{% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.previous_page_number }}"
+           class="btn btn-ghost btn-sm">← Prev</a>
+      {% endif %}
+      <span class="px-3 py-1 text-sm text-slate-600">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}
+        <a href="?{% if request.GET.urlencode %}{{ request.GET.urlencode }}&{% endif %}page={{ page_obj.next_page_number }}"
+           class="btn btn-ghost btn-sm">Next →</a>
+      {% endif %}
+    </div>
+  </nav>
+{% endif %}

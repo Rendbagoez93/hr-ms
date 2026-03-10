@@ -55,6 +55,9 @@ INTERNAL_APPS = [
     "applications.organization",
     "applications.employee",
     "applications.employment",
+    "applications.imports",
+    "applications.company_profile",
+    "shared",
 ]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + INTERNAL_APPS
@@ -137,6 +140,12 @@ MEDIA_ROOT = BASE_DIR / "media"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOWED_ORIGINS = _env.CORS_ALLOWED_ORIGINS
+
+# Auth redirects
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/employees/"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
+
 
 # ---------------------------------------------------------------------------
 # Django REST Framework
