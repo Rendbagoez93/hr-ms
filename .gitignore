@@ -41,6 +41,13 @@ htmlcov/
 .pytest_cache/
 .tox/
 
+# Tools
+.ruff_cache/
+.mypy_cache/
+
+# uv
+# uv.lock is intentionally tracked — do not add it here
+
 # Misc
 *.bak
 *.tmp
