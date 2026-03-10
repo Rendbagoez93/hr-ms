@@ -51,7 +51,11 @@ THIRD_PARTY_APPS = [
     "django_celery_beat",
 ]
 
-INTERNAL_APPS = []
+INTERNAL_APPS = [
+    "applications.organization",
+    "applications.employee",
+    "applications.employment",
+]
 
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + INTERNAL_APPS
 
