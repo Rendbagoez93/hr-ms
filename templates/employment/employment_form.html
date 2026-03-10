@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}{% if form.instance.pk %}Edit Employment Record{% else %}New Employment Record{% endif %}{% endblock %}
+{% block content %}
+<div class="max-w-2xl mx-auto">
+  <h1 class="page-title mb-6">
+    {% if form.instance.pk %}Edit Employment Record{% else %}New Employment Record{% endif %}
+  </h1>
+
+  <form method="post" class="card p-6 space-y-5">
+    {% csrf_token %}
+
+    {% if not form.instance.pk %}
+      <div class="form-group">
+        <label class="form-label" for="{{ form.employee.id_for_label }}">Employee <span class="text-red-500">*</span></label>
+        {{ form.employee }}
+        {% if form.employee.errors %}<p class="form-error">{{ form.employee.errors.0 }}</p>{% endif %}
+      </div>
+    {% endif %}
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="form-group">
+        <label class="form-label" for="{{ form.department.id_for_label }}">Department <span class="text-red-500">*</span></label>
+        {{ form.department }}
+        {% if form.department.errors %}<p class="form-error">{{ form.department.errors.0 }}</p>{% endif %}
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="{{ form.job_title.id_for_label }}">Job Title <span class="text-red-500">*</span></label>
+        {{ form.job_title }}
+        {% if form.job_title.errors %}<p class="form-error">{{ form.job_title.errors.0 }}</p>{% endif %}
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="{{ form.reporting_manager.id_for_label }}">Reporting Manager</label>
+        {{ form.reporting_manager }}
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="{{ form.work_location.id_for_label }}">Work Location</label>
+        {{ form.work_location }}
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="{{ form.status.id_for_label }}">Status <span class="text-red-500">*</span></label>
+        {{ form.status }}
+        {% if form.status.errors %}<p class="form-error">{{ form.status.errors.0 }}</p>{% endif %}
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="{{ form.hire_date.id_for_label }}">Hire Date <span class="text-red-500">*</span></label>
+        {{ form.hire_date }}
+        {% if form.hire_date.errors %}<p class="form-error">{{ form.hire_date.errors.0 }}</p>{% endif %}
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="{{ form.end_date.id_for_label }}">End Date</label>
+        {{ form.end_date }}
+      </div>
+    </div>
+
+    {% if form.non_field_errors %}
+      <div class="form-error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="flex items-center gap-3 pt-2">
+      <button type="submit" class="btn btn-primary">
+        {% if form.instance.pk %}Save Changes{% else %}Create Record{% endif %}
+      </button>
+      <a href="{% url 'employment:employment-list' %}" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

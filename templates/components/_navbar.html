@@ -1,0 +1,24 @@
+<nav class="bg-white border-b border-slate-200 px-4 py-3 flex items-center justify-between shadow-sm">
+  <div class="flex items-center gap-3">
+    <a href="/" class="flex items-center gap-2 text-indigo-600 font-bold text-lg tracking-tight">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+      </svg>
+      HR&#8209;MS
+    </a>
+  </div>
+
+  <div class="flex items-center gap-4">
+    {% if user.is_authenticated %}
+      <span class="text-sm text-slate-500">
+        {{ user.email }}
+        <span class="ml-1 inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700">{{ user.role }}</span>
+      </span>
+      <a href="{% url 'logout' %}" class="btn btn-ghost text-sm">
+        Sign out
+      </a>
+    {% else %}
+      <a href="{% url 'login' %}" class="btn btn-primary text-sm">Sign in</a>
+    {% endif %}
+  </div>
+</nav>
