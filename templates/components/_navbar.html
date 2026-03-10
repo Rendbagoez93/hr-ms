@@ -14,9 +14,10 @@
         {{ user.email }}
         <span class="ml-1 inline-flex items-center rounded-full bg-indigo-50 px-2 py-0.5 text-xs font-medium text-indigo-700">{{ user.role }}</span>
       </span>
-      <a href="{% url 'logout' %}" class="btn btn-ghost text-sm">
-        Sign out
-      </a>
+      <form method="post" action="{% url 'logout' %}" class="inline">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-ghost text-sm">Sign out</button>
+      </form>
     {% else %}
       <a href="{% url 'login' %}" class="btn btn-primary text-sm">Sign in</a>
     {% endif %}
