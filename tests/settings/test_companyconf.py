@@ -10,8 +10,8 @@ from config.settings.companyconf import (
     HRSettings,
     JobLevel,
     LeavePolicy,
-    WorkdayHours,
     Weekdays,
+    WorkdayHours,
     load_company_config,
 )
 
@@ -20,6 +20,7 @@ pytestmark = pytest.mark.unit
 
 
 # ─── load_company_config ──────────────────────────────────────────────────────
+
 
 def test_load_returns_company_profile():
     profile = load_company_config()
@@ -82,6 +83,7 @@ def test_department_codes_are_unique(company_config):
 
 
 # ─── Pydantic model validation ────────────────────────────────────────────────
+
 
 def test_company_profile_requires_name():
     from pydantic import ValidationError

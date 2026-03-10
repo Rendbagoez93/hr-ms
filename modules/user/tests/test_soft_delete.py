@@ -2,13 +2,15 @@
 Scenario: An employee leaves the company and their account is soft-deleted.
 Covers: SoftDeleteManager, BaseModel.delete(), is_active flag, Django authentication.
 """
-import pytest
+
 from django.contrib.auth import authenticate
+import pytest
 
 from modules.user.models import User
 
 
 # ─── Positive Tests ───────────────────────────────────────────────────────────
+
 
 @pytest.mark.django_db
 def test_deleted_user_has_deleted_at_set(ex_employee):
@@ -46,6 +48,7 @@ def test_deleted_user_cannot_authenticate(ex_employee):
 
 
 # ─── Negative Tests ───────────────────────────────────────────────────────────
+
 
 @pytest.mark.django_db
 def test_soft_delete_does_not_remove_from_database(ex_employee):

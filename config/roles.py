@@ -50,7 +50,7 @@ class Role(StrEnum):
     OPERATIONS_MANAGER = "operations_manager"
     LOGISTICS_COORDINATOR = "logistics_coordinator"
     INVENTORY_CONTROLLER = "inventory_controller"
-    
+
     # ── Safety & Security ─────────────────────────────────────────────
     SAFETY_OFFICER = "safety_officer"
     SECURITY_OFFICER = "security_officer"
@@ -78,8 +78,12 @@ class Role(StrEnum):
         """Can manage direct reports, approve leave/overtime, and access
         team-level reports."""
         included = [
-            cls.GENERAL_MANAGER, cls.MANAGER, cls.SUPERVISOR, cls.TEAM_LEAD,
-            cls.OPERATIONS_MANAGER, cls.SALES_MANAGER,
+            cls.GENERAL_MANAGER,
+            cls.MANAGER,
+            cls.SUPERVISOR,
+            cls.TEAM_LEAD,
+            cls.OPERATIONS_MANAGER,
+            cls.SALES_MANAGER,
         ]
         return [role.value for role in cls if role in included]
 
@@ -123,7 +127,7 @@ class Role(StrEnum):
         """Access to supply chain, inventory, and logistics modules."""
         included = [cls.OPERATIONS_MANAGER, cls.LOGISTICS_COORDINATOR, cls.INVENTORY_CONTROLLER]
         return [role.value for role in cls if role in included]
-    
+
     @classmethod
     def safety_and_security_roles(cls):
         """Access to safety protocols, incident reporting, and security
@@ -158,4 +162,4 @@ class Role(StrEnum):
     @classmethod
     def choices(cls):
         """Return Django-compatible choices list for use in model fields."""
-        return [(r.value, r.name.replace('_', ' ').title()) for r in cls]
+        return [(r.value, r.name.replace("_", " ").title()) for r in cls]

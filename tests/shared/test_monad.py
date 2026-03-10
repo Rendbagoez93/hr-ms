@@ -8,6 +8,7 @@ pytestmark = pytest.mark.unit
 
 # ─── Success ──────────────────────────────────────────────────────────────────
 
+
 def test_success_is_ok():
     result = Result.Success(42)
     assert result.is_ok() is True
@@ -26,6 +27,7 @@ def test_success_with_none_value():
 
 # ─── Failure ──────────────────────────────────────────────────────────────────
 
+
 def test_failure_is_not_ok():
     result = Result.Failure("something went wrong")
     assert result.is_ok() is False
@@ -38,6 +40,7 @@ def test_failure_holds_error():
 
 
 # ─── bind ─────────────────────────────────────────────────────────────────────
+
 
 def test_bind_transforms_success_value():
     result = Result.Success(5).bind(lambda x: Result.Success(x * 2))
@@ -56,7 +59,7 @@ def test_bind_propagates_failure_through_chain():
     result = (
         Result.Success(10)
         .bind(lambda x: Result.Success(x + 1))
-        .bind(lambda x: Result.Failure("abort"))
+        .bind(lambda _: Result.Failure("abort"))
         .bind(lambda x: Result.Success(x * 100))
     )
     assert result.is_ok() is False
