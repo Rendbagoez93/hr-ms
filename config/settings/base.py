@@ -138,6 +138,12 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 CORS_ALLOWED_ORIGINS = _env.CORS_ALLOWED_ORIGINS
 
+# Auth redirects
+LOGIN_URL = "/accounts/login/"
+LOGIN_REDIRECT_URL = "/employees/"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
+
+
 # ---------------------------------------------------------------------------
 # Django REST Framework
 # ---------------------------------------------------------------------------
