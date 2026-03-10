@@ -15,9 +15,9 @@ class DepartmentQuerySet(models.QuerySet):
         return self.prefetch_related("children")
 
 
-class DepartmentManager(models.Manager):
+class DepartmentManager(models.Manager.from_queryset(DepartmentQuerySet)):
     def get_queryset(self) -> DepartmentQuerySet:
-        return DepartmentQuerySet(self.model, using=self._db).filter(deleted_at__isnull=True)
+        return super().get_queryset().filter(deleted_at__isnull=True)
 
 
 class JobTitleQuerySet(models.QuerySet):
@@ -31,6 +31,6 @@ class JobTitleQuerySet(models.QuerySet):
         return self.select_related("department")
 
 
-class JobTitleManager(models.Manager):
+class JobTitleManager(models.Manager.from_queryset(JobTitleQuerySet)):
     def get_queryset(self) -> JobTitleQuerySet:
-        return JobTitleQuerySet(self.model, using=self._db).filter(deleted_at__isnull=True)
+        return super().get_queryset().filter(deleted_at__isnull=True)

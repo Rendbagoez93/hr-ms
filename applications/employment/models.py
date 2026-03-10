@@ -1,8 +1,8 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
-from modules.employee.models import Employee
-from modules.organization.models import Department, JobTitle
+from applications.employee.models import Employee
+from applications.organization.models import Department, JobTitle
 from shared.base_models import BaseModel
 
 from .constants import ContractType, EmploymentStatus, PaymentFrequency, WorkLocationType

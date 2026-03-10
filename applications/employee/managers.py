@@ -17,6 +17,6 @@ class EmployeeQuerySet(models.QuerySet):
         return self.select_related("user")
 
 
-class EmployeeManager(models.Manager):
+class EmployeeManager(models.Manager.from_queryset(EmployeeQuerySet)):
     def get_queryset(self) -> EmployeeQuerySet:
-        return EmployeeQuerySet(self.model, using=self._db).filter(deleted_at__isnull=True)
+        return super().get_queryset().filter(deleted_at__isnull=True)

@@ -52,7 +52,7 @@ DJANGO_SETTINGS_MODULE = "config.settings.local"
 python_files  = ["test_*.py", "*_test.py"]
 python_classes = ["Test*"]
 python_functions = ["test_*"]
-testpaths = ["tests", "modules"]
+testpaths = ["tests", "modules", "applications"]
 
 # Runtime flags
 addopts = [

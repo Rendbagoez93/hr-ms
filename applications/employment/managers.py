@@ -23,9 +23,9 @@ class EmploymentQuerySet(models.QuerySet):
         return self.select_related("employee", "department", "job_title", "reporting_manager")
 
 
-class EmploymentManager(models.Manager):
+class EmploymentManager(models.Manager.from_queryset(EmploymentQuerySet)):
     def get_queryset(self) -> EmploymentQuerySet:
-        return EmploymentQuerySet(self.model, using=self._db).filter(deleted_at__isnull=True)
+        return super().get_queryset().filter(deleted_at__isnull=True)
 
 
 class ContractQuerySet(models.QuerySet):
@@ -34,9 +34,9 @@ class ContractQuerySet(models.QuerySet):
         return self.filter(models.Q(end_date__isnull=True) | models.Q(end_date__gte=timezone.now().date()))
 
 
-class ContractManager(models.Manager):
+class ContractManager(models.Manager.from_queryset(ContractQuerySet)):
     def get_queryset(self) -> ContractQuerySet:
-        return ContractQuerySet(self.model, using=self._db).filter(deleted_at__isnull=True)
+        return super().get_queryset().filter(deleted_at__isnull=True)
 
 
 class SalaryQuerySet(models.QuerySet):
@@ -49,6 +49,6 @@ class SalaryQuerySet(models.QuerySet):
         return self.filter(end_date__isnull=False)
 
 
-class SalaryManager(models.Manager):
+class SalaryManager(models.Manager.from_queryset(SalaryQuerySet)):
     def get_queryset(self) -> SalaryQuerySet:
-        return SalaryQuerySet(self.model, using=self._db).filter(deleted_at__isnull=True)
+        return super().get_queryset().filter(deleted_at__isnull=True)
