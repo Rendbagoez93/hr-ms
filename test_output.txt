@@ -1,0 +1,617 @@
+============================= test session starts =============================
+platform win32 -- Python 3.14.3, pytest-9.0.2, pluggy-1.6.0 -- C:\Users\Admin\project\Web Dev\hr-ms\.venv\Scripts\python.exe
+cachedir: .pytest_cache
+django: version: 6.0.2, settings: config.settings.local (from ini)
+rootdir: C:\Users\Admin\project\Web Dev\hr-ms
+configfile: pyproject.toml
+testpaths: tests, modules, applications
+plugins: Faker-40.5.1, cov-7.0.0, django-4.12.0, xdist-3.8.0
+created: 16/16 workers
+16 workers [261 items]
+
+scheduling tests via LoadScopeScheduling
+
+modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_executive_grants_executive_role 
+tests/shared/test_monad.py::test_success_is_ok 
+modules/user/tests/test_soft_delete.py::test_deleted_user_has_deleted_at_set 
+tests/settings/test_companyconf.py::test_load_returns_company_profile 
+applications/organization/tests/test_organization.py::TestJobTitleModel::test_str_with_department 
+tests/shared/test_base_models.py::test_primary_key_is_uuid 
+applications/employment/tests/test_employment.py::TestEmploymentModel::test_str_representation 
+applications/employee/tests/test_employee.py::TestEmployeeModel::test_full_name_property 
+applications/organization/tests/test_organization.py::TestDepartmentModel::test_str_representation 
+applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_str_representation 
+applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_str_representation 
+applications/employment/tests/test_employment.py::TestEmploymentManager::test_active_returns_active_and_probation 
+applications/employment/tests/test_employment.py::TestContractModel::test_str_representation 
+tests/settings/test_factory.py::test_returns_a_dict 
+tests/settings/test_databases.py::test_sqlite_enum_value 
+tests/settings/test_envcommon.py::test_secret_key_is_required 
+[gw7] [  0%] PASSED tests/shared/test_monad.py::test_success_is_ok 
+tests/shared/test_monad.py::test_success_holds_value 
+[gw7] [  0%] PASSED tests/shared/test_monad.py::test_success_holds_value 
+tests/shared/test_monad.py::test_success_with_none_value 
+[gw7] [  1%] PASSED tests/shared/test_monad.py::test_success_with_none_value 
+tests/shared/test_monad.py::test_failure_is_not_ok 
+[gw7] [  1%] PASSED tests/shared/test_monad.py::test_failure_is_not_ok 
+tests/shared/test_monad.py::test_failure_holds_error 
+[gw7] [  1%] PASSED tests/shared/test_monad.py::test_failure_holds_error 
+tests/shared/test_monad.py::test_bind_transforms_success_value 
+[gw7] [  2%] PASSED tests/shared/test_monad.py::test_bind_transforms_success_value 
+tests/shared/test_monad.py::test_bind_short_circuits_on_failure 
+[gw7] [  2%] PASSED tests/shared/test_monad.py::test_bind_short_circuits_on_failure 
+tests/shared/test_monad.py::test_bind_propagates_failure_through_chain 
+[gw7] [  3%] PASSED tests/shared/test_monad.py::test_bind_propagates_failure_through_chain 
+tests/shared/test_monad.py::test_bind_chains_multiple_successful_steps 
+[gw7] [  3%] PASSED tests/shared/test_monad.py::test_bind_chains_multiple_successful_steps 
+tests/shared/test_monad.py::test_bind_success_to_failure_stops_at_failure 
+[gw2] [  3%] PASSED tests/settings/test_databases.py::test_sqlite_enum_value 
+tests/settings/test_databases.py::test_postgres_enum_value 
+[gw7] [  4%] PASSED tests/shared/test_monad.py::test_bind_success_to_failure_stops_at_failure 
+applications/employment/tests/test_employment.py::TestSalaryModel::test_current_salary_has_no_end_date 
+[gw2] [  4%] PASSED tests/settings/test_databases.py::test_postgres_enum_value 
+tests/settings/test_databases.py::test_validate_engine_accepts_sqlite_name 
+[gw6] [  4%] PASSED tests/settings/test_envcommon.py::test_secret_key_is_required 
+tests/settings/test_envcommon.py::test_default_debug_is_false 
+[gw6] [  5%] PASSED tests/settings/test_envcommon.py::test_default_debug_is_false 
+tests/settings/test_envcommon.py::test_default_environment_is_local 
+[gw6] [  5%] PASSED tests/settings/test_envcommon.py::test_default_environment_is_local 
+tests/settings/test_envcommon.py::test_default_allowed_hosts 
+[gw6] [  6%] PASSED tests/settings/test_envcommon.py::test_default_allowed_hosts 
+tests/settings/test_envcommon.py::test_default_cors_allowed_origins_empty 
+[gw2] [  6%] PASSED tests/settings/test_databases.py::test_validate_engine_accepts_sqlite_name 
+[gw0] [  6%] PASSED tests/settings/test_companyconf.py::test_load_returns_company_profile 
+[gw6] [  7%] PASSED tests/settings/test_envcommon.py::test_default_cors_allowed_origins_empty 
+tests/settings/test_companyconf.py::test_loaded_company_name 
+tests/settings/test_databases.py::test_validate_engine_accepts_postgres_name 
+tests/settings/test_envcommon.py::test_default_language_code 
+[gw10] [  7%] PASSED tests/settings/test_factory.py::test_returns_a_dict 
+tests/settings/test_factory.py::test_has_default_key 
+[gw6] [  8%] PASSED tests/settings/test_envcommon.py::test_default_language_code 
+[gw2] [  8%] PASSED tests/settings/test_databases.py::test_validate_engine_accepts_postgres_name 
+tests/settings/test_databases.py::test_validate_engine_accepts_full_sqlite_value 
+tests/settings/test_envcommon.py::test_override_debug_true 
+[gw10] [  8%] PASSED tests/settings/test_factory.py::test_has_default_key 
+tests/settings/test_factory.py::test_default_engine_is_sqlite 
+[gw2] [  9%] PASSED tests/settings/test_databases.py::test_validate_engine_accepts_full_sqlite_value 
+tests/settings/test_databases.py::test_validate_engine_accepts_full_postgres_value 
+[gw10] [  9%] PASSED tests/settings/test_factory.py::test_default_engine_is_sqlite 
+[gw6] [  9%] PASSED tests/settings/test_envcommon.py::test_override_debug_true 
+[gw2] [ 10%] PASSED tests/settings/test_databases.py::test_validate_engine_accepts_full_postgres_value 
+tests/settings/test_factory.py::test_sqlite_dict_has_name_key 
+tests/settings/test_envcommon.py::test_override_environment 
+tests/settings/test_databases.py::test_validate_engine_raises_on_unknown_value 
+[gw0] [ 10%] PASSED tests/settings/test_companyconf.py::test_loaded_company_name 
+[gw6] [ 11%] PASSED tests/settings/test_envcommon.py::test_override_environment 
+tests/settings/test_companyconf.py::test_loaded_company_has_contact 
+tests/settings/test_envcommon.py::test_override_secret_key 
+[gw10] [ 11%] PASSED tests/settings/test_factory.py::test_sqlite_dict_has_name_key 
+[gw2] [ 11%] PASSED tests/settings/test_databases.py::test_validate_engine_raises_on_unknown_value 
+tests/settings/test_factory.py::test_sqlite_name_ends_with_db_sqlite3 
+tests/settings/test_databases.py::test_base_settings_defaults_to_sqlite 
+[gw6] [ 12%] PASSED tests/settings/test_envcommon.py::test_override_secret_key 
+tests/settings/test_envcommon.py::test_override_language_code 
+[gw0] [ 12%] PASSED tests/settings/test_companyconf.py::test_loaded_company_has_contact 
+tests/settings/test_companyconf.py::test_loaded_company_address_country 
+[gw2] [ 13%] PASSED tests/settings/test_databases.py::test_base_settings_defaults_to_sqlite 
+tests/settings/test_databases.py::test_sqlite_settings_default_engine 
+[gw6] [ 13%] PASSED tests/settings/test_envcommon.py::test_override_language_code 
+modules/user/tests/test_role_transition.py::test_promoted_user_is_hr 
+[gw0] [ 13%] PASSED tests/settings/test_companyconf.py::test_loaded_company_address_country 
+tests/settings/test_companyconf.py::test_loaded_hr_settings_working_hours 
+[gw0] [ 14%] PASSED tests/settings/test_companyconf.py::test_loaded_hr_settings_working_hours 
+[gw2] [ 14%] PASSED tests/settings/test_databases.py::test_sqlite_settings_default_engine 
+tests/settings/test_databases.py::test_sqlite_settings_default_name_ends_with_db_sqlite3 
+tests/settings/test_companyconf.py::test_loaded_hr_settings_payroll_cycle 
+[gw0] [ 14%] PASSED tests/settings/test_companyconf.py::test_loaded_hr_settings_payroll_cycle 
+tests/settings/test_companyconf.py::test_loaded_leave_policies_count 
+[gw0] [ 15%] PASSED tests/settings/test_companyconf.py::test_loaded_leave_policies_count 
+tests/settings/test_companyconf.py::test_annual_leave_carry_over 
+[gw0] [ 15%] PASSED tests/settings/test_companyconf.py::test_annual_leave_carry_over 
+tests/settings/test_companyconf.py::test_sick_leave_no_carry_over 
+[gw0] [ 16%] PASSED tests/settings/test_companyconf.py::test_sick_leave_no_carry_over 
+tests/settings/test_companyconf.py::test_job_levels_are_ordered 
+[gw0] [ 16%] PASSED tests/settings/test_companyconf.py::test_job_levels_are_ordered 
+tests/settings/test_companyconf.py::test_business_hours_timezone 
+[gw0] [ 16%] PASSED tests/settings/test_companyconf.py::test_business_hours_timezone 
+tests/settings/test_companyconf.py::test_departments_count 
+[gw0] [ 17%] PASSED tests/settings/test_companyconf.py::test_departments_count 
+tests/settings/test_companyconf.py::test_department_codes_are_unique 
+[gw0] [ 17%] PASSED tests/settings/test_companyconf.py::test_department_codes_are_unique 
+tests/settings/test_companyconf.py::test_company_profile_requires_name 
+[gw0] [ 18%] PASSED tests/settings/test_companyconf.py::test_company_profile_requires_name 
+tests/settings/test_companyconf.py::test_minimal_company_profile_is_valid 
+[gw0] [ 18%] PASSED tests/settings/test_companyconf.py::test_minimal_company_profile_is_valid 
+tests/settings/test_companyconf.py::test_leave_policy_model_fields 
+[gw0] [ 18%] PASSED tests/settings/test_companyconf.py::test_leave_policy_model_fields 
+tests/settings/test_companyconf.py::test_job_level_model_fields 
+[gw0] [ 19%] PASSED tests/settings/test_companyconf.py::test_job_level_model_fields 
+tests/settings/test_companyconf.py::test_benefits_defaults_to_false 
+[gw0] [ 19%] PASSED tests/settings/test_companyconf.py::test_benefits_defaults_to_false 
+tests/settings/test_companyconf.py::test_workday_hours_model 
+[gw0] [ 19%] PASSED tests/settings/test_companyconf.py::test_workday_hours_model 
+tests/settings/test_companyconf.py::test_business_hours_defaults_to_utc 
+[gw0] [ 20%] PASSED tests/settings/test_companyconf.py::test_business_hours_defaults_to_utc 
+tests/settings/test_companyconf.py::test_weekdays_all_optional 
+[gw0] [ 20%] PASSED tests/settings/test_companyconf.py::test_weekdays_all_optional 
+tests/settings/test_companyconf.py::test_department_model_fields 
+[gw0] [ 21%] PASSED tests/settings/test_companyconf.py::test_department_model_fields 
+modules/user/tests/test_email_normalization.py::test_email_domain_is_lowercased_on_creation 
+[gw10] [ 21%] FAILED tests/settings/test_factory.py::test_sqlite_name_ends_with_db_sqlite3 
+tests/settings/test_factory.py::test_postgres_engine_selected_by_env 
+[gw10] [ 21%] PASSED tests/settings/test_factory.py::test_postgres_engine_selected_by_env 
+tests/settings/test_factory.py::test_postgres_dict_has_host_and_port 
+[gw2] [ 22%] FAILED tests/settings/test_databases.py::test_sqlite_settings_default_name_ends_with_db_sqlite3 
+tests/settings/test_databases.py::test_postgres_settings_default_host 
+[gw10] [ 22%] PASSED tests/settings/test_factory.py::test_postgres_dict_has_host_and_port 
+tests/settings/test_factory.py::test_postgres_default_host 
+[gw2] [ 22%] PASSED tests/settings/test_databases.py::test_postgres_settings_default_host 
+tests/settings/test_databases.py::test_postgres_settings_default_port 
+[gw10] [ 23%] PASSED tests/settings/test_factory.py::test_postgres_default_host 
+[gw2] [ 23%] PASSED tests/settings/test_databases.py::test_postgres_settings_default_port 
+tests/settings/test_factory.py::test_postgres_env_host_override 
+tests/settings/test_databases.py::test_postgres_settings_default_name 
+[gw2] [ 24%] PASSED tests/settings/test_databases.py::test_postgres_settings_default_name 
+tests/settings/test_databases.py::test_postgres_settings_env_override 
+[gw10] [ 24%] PASSED tests/settings/test_factory.py::test_postgres_env_host_override 
+applications/attendance/tests/test_attendance.py::TestLeaveRequestModel::test_str_representation 
+[gw2] [ 24%] PASSED tests/settings/test_databases.py::test_postgres_settings_env_override 
+tests/settings/test_databases.py::test_django_databases_wraps_sqlite 
+[gw2] [ 25%] PASSED tests/settings/test_databases.py::test_django_databases_wraps_sqlite 
+tests/settings/test_databases.py::test_django_databases_wraps_postgres 
+[gw2] [ 25%] PASSED tests/settings/test_databases.py::test_django_databases_wraps_postgres 
+tests/settings/test_databases.py::test_django_databases_model_dump_has_default_key 
+[gw2] [ 26%] PASSED tests/settings/test_databases.py::test_django_databases_model_dump_has_default_key 
+applications/attendance/tests/test_attendance.py::TestSelectors::test_get_attendance_record_raises_404_for_missing 
+[gw9] [ 26%] PASSED applications/organization/tests/test_organization.py::TestJobTitleModel::test_str_with_department 
+applications/organization/tests/test_organization.py::TestJobTitleModel::test_str_without_department 
+[gw1] [ 26%] PASSED tests/shared/test_base_models.py::test_primary_key_is_uuid 
+[gw9] [ 27%] PASSED applications/organization/tests/test_organization.py::TestJobTitleModel::test_str_without_department 
+tests/shared/test_base_models.py::test_str_representation 
+applications/organization/tests/test_organization.py::TestJobTitleModel::test_unique_code_constraint 
+[gw1] [ 27%] PASSED tests/shared/test_base_models.py::test_str_representation 
+tests/shared/test_base_models.py::test_created_at_is_set_on_create 
+[gw9] [ 27%] PASSED applications/organization/tests/test_organization.py::TestJobTitleModel::test_unique_code_constraint 
+applications/organization/tests/test_organization.py::TestJobTitleModel::test_unique_name_per_department_constraint 
+[gw1] [ 28%] PASSED tests/shared/test_base_models.py::test_created_at_is_set_on_create 
+[gw9] [ 28%] PASSED applications/organization/tests/test_organization.py::TestJobTitleModel::test_unique_name_per_department_constraint 
+tests/shared/test_base_models.py::test_updated_at_changes_on_save 
+applications/organization/tests/test_organization.py::TestJobTitleModel::test_same_name_allowed_in_different_departments 
+[gw1] [ 29%] PASSED tests/shared/test_base_models.py::test_updated_at_changes_on_save 
+tests/shared/test_base_models.py::test_soft_delete_sets_deleted_at 
+[gw9] [ 29%] PASSED applications/organization/tests/test_organization.py::TestJobTitleModel::test_same_name_allowed_in_different_departments 
+applications/organization/tests/test_organization.py::TestJobTitleModel::test_department_foreign_key_nullable 
+[gw1] [ 29%] PASSED tests/shared/test_base_models.py::test_soft_delete_sets_deleted_at 
+tests/shared/test_base_models.py::test_soft_delete_sets_is_active_false 
+[gw9] [ 30%] PASSED applications/organization/tests/test_organization.py::TestJobTitleModel::test_department_foreign_key_nullable 
+applications/organization/tests/test_organization.py::TestJobTitleModel::test_soft_delete_excludes_job_title 
+[gw1] [ 30%] PASSED tests/shared/test_base_models.py::test_soft_delete_sets_is_active_false 
+tests/shared/test_base_models.py::test_soft_deleted_record_excluded_from_default_manager 
+[gw5] [ 31%] PASSED applications/organization/tests/test_organization.py::TestDepartmentModel::test_str_representation 
+applications/organization/tests/test_organization.py::TestDepartmentModel::test_unique_name_constraint 
+[gw1] [ 31%] PASSED tests/shared/test_base_models.py::test_soft_deleted_record_excluded_from_default_manager 
+[gw9] [ 31%] PASSED applications/organization/tests/test_organization.py::TestJobTitleModel::test_soft_delete_excludes_job_title 
+tests/shared/test_base_models.py::test_soft_deleted_record_in_deleted_objects_manager 
+[gw5] [ 32%] PASSED applications/organization/tests/test_organization.py::TestDepartmentModel::test_unique_name_constraint 
+applications/organization/tests/test_organization.py::TestJobTitleModel::test_ordering_alphabetical 
+applications/organization/tests/test_organization.py::TestDepartmentModel::test_unique_code_constraint 
+[gw5] [ 32%] PASSED applications/organization/tests/test_organization.py::TestDepartmentModel::test_unique_code_constraint 
+applications/organization/tests/test_organization.py::TestDepartmentModel::test_root_department_has_no_parent 
+[gw1] [ 32%] PASSED tests/shared/test_base_models.py::test_soft_deleted_record_in_deleted_objects_manager 
+tests/shared/test_base_models.py::test_active_record_not_in_deleted_objects_manager 
+[gw4] [ 33%] PASSED applications/employee/tests/test_employee.py::TestEmployeeModel::test_full_name_property 
+[gw9] [ 33%] PASSED applications/organization/tests/test_organization.py::TestJobTitleModel::test_ordering_alphabetical 
+applications/employee/tests/test_employee.py::TestEmployeeModel::test_str_representation 
+applications/organization/tests/test_organization.py::TestJobTitleModel::test_protected_delete_when_employment_exists 
+[gw5] [ 34%] PASSED applications/organization/tests/test_organization.py::TestDepartmentModel::test_root_department_has_no_parent 
+applications/organization/tests/test_organization.py::TestDepartmentModel::test_child_department_linked_to_parent 
+[gw1] [ 34%] PASSED tests/shared/test_base_models.py::test_active_record_not_in_deleted_objects_manager 
+tests/shared/test_base_models.py::test_all_objects_returns_active_records 
+[gw4] [ 34%] PASSED applications/employee/tests/test_employee.py::TestEmployeeModel::test_str_representation 
+applications/employee/tests/test_employee.py::TestEmployeeModel::test_employee_id_is_unique 
+[gw5] [ 35%] PASSED applications/organization/tests/test_organization.py::TestDepartmentModel::test_child_department_linked_to_parent 
+[gw1] [ 35%] PASSED tests/shared/test_base_models.py::test_all_objects_returns_active_records 
+applications/organization/tests/test_organization.py::TestDepartmentModel::test_parent_set_null_on_parent_delete 
+tests/shared/test_base_models.py::test_all_objects_returns_soft_deleted_records 
+[gw1] [ 36%] PASSED tests/shared/test_base_models.py::test_all_objects_returns_soft_deleted_records 
+tests/shared/test_base_models.py::test_all_objects_count_includes_deleted 
+[gw14] [ 36%] PASSED applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_str_representation 
+applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_is_open_ended_when_no_effective_to 
+[gw5] [ 36%] PASSED applications/organization/tests/test_organization.py::TestDepartmentModel::test_parent_set_null_on_parent_delete 
+applications/organization/tests/test_organization.py::TestDepartmentModel::test_description_is_optional 
+[gw5] [ 37%] PASSED applications/organization/tests/test_organization.py::TestDepartmentModel::test_description_is_optional 
+applications/organization/tests/test_organization.py::TestDepartmentModel::test_soft_delete_excludes_from_default_queryset 
+[gw1] [ 37%] PASSED tests/shared/test_base_models.py::test_all_objects_count_includes_deleted 
+[gw14] [ 37%] PASSED applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_is_open_ended_when_no_effective_to 
+applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_not_open_ended_when_effective_to_set 
+tests/shared/test_base_models.py::test_restore_clears_deleted_at 
+[gw5] [ 38%] PASSED applications/organization/tests/test_organization.py::TestDepartmentModel::test_soft_delete_excludes_from_default_queryset 
+applications/organization/tests/test_organization.py::TestDepartmentModel::test_restore_brings_back_department 
+[gw14] [ 38%] PASSED applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_not_open_ended_when_effective_to_set 
+applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_work_days_property_returns_enabled_days 
+[gw1] [ 39%] PASSED tests/shared/test_base_models.py::test_restore_clears_deleted_at 
+tests/shared/test_base_models.py::test_restore_sets_is_active_true 
+[gw5] [ 39%] PASSED applications/organization/tests/test_organization.py::TestDepartmentModel::test_restore_brings_back_department 
+applications/organization/tests/test_organization.py::TestDepartmentModel::test_ordering_is_alphabetical 
+[gw1] [ 39%] PASSED tests/shared/test_base_models.py::test_restore_sets_is_active_true 
+tests/shared/test_base_models.py::test_restore_makes_record_visible_in_default_manager 
+[gw5] [ 40%] PASSED applications/organization/tests/test_organization.py::TestDepartmentModel::test_ordering_is_alphabetical 
+[gw14] [ 40%] PASSED applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_work_days_property_returns_enabled_days 
+applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_work_days_empty_when_all_disabled 
+[gw1] [ 40%] PASSED tests/shared/test_base_models.py::test_restore_makes_record_visible_in_default_manager 
+[gw14] [ 41%] PASSED applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_work_days_empty_when_all_disabled 
+tests/shared/test_base_models.py::test_restore_removes_record_from_deleted_objects_manager 
+applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_soft_delete_excluded_from_default_manager 
+applications/organization/tests/test_organization.py::TestJobTitleManager::test_active_returns_active_titles 
+[gw1] [ 41%] PASSED tests/shared/test_base_models.py::test_restore_removes_record_from_deleted_objects_manager 
+tests/shared/test_base_models.py::test_hard_delete_removes_from_db 
+[gw5] [ 42%] PASSED applications/organization/tests/test_organization.py::TestJobTitleManager::test_active_returns_active_titles 
+applications/organization/tests/test_organization.py::TestJobTitleManager::test_for_department_filters_by_department 
+[gw1] [ 42%] PASSED tests/shared/test_base_models.py::test_hard_delete_removes_from_db 
+applications/attendance/tests/test_attendance.py::TestAttendanceRecordModel::test_str_representation 
+[gw5] [ 42%] PASSED applications/organization/tests/test_organization.py::TestJobTitleManager::test_for_department_filters_by_department 
+applications/organization/tests/test_organization.py::TestJobTitleManager::test_with_department_select_related 
+[gw5] [ 43%] PASSED applications/organization/tests/test_organization.py::TestJobTitleManager::test_with_department_select_related 
+applications/organization/tests/test_organization.py::TestJobTitleManager::test_default_manager_excludes_soft_deleted 
+[gw5] [ 43%] PASSED applications/organization/tests/test_organization.py::TestJobTitleManager::test_default_manager_excludes_soft_deleted 
+[gw1] [ 44%] PASSED applications/attendance/tests/test_attendance.py::TestAttendanceRecordModel::test_str_representation 
+applications/attendance/tests/test_attendance.py::TestAttendanceRecordModel::test_str_contains_date 
+applications/organization/tests/test_organization.py::TestJobTitleManager::test_for_department_returns_empty_for_no_titles 
+[gw1] [ 44%] PASSED applications/attendance/tests/test_attendance.py::TestAttendanceRecordModel::test_str_contains_date 
+applications/attendance/tests/test_attendance.py::TestAttendanceRecordModel::test_soft_delete_excluded_from_default_manager 
+[gw5] [ 44%] PASSED applications/organization/tests/test_organization.py::TestJobTitleManager::test_for_department_returns_empty_for_no_titles 
+applications/employee/tests/test_employee.py::TestEmployeeManager::test_active_returns_only_active_employees 
+[gw10] [ 45%] PASSED applications/attendance/tests/test_attendance.py::TestLeaveRequestModel::test_str_representation 
+applications/attendance/tests/test_attendance.py::TestLeaveRequestModel::test_is_pending_property 
+[gw10] [ 45%] PASSED applications/attendance/tests/test_attendance.py::TestLeaveRequestModel::test_is_pending_property 
+applications/attendance/tests/test_attendance.py::TestLeaveRequestModel::test_is_not_pending_when_approved 
+[gw10] [ 45%] PASSED applications/attendance/tests/test_attendance.py::TestLeaveRequestModel::test_is_not_pending_when_approved 
+[gw2] [ 46%] PASSED applications/attendance/tests/test_attendance.py::TestSelectors::test_get_attendance_record_raises_404_for_missing 
+applications/attendance/tests/test_attendance.py::TestLeaveRequestModel::test_is_approved_property 
+applications/attendance/tests/test_attendance.py::TestSelectors::test_get_leave_request_raises_404_for_missing 
+[gw10] [ 46%] PASSED applications/attendance/tests/test_attendance.py::TestLeaveRequestModel::test_is_approved_property 
+[gw2] [ 47%] PASSED applications/attendance/tests/test_attendance.py::TestSelectors::test_get_leave_request_raises_404_for_missing 
+applications/attendance/tests/test_attendance.py::TestSelectors::test_get_work_schedule_raises_404_for_missing 
+applications/attendance/tests/test_attendance.py::TestLeaveRequestModel::test_soft_delete_excluded_from_default_manager 
+[gw2] [ 47%] PASSED applications/attendance/tests/test_attendance.py::TestSelectors::test_get_work_schedule_raises_404_for_missing 
+applications/attendance/tests/test_attendance.py::TestSelectors::test_get_active_schedule_returns_none_when_no_schedule 
+[gw8] [ 47%] PASSED modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_executive_grants_executive_role 
+modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_executive_denies_staff_role 
+[gw11] [ 48%] PASSED modules/user/tests/test_soft_delete.py::test_deleted_user_has_deleted_at_set 
+modules/user/tests/test_soft_delete.py::test_deleted_user_is_inactive 
+[gw15] [ 48%] PASSED applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_str_representation 
+applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_primary_contact_flag 
+[gw9] [ 49%] PASSED applications/organization/tests/test_organization.py::TestJobTitleModel::test_protected_delete_when_employment_exists 
+applications/organization/tests/test_organization.py::TestDepartmentManager::test_active_returns_active_departments 
+[gw9] [ 49%] PASSED applications/organization/tests/test_organization.py::TestDepartmentManager::test_active_returns_active_departments 
+[gw13] [ 49%] PASSED applications/employment/tests/test_employment.py::TestContractModel::test_str_representation 
+applications/organization/tests/test_organization.py::TestDepartmentManager::test_root_returns_departments_without_parent 
+applications/employment/tests/test_employment.py::TestContractModel::test_open_ended_contract_has_no_end_date 
+[gw9] [ 50%] PASSED applications/organization/tests/test_organization.py::TestDepartmentManager::test_root_returns_departments_without_parent 
+applications/organization/tests/test_organization.py::TestDepartmentManager::test_with_children_prefetches_children 
+[gw9] [ 50%] PASSED applications/organization/tests/test_organization.py::TestDepartmentManager::test_with_children_prefetches_children 
+applications/organization/tests/test_organization.py::TestDepartmentManager::test_default_manager_excludes_soft_deleted 
+[gw9] [ 50%] PASSED applications/organization/tests/test_organization.py::TestDepartmentManager::test_default_manager_excludes_soft_deleted 
+applications/organization/tests/test_organization.py::TestDepartmentManager::test_root_departments_form_company_tree_top 
+[gw14] [ 51%] PASSED applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_soft_delete_excluded_from_default_manager 
+applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_restore_reenables_schedule 
+[gw9] [ 51%] PASSED applications/organization/tests/test_organization.py::TestDepartmentManager::test_root_departments_form_company_tree_top 
+applications/attendance/tests/test_attendance.py::TestCreateAttendanceRecord::test_creates_record_with_work_hours 
+[gw0] [ 52%] PASSED modules/user/tests/test_email_normalization.py::test_email_domain_is_lowercased_on_creation 
+modules/user/tests/test_email_normalization.py::test_normalized_email_is_persisted_to_db 
+[gw3] [ 52%] PASSED applications/employment/tests/test_employment.py::TestEmploymentModel::test_str_representation 
+applications/employment/tests/test_employment.py::TestEmploymentModel::test_default_status_is_probation 
+[gw7] [ 52%] PASSED applications/employment/tests/test_employment.py::TestSalaryModel::test_current_salary_has_no_end_date 
+applications/employment/tests/test_employment.py::TestSalaryModel::test_past_salary_has_end_date 
+[gw6] [ 53%] PASSED modules/user/tests/test_role_transition.py::test_promoted_user_is_hr 
+modules/user/tests/test_role_transition.py::test_promoted_user_loses_regular_staff_status 
+[gw10] [ 53%] PASSED applications/attendance/tests/test_attendance.py::TestLeaveRequestModel::test_soft_delete_excluded_from_default_manager 
+applications/employment/tests/test_employment.py::TestSalaryManager::test_current_returns_salaries_with_no_end_date 
+[gw1] [ 54%] PASSED applications/attendance/tests/test_attendance.py::TestAttendanceRecordModel::test_soft_delete_excluded_from_default_manager 
+applications/attendance/tests/test_attendance.py::TestAttendanceRecordModel::test_restore_reenables_record 
+[gw2] [ 54%] PASSED applications/attendance/tests/test_attendance.py::TestSelectors::test_get_active_schedule_returns_none_when_no_schedule 
+applications/attendance/tests/test_attendance.py::TestSelectors::test_get_active_schedule_returns_default_schedule 
+[gw8] [ 54%] PASSED modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_executive_denies_staff_role 
+modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_manager_grants_manager_role 
+[gw11] [ 55%] PASSED modules/user/tests/test_soft_delete.py::test_deleted_user_is_inactive 
+modules/user/tests/test_soft_delete.py::test_deleted_user_preserved_for_audit 
+[gw13] [ 55%] PASSED applications/employment/tests/test_employment.py::TestContractModel::test_open_ended_contract_has_no_end_date 
+applications/employment/tests/test_employment.py::TestContractModel::test_fixed_term_contract_has_end_date 
+[gw3] [ 55%] PASSED applications/employment/tests/test_employment.py::TestEmploymentModel::test_default_status_is_probation 
+applications/employment/tests/test_employment.py::TestEmploymentModel::test_employee_is_unique_per_employment 
+[gw14] [ 56%] PASSED applications/attendance/tests/test_attendance.py::TestWorkScheduleModel::test_restore_reenables_schedule 
+applications/attendance/tests/test_attendance.py::TestAttendanceRecordQuerySet::test_for_employee_filters_correctly 
+[gw7] [ 56%] PASSED applications/employment/tests/test_employment.py::TestSalaryModel::test_past_salary_has_end_date 
+applications/employment/tests/test_employment.py::TestSalaryModel::test_cascade_delete_when_employment_deleted 
+[gw15] [ 57%] PASSED applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_primary_contact_flag 
+applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_ordering_primary_first 
+[gw4] [ 57%] PASSED applications/employee/tests/test_employee.py::TestEmployeeModel::test_employee_id_is_unique 
+applications/employee/tests/test_employee.py::TestEmployeeModel::test_employee_with_user_account 
+[gw9] [ 57%] PASSED applications/attendance/tests/test_attendance.py::TestCreateAttendanceRecord::test_creates_record_with_work_hours 
+applications/attendance/tests/test_attendance.py::TestCreateAttendanceRecord::test_creates_record_without_times 
+[gw0] [ 58%] PASSED modules/user/tests/test_email_normalization.py::test_normalized_email_is_persisted_to_db 
+modules/user/tests/test_email_normalization.py::test_exact_duplicate_email_raises_integrity_error 
+[gw6] [ 58%] PASSED modules/user/tests/test_role_transition.py::test_promoted_user_loses_regular_staff_status 
+modules/user/tests/test_role_transition.py::test_role_change_is_persisted 
+[gw5] [ 59%] PASSED applications/employee/tests/test_employee.py::TestEmployeeManager::test_active_returns_only_active_employees 
+applications/employee/tests/test_employee.py::TestEmployeeManager::test_default_manager_excludes_soft_deleted 
+[gw1] [ 59%] PASSED applications/attendance/tests/test_attendance.py::TestAttendanceRecordModel::test_restore_reenables_record 
+[gw2] [ 59%] PASSED applications/attendance/tests/test_attendance.py::TestSelectors::test_get_active_schedule_returns_default_schedule 
+applications/employment/tests/test_employment.py::TestContractManager::test_current_includes_open_ended_contracts 
+modules/auth/tests/test_serializers.py::TestLoginSerializer::test_valid_credentials 
+[gw10] [ 60%] PASSED applications/employment/tests/test_employment.py::TestSalaryManager::test_current_returns_salaries_with_no_end_date 
+applications/employment/tests/test_employment.py::TestSalaryManager::test_history_returns_salaries_with_end_date 
+[gw8] [ 60%] PASSED modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_manager_grants_manager_role 
+modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_manager_denies_staff_role 
+[gw11] [ 60%] PASSED modules/user/tests/test_soft_delete.py::test_deleted_user_preserved_for_audit 
+modules/user/tests/test_soft_delete.py::test_deleted_user_appears_in_deleted_objects 
+[gw13] [ 61%] PASSED applications/employment/tests/test_employment.py::TestContractModel::test_fixed_term_contract_has_end_date 
+applications/employment/tests/test_employment.py::TestContractModel::test_terms_field_can_be_blank 
+[gw3] [ 61%] PASSED applications/employment/tests/test_employment.py::TestEmploymentModel::test_employee_is_unique_per_employment 
+applications/employment/tests/test_employment.py::TestEmploymentModel::test_reporting_manager_can_be_null 
+[gw7] [ 62%] PASSED applications/employment/tests/test_employment.py::TestSalaryModel::test_cascade_delete_when_employment_deleted 
+applications/employment/tests/test_employment.py::TestSalaryModel::test_salary_history_multiple_records 
+[gw9] [ 62%] PASSED applications/attendance/tests/test_attendance.py::TestCreateAttendanceRecord::test_creates_record_without_times 
+applications/attendance/tests/test_attendance.py::TestCreateAttendanceRecord::test_raises_on_duplicate_employee_date 
+[gw6] [ 62%] PASSED modules/user/tests/test_role_transition.py::test_role_change_is_persisted 
+modules/user/tests/test_role_transition.py::test_staff_user_is_not_hr 
+[gw15] [ 63%] PASSED applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_ordering_primary_first 
+applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_multiple_contacts_per_employee 
+[gw4] [ 63%] PASSED applications/employee/tests/test_employee.py::TestEmployeeModel::test_employee_with_user_account 
+applications/employee/tests/test_employee.py::TestEmployeeModel::test_employee_without_user_account 
+[gw4] [ 63%] PASSED applications/employee/tests/test_employee.py::TestEmployeeModel::test_employee_without_user_account 
+applications/employee/tests/test_employee.py::TestEmployeeModel::test_gender_choices_stored_correctly 
+[gw10] [ 64%] PASSED applications/employment/tests/test_employment.py::TestSalaryManager::test_history_returns_salaries_with_end_date 
+applications/employment/tests/test_employment.py::TestSalaryManager::test_default_manager_excludes_soft_deleted 
+[gw1] [ 64%] PASSED applications/employment/tests/test_employment.py::TestContractManager::test_current_includes_open_ended_contracts 
+applications/employment/tests/test_employment.py::TestContractManager::test_current_includes_future_end_date 
+[gw5] [ 65%] PASSED applications/employee/tests/test_employee.py::TestEmployeeManager::test_default_manager_excludes_soft_deleted 
+applications/employee/tests/test_employee.py::TestEmployeeManager::test_with_user_performs_select_related 
+[gw8] [ 65%] PASSED modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_manager_denies_staff_role 
+modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_hr_grants_hr_role 
+[gw11] [ 65%] PASSED modules/user/tests/test_soft_delete.py::test_deleted_user_appears_in_deleted_objects 
+modules/user/tests/test_soft_delete.py::test_deleted_user_cannot_authenticate 
+[gw13] [ 66%] PASSED applications/employment/tests/test_employment.py::TestContractModel::test_terms_field_can_be_blank 
+applications/employment/tests/test_employment.py::TestContractModel::test_cascade_delete_when_employment_deleted 
+[gw14] [ 66%] PASSED applications/attendance/tests/test_attendance.py::TestAttendanceRecordQuerySet::test_for_employee_filters_correctly 
+applications/attendance/tests/test_attendance.py::TestAttendanceRecordQuerySet::test_for_date_range_returns_correct_records 
+[gw3] [ 67%] PASSED applications/employment/tests/test_employment.py::TestEmploymentModel::test_reporting_manager_can_be_null 
+applications/employment/tests/test_employment.py::TestEmploymentModel::test_reporting_manager_is_employee_instance 
+[gw7] [ 67%] PASSED applications/employment/tests/test_employment.py::TestSalaryModel::test_salary_history_multiple_records 
+applications/employment/tests/test_employment.py::TestSalaryModel::test_currency_default_is_idr 
+[gw6] [ 67%] PASSED modules/user/tests/test_role_transition.py::test_staff_user_is_not_hr 
+modules/user/tests/test_role_transition.py::test_non_hr_role_does_not_grant_hr_access 
+[gw9] [ 68%] PASSED applications/attendance/tests/test_attendance.py::TestCreateAttendanceRecord::test_raises_on_duplicate_employee_date 
+applications/employee/tests/test_employee.py::TestGenderEnum::test_choices_returns_list_of_tuples 
+[gw9] [ 68%] PASSED applications/employee/tests/test_employee.py::TestGenderEnum::test_choices_returns_list_of_tuples 
+applications/employee/tests/test_employee.py::TestGenderEnum::test_all_values_present_in_choices 
+[gw9] [ 68%] PASSED applications/employee/tests/test_employee.py::TestGenderEnum::test_all_values_present_in_choices 
+applications/employee/tests/test_employee.py::TestGenderEnum::test_prefer_not_to_say_value 
+[gw9] [ 69%] PASSED applications/employee/tests/test_employee.py::TestGenderEnum::test_prefer_not_to_say_value 
+applications/attendance/tests/test_attendance.py::TestCreateLeaveRequest::test_creates_request_with_correct_total_days 
+[gw12] [ 69%] PASSED applications/employment/tests/test_employment.py::TestEmploymentManager::test_active_returns_active_and_probation 
+applications/employment/tests/test_employment.py::TestEmploymentManager::test_with_employee_select_related 
+[gw15] [ 70%] PASSED applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_multiple_contacts_per_employee 
+applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_cascade_delete_removes_contacts 
+[gw0] [ 70%] PASSED modules/user/tests/test_email_normalization.py::test_exact_duplicate_email_raises_integrity_error 
+modules/user/tests/test_email_normalization.py::test_missing_email_raises_value_error 
+[gw0] [ 70%] PASSED modules/user/tests/test_email_normalization.py::test_missing_email_raises_value_error 
+modules/user/tests/test_email_normalization.py::test_local_part_case_creates_distinct_users 
+[gw4] [ 71%] PASSED applications/employee/tests/test_employee.py::TestEmployeeModel::test_gender_choices_stored_correctly 
+applications/employee/tests/test_employee.py::TestEmployeeModel::test_soft_delete_excludes_from_default_queryset 
+[gw10] [ 71%] PASSED applications/employment/tests/test_employment.py::TestSalaryManager::test_default_manager_excludes_soft_deleted 
+applications/employment/tests/test_employment.py::TestSalaryManager::test_get_latest_salary_via_ordering 
+[gw1] [ 72%] PASSED applications/employment/tests/test_employment.py::TestContractManager::test_current_includes_future_end_date 
+applications/employment/tests/test_employment.py::TestContractManager::test_current_excludes_past_end_date 
+[gw2] [ 72%] PASSED modules/auth/tests/test_serializers.py::TestLoginSerializer::test_valid_credentials 
+modules/auth/tests/test_serializers.py::TestLoginSerializer::test_invalid_credentials_raises 
+[gw5] [ 72%] PASSED applications/employee/tests/test_employee.py::TestEmployeeManager::test_with_user_performs_select_related 
+applications/employee/tests/test_employee.py::TestEmployeeManager::test_with_emergency_contacts_prefetches 
+[gw8] [ 73%] PASSED modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_hr_grants_hr_role 
+modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_hr_denies_staff_role 
+[gw13] [ 73%] PASSED applications/employment/tests/test_employment.py::TestContractModel::test_cascade_delete_when_employment_deleted 
+applications/employment/tests/test_employment.py::TestContractModel::test_multiple_contracts_per_employment 
+[gw14] [ 73%] PASSED applications/attendance/tests/test_attendance.py::TestAttendanceRecordQuerySet::test_for_date_range_returns_correct_records 
+applications/attendance/tests/test_attendance.py::TestAttendanceRecordQuerySet::test_present_returns_only_present_statuses 
+[gw7] [ 74%] PASSED applications/employment/tests/test_employment.py::TestSalaryModel::test_currency_default_is_idr 
+applications/employment/tests/test_employment.py::TestSalaryModel::test_all_payment_frequencies_valid 
+[gw6] [ 74%] PASSED modules/user/tests/test_role_transition.py::test_non_hr_role_does_not_grant_hr_access 
+modules/user/tests/test_role_transition.py::test_in_memory_change_does_not_persist_without_save 
+[gw12] [ 75%] PASSED applications/employment/tests/test_employment.py::TestEmploymentManager::test_with_employee_select_related 
+applications/employment/tests/test_employment.py::TestEmploymentManager::test_with_position_select_related 
+[gw9] [ 75%] PASSED applications/attendance/tests/test_attendance.py::TestCreateLeaveRequest::test_creates_request_with_correct_total_days 
+applications/attendance/tests/test_attendance.py::TestCreateLeaveRequest::test_single_day_leave_has_total_days_one 
+[gw15] [ 75%] PASSED applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_cascade_delete_removes_contacts 
+applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_email_and_address_are_optional 
+[gw10] [ 76%] PASSED applications/employment/tests/test_employment.py::TestSalaryManager::test_get_latest_salary_via_ordering 
+applications/employment/tests/test_employment.py::TestEmploymentStatusEnum::test_choices_returns_list_of_tuples 
+[gw10] [ 76%] PASSED applications/employment/tests/test_employment.py::TestEmploymentStatusEnum::test_choices_returns_list_of_tuples 
+applications/employment/tests/test_employment.py::TestEmploymentStatusEnum::test_active_statuses_returns_correct_subset 
+[gw10] [ 77%] PASSED applications/employment/tests/test_employment.py::TestEmploymentStatusEnum::test_active_statuses_returns_correct_subset 
+applications/employment/tests/test_employment.py::TestEmploymentStatusEnum::test_terminated_not_in_active_statuses 
+[gw10] [ 77%] PASSED applications/employment/tests/test_employment.py::TestEmploymentStatusEnum::test_terminated_not_in_active_statuses 
+applications/employment/tests/test_employment.py::TestPaymentFrequencyEnum::test_all_values_in_choices 
+[gw10] [ 77%] PASSED applications/employment/tests/test_employment.py::TestPaymentFrequencyEnum::test_all_values_in_choices 
+applications/employment/tests/test_employment.py::TestWorkLocationTypeEnum::test_all_values_in_choices 
+[gw4] [ 78%] PASSED applications/employee/tests/test_employee.py::TestEmployeeModel::test_soft_delete_excludes_from_default_queryset 
+applications/employee/tests/test_employee.py::TestEmployeeModel::test_soft_delete_keeps_record_in_all_objects 
+[gw10] [ 78%] PASSED applications/employment/tests/test_employment.py::TestWorkLocationTypeEnum::test_all_values_in_choices 
+[gw5] [ 78%] PASSED applications/employee/tests/test_employee.py::TestEmployeeManager::test_with_emergency_contacts_prefetches 
+modules/auth/tests/test_views.py::TestMeView::test_returns_authenticated_user_profile 
+[gw1] [ 79%] PASSED applications/employment/tests/test_employment.py::TestContractManager::test_current_excludes_past_end_date 
+applications/employment/tests/test_employment.py::TestContractManager::test_default_manager_excludes_soft_deleted 
+[gw8] [ 79%] PASSED modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_hr_denies_staff_role 
+modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_finance_grants_finance_role 
+[gw11] [ 80%] PASSED modules/user/tests/test_soft_delete.py::test_deleted_user_cannot_authenticate 
+modules/user/tests/test_soft_delete.py::test_soft_delete_does_not_remove_from_database 
+[gw14] [ 80%] PASSED applications/attendance/tests/test_attendance.py::TestAttendanceRecordQuerySet::test_present_returns_only_present_statuses 
+applications/attendance/tests/test_attendance.py::TestAttendanceRecordQuerySet::test_absent_returns_only_absent_statuses 
+[gw3] [ 80%] PASSED applications/employment/tests/test_employment.py::TestEmploymentModel::test_reporting_manager_is_employee_instance 
+applications/employment/tests/test_employment.py::TestEmploymentModel::test_end_date_can_be_null 
+[gw6] [ 81%] PASSED modules/user/tests/test_role_transition.py::test_in_memory_change_does_not_persist_without_save 
+applications/attendance/tests/test_attendance.py::TestUpdateAttendanceRecord::test_updates_status 
+[gw13] [ 81%] PASSED applications/employment/tests/test_employment.py::TestContractModel::test_multiple_contracts_per_employment 
+applications/employment/tests/test_employment.py::TestContractModel::test_all_contract_types_are_valid 
+[gw7] [ 81%] PASSED applications/employment/tests/test_employment.py::TestSalaryModel::test_all_payment_frequencies_valid 
+applications/employment/tests/test_employment.py::TestSalaryModel::test_soft_delete_hides_salary 
+[gw12] [ 82%] PASSED applications/employment/tests/test_employment.py::TestEmploymentManager::test_with_position_select_related 
+applications/employment/tests/test_employment.py::TestEmploymentManager::test_with_reporting_manager_select_related 
+[gw9] [ 82%] PASSED applications/attendance/tests/test_attendance.py::TestCreateLeaveRequest::test_single_day_leave_has_total_days_one 
+applications/attendance/tests/test_attendance.py::TestCreateWorkSchedule::test_creates_schedule_with_default_mon_fri 
+[gw4] [ 83%] PASSED applications/employee/tests/test_employee.py::TestEmployeeModel::test_soft_delete_keeps_record_in_all_objects 
+applications/employee/tests/test_employee.py::TestEmployeeModel::test_restore_makes_employee_active_again 
+[gw0] [ 83%] PASSED modules/user/tests/test_email_normalization.py::test_local_part_case_creates_distinct_users 
+[gw15] [ 83%] PASSED applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_email_and_address_are_optional 
+applications/employee/tests/test_employee.py::TestEmergencyContactRelationshipEnum::test_choices_returns_list_of_tuples 
+applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_all_relationship_choices_are_valid 
+[gw0] [ 84%] PASSED applications/employee/tests/test_employee.py::TestEmergencyContactRelationshipEnum::test_choices_returns_list_of_tuples 
+applications/employee/tests/test_employee.py::TestEmergencyContactRelationshipEnum::test_all_values_present_in_choices 
+[gw0] [ 84%] PASSED applications/employee/tests/test_employee.py::TestEmergencyContactRelationshipEnum::test_all_values_present_in_choices 
+[gw1] [ 85%] PASSED applications/employment/tests/test_employment.py::TestContractManager::test_default_manager_excludes_soft_deleted 
+applications/attendance/tests/test_attendance.py::TestDeleteAttendanceRecord::test_soft_deletes_record 
+[gw2] [ 85%] PASSED modules/auth/tests/test_serializers.py::TestLoginSerializer::test_invalid_credentials_raises 
+modules/auth/tests/test_serializers.py::TestLoginSerializer::test_inactive_user_raises 
+[gw5] [ 85%] PASSED modules/auth/tests/test_views.py::TestMeView::test_returns_authenticated_user_profile 
+modules/auth/tests/test_views.py::TestMeView::test_unauthenticated_request_is_rejected 
+[gw5] [ 86%] PASSED modules/auth/tests/test_views.py::TestMeView::test_unauthenticated_request_is_rejected 
+[gw8] [ 86%] PASSED modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_finance_grants_finance_role 
+modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_it_grants_it_role 
+[gw11] [ 86%] PASSED modules/user/tests/test_soft_delete.py::test_soft_delete_does_not_remove_from_database 
+modules/user/tests/test_soft_delete.py::test_active_user_can_authenticate 
+[gw14] [ 87%] PASSED applications/attendance/tests/test_attendance.py::TestAttendanceRecordQuerySet::test_absent_returns_only_absent_statuses 
+applications/attendance/tests/test_attendance.py::TestRejectLeaveRequest::test_sets_status_rejected 
+[gw3] [ 87%] PASSED applications/employment/tests/test_employment.py::TestEmploymentModel::test_end_date_can_be_null 
+applications/employment/tests/test_employment.py::TestEmploymentModel::test_terminated_employee_has_end_date 
+[gw13] [ 88%] PASSED applications/employment/tests/test_employment.py::TestContractModel::test_all_contract_types_are_valid 
+applications/employment/tests/test_employment.py::TestContractModel::test_soft_delete_hides_contract 
+[gw7] [ 88%] PASSED applications/employment/tests/test_employment.py::TestSalaryModel::test_soft_delete_hides_salary 
+applications/attendance/tests/test_attendance.py::TestCancelLeaveRequest::test_sets_status_cancelled 
+[gw6] [ 88%] PASSED applications/attendance/tests/test_attendance.py::TestUpdateAttendanceRecord::test_updates_status 
+applications/attendance/tests/test_attendance.py::TestUpdateAttendanceRecord::test_recomputes_work_hours_on_time_update 
+[gw9] [ 89%] PASSED applications/attendance/tests/test_attendance.py::TestCreateWorkSchedule::test_creates_schedule_with_default_mon_fri 
+applications/attendance/tests/test_attendance.py::TestCreateWorkSchedule::test_creates_schedule_with_custom_work_days 
+[gw4] [ 89%] PASSED applications/employee/tests/test_employee.py::TestEmployeeModel::test_restore_makes_employee_active_again 
+applications/employee/tests/test_employee.py::TestEmployeeModel::test_ordering_by_last_name_then_first_name 
+[gw15] [ 90%] PASSED applications/employee/tests/test_employee.py::TestEmergencyContactModel::test_all_relationship_choices_are_valid 
+applications/employment/tests/test_employment.py::TestContractTypeEnum::test_all_values_in_choices 
+[gw15] [ 90%] PASSED applications/employment/tests/test_employment.py::TestContractTypeEnum::test_all_values_in_choices 
+[gw1] [ 90%] PASSED applications/attendance/tests/test_attendance.py::TestDeleteAttendanceRecord::test_soft_deletes_record 
+[gw2] [ 91%] PASSED modules/auth/tests/test_serializers.py::TestLoginSerializer::test_inactive_user_raises 
+applications/attendance/tests/test_attendance.py::TestApproveLeaveRequest::test_sets_status_approved 
+[gw8] [ 91%] PASSED modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_it_grants_it_role 
+modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_unauthenticated_is_denied 
+[gw8] [ 91%] PASSED modules/auth/tests/test_permissions.py::TestHasRolePermissions::test_unauthenticated_is_denied 
+[gw3] [ 92%] PASSED applications/employment/tests/test_employment.py::TestEmploymentModel::test_terminated_employee_has_end_date 
+applications/employment/tests/test_employment.py::TestEmploymentModel::test_work_location_choices 
+[gw6] [ 92%] PASSED applications/attendance/tests/test_attendance.py::TestUpdateAttendanceRecord::test_recomputes_work_hours_on_time_update 
+[gw12] [ 93%] PASSED applications/employment/tests/test_employment.py::TestEmploymentManager::test_with_reporting_manager_select_related 
+applications/employment/tests/test_employment.py::TestEmploymentManager::test_with_full_detail_loads_all_relations 
+[gw7] [ 93%] PASSED applications/attendance/tests/test_attendance.py::TestCancelLeaveRequest::test_sets_status_cancelled 
+[gw13] [ 93%] PASSED applications/employment/tests/test_employment.py::TestContractModel::test_soft_delete_hides_contract 
+[gw9] [ 94%] PASSED applications/attendance/tests/test_attendance.py::TestCreateWorkSchedule::test_creates_schedule_with_custom_work_days 
+[gw11] [ 94%] PASSED modules/user/tests/test_soft_delete.py::test_active_user_can_authenticate 
+modules/user/tests/test_soft_delete.py::test_restored_user_can_authenticate 
+[gw14] [ 95%] PASSED applications/attendance/tests/test_attendance.py::TestRejectLeaveRequest::test_sets_status_rejected 
+[gw4] [ 95%] PASSED applications/employee/tests/test_employee.py::TestEmployeeModel::test_ordering_by_last_name_then_first_name 
+applications/employee/tests/test_employee.py::TestEmployeeModel::test_optional_fields_can_be_blank 
+[gw2] [ 95%] PASSED applications/attendance/tests/test_attendance.py::TestApproveLeaveRequest::test_sets_status_approved 
+[gw12] [ 96%] PASSED applications/employment/tests/test_employment.py::TestEmploymentManager::test_with_full_detail_loads_all_relations 
+applications/employment/tests/test_employment.py::TestEmploymentManager::test_default_manager_excludes_soft_deleted 
+[gw4] [ 96%] PASSED applications/employee/tests/test_employee.py::TestEmployeeModel::test_optional_fields_can_be_blank 
+[gw11] [ 96%] PASSED modules/user/tests/test_soft_delete.py::test_restored_user_can_authenticate 
+[gw3] [ 97%] PASSED applications/employment/tests/test_employment.py::TestEmploymentModel::test_work_location_choices 
+applications/employment/tests/test_employment.py::TestEmploymentModel::test_soft_delete_hides_employment 
+[gw12] [ 97%] PASSED applications/employment/tests/test_employment.py::TestEmploymentManager::test_default_manager_excludes_soft_deleted 
+applications/employment/tests/test_employment.py::TestEmploymentManager::test_active_statuses_list 
+[gw12] [ 98%] PASSED applications/employment/tests/test_employment.py::TestEmploymentManager::test_active_statuses_list 
+applications/employment/tests/test_employment.py::TestEmploymentManager::test_find_direct_reports_of_manager 
+[gw3] [ 98%] PASSED applications/employment/tests/test_employment.py::TestEmploymentModel::test_soft_delete_hides_employment 
+applications/employment/tests/test_employment.py::TestEmploymentModel::test_restore_employment_record 
+[gw3] [ 98%] PASSED applications/employment/tests/test_employment.py::TestEmploymentModel::test_restore_employment_record 
+applications/employment/tests/test_employment.py::TestEmploymentModel::test_department_protected_from_deletion 
+[gw3] [ 99%] PASSED applications/employment/tests/test_employment.py::TestEmploymentModel::test_department_protected_from_deletion 
+applications/employment/tests/test_employment.py::TestEmploymentModel::test_job_title_protected_from_deletion 
+[gw3] [ 99%] PASSED applications/employment/tests/test_employment.py::TestEmploymentModel::test_job_title_protected_from_deletion 
+[gw12] [100%] PASSED applications/employment/tests/test_employment.py::TestEmploymentManager::test_find_direct_reports_of_manager 
+
+================================== FAILURES ===================================
+____________________ test_sqlite_name_ends_with_db_sqlite3 ____________________
+[gw10] win32 -- Python 3.14.3 C:\Users\Admin\project\Web Dev\hr-ms\.venv\Scripts\python.exe
+tests\settings\test_factory.py:44: in test_sqlite_name_ends_with_db_sqlite3
+    assert str(result["default"]["NAME"]) == "hr_ms"
+E   AssertionError: assert 'C:\\Users\\A...s\\db.sqlite3' == 'hr_ms'
+E     
+E     [0m[91m- hr_ms[39;49;00m[90m[39;49;00m
+E     [92m+ C:\Users\Admin\project\Web Dev\hr-ms\db.sqlite3[39;49;00m[90m[39;49;00m
+___________ test_sqlite_settings_default_name_ends_with_db_sqlite3 ____________
+[gw2] win32 -- Python 3.14.3 C:\Users\Admin\project\Web Dev\hr-ms\.venv\Scripts\python.exe
+tests\settings\test_databases.py:78: in test_sqlite_settings_default_name_ends_with_db_sqlite3
+    assert settings.name == "hr_ms"
+E   AssertionError: assert 'C:\\Users\\A...s\\db.sqlite3' == 'hr_ms'
+E     
+E     [0m[91m- hr_ms[39;49;00m[90m[39;49;00m
+E     [92m+ C:\Users\Admin\project\Web Dev\hr-ms\db.sqlite3[39;49;00m[90m[39;49;00m
+============================== warnings summary ===============================
+modules/auth/tests/test_views.py::TestMeView::test_returns_authenticated_user_profile
+modules/auth/tests/test_views.py::TestMeView::test_unauthenticated_request_is_rejected
+  C:\Users\Admin\project\Web Dev\hr-ms\.venv\Lib\site-packages\django\core\handlers\base.py:62: UserWarning: No directory at: C:\Users\Admin\project\Web Dev\hr-ms\staticfiles\
+    mw_instance = middleware(adapted_handler)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=============================== tests coverage ================================
+_______________ coverage: platform win32, python 3.14.3-final-0 _______________
+
+Name                                                                       Stmts   Miss Branch BrPart  Cover   Missing
+----------------------------------------------------------------------------------------------------------------------
+applications\attendance\constants.py                                          43      2      0      0    95%   44, 60
+applications\attendance\forms.py                                              42     22      8      0    40%   17-22, 35-40, 70-79
+applications\attendance\managers.py                                           51      7      0      0    86%   40, 63, 66-68, 71-73, 77
+applications\attendance\selectors.py                                          33     18     12      0    33%   19-24, 37-42, 55-60
+applications\attendance\services.py                                          109     21     26      3    72%   80, 84, 86, 211-228
+applications\attendance\tests\conftest.py                                     14      4      0      0    71%   8, 13, 18, 23
+applications\attendance\views.py                                             152     66      6      0    54%   46-52, 55-57, 67-78, 86, 96, 99-109, 118, 121-123, 137-146, 149-153, 163-172, 180, 185-189, 194-198, 203-205, 219, 229-241, 249, 259, 262-274
+applications\company_profile\management\commands\seed_company_profile.py      12     12      2      0     0%   1-16
+applications\company_profile\models.py                                        35      1      0      0    97%   61
+applications\company_profile\services.py                                      33     25      8      0    20%   19-23, 31-76, 81-85
+applications\company_profile\views.py                                         43     23     10      0    38%   51-52, 67-68, 71-91, 94
+applications\context\user_decorator.py                                        22     22      6      0     0%   1-42
+applications\employee\managers.py                                             14      1      0      0    93%   11
+applications\employee\selectors.py                                            10      4      0      0    60%   12, 16, 25, 29
+applications\employee\views.py                                               120     60      4      0    48%   34-43, 46-50, 58, 61-63, 89, 92-95, 119, 122, 125-128, 136, 139-141, 155, 158-160, 163-168, 171, 179, 182-184, 187, 190-193, 200, 203-205, 208, 211-213
+applications\employment\models.py                                             53      1      0      0    98%   127
+applications\employment\selectors.py                                          18      7      0      0    61%   15, 19, 23, 32, 36, 45, 49
+applications\employment\views.py                                             176     97      4      0    44%   37-44, 47-54, 62, 65-68, 77-81, 84, 87-90, 98, 101-105, 108, 111-114, 128, 131-133, 136-141, 144, 152, 155-157, 160, 163-166, 173, 176-178, 181, 184-186, 200, 203-205, 208-213, 216, 224, 227-229, 232, 235-238, 245, 248-250, 253, 256-258
+applications\imports\constants.py                                             41      1      0      0    98%   19
+applications\imports\managers.py                                              12      3      0      0    75%   10, 13, 16
+applications\imports\models.py                                                46      6      2      0    83%   66, 70-72, 77, 105
+applications\imports\selectors.py                                             12      5      0      0    58%   9, 13, 17, 21-23
+applications\imports\services.py                                             293    263     82      0     8%   35-42, 47-60, 65-67, 72-83, 88-109, 124-142, 151-157, 161-172, 176-181, 190-221, 225-248, 252-275, 279-318, 322-349, 353-385, 389-413, 433-437, 441-447, 455-500, 511-515
+applications\imports\views.py                                                113     77     22      0    27%   24, 27-34, 41, 44-74, 77-79, 98-101, 104-120, 123-132, 135-137, 159-182, 190, 193-203
+applications\organization\selectors.py                                        14      6      0      0    57%   12, 16, 20, 29, 33, 37
+applications\organization\views.py                                           110     48      2      0    55%   28, 36, 39-42, 52-55, 63, 66, 69-72, 80, 83-85, 99-103, 106-109, 119-121, 124-127, 136, 139-141, 144-147, 155, 158-160
+config\asgi.py                                                                 4      4      0      0     0%   10-17
+config\roles.py                                                               93      1      0      0    99%   160
+config\settings\base.py                                                       56      8      2      1    84%   214-221
+config\settings\databases.py                                                  40      0      8      1    98%   35->43
+config\urls.py                                                                 8      1      2      1    80%   42
+config\wsgi.py                                                                 4      4      0      0     0%   10-17
+manage.py                                                                     11     11      2      0     0%   4-23
+modules\auth\permissions.py                                                  101      5      2      0    93%   27-30, 34
+modules\auth\tests\conftest.py                                                34      1      0      0    97%   20
+modules\auth\views.py                                                         23      6      0      0    74%   27, 34-37, 51
+modules\user\managers.py                                                      22      9      6      0    54%   18-28
+modules\user\models.py                                                        43      7      0      0    84%   33, 37, 41, 49, 53, 57, 61
+modules\user\tests\conftest.py                                                15      1      0      0    93%   19
+shared\monad.py                                                               24      1      2      0    96%   35
+shared\templatetags\dict_extras.py                                            10     10      2      0     0%   1-18
+----------------------------------------------------------------------------------------------------------------------
+TOTAL                                                                       4248    871    250      6    76%
+
+101 files skipped due to complete coverage.
+Coverage HTML written to dir htmlcov
+Coverage XML written to file coverage.xml
+Required test coverage of 50% reached. Total coverage: 76.23%
+=========================== short test summary info ===========================
+FAILED tests/settings/test_factory.py::test_sqlite_name_ends_with_db_sqlite3
+FAILED tests/settings/test_databases.py::test_sqlite_settings_default_name_ends_with_db_sqlite3
+================= 2 failed, 259 passed, 2 warnings in 55.47s ==================
