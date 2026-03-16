@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}My Check In / Out{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
+{% endblock %}
+
+{% block breadcrumb %}
+  <nav class="attendance-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Dashboard</a>
+    <span>/</span>
+    <a href="{% url 'attendance:attendance-list' %}">Attendance</a>
+    <span>/</span>
+    <span aria-current="page">My Check In/Out</span>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <section class="attendance-shell">
+    <header class="attendance-hero" aria-labelledby="checkin-heading">
+      <div>
+        <p class="attendance-eyebrow">My Time Tracker</p>
+        <h1 id="checkin-heading">Check In / Check Out</h1>
+        <p class="attendance-subtitle">Clock your workday with one tap, and monitor your latest attendance records.</p>
+      </div>
+      <div class="attendance-clock-card" aria-live="polite">
+        <p>Current Office Time</p>
+        <strong id="attendance-live-time">--:--:--</strong>
+        <span id="attendance-live-date">--</span>
+      </div>
+    </header>
+
+    {% if employee %}
+      <section class="attendance-panel-wrap">
+        <article class="attendance-panel">
+          <header class="attendance-panel-head">
+            <h2>Today Status</h2>
+            <span class="status-chip status-{{ today_record.status|default:'pending' }}">{{ today_record.status|default:"not_started"|title }}</span>
+          </header>
+          <div class="attendance-detail-grid">
+            <div>
+              <p class="attendance-detail-label">Employee</p>
+              <p class="attendance-detail-value">{{ employee.full_name }} ({{ employee.employee_id }})</p>
+            </div>
+            <div>
+              <p class="attendance-detail-label">Date</p>
+              <p class="attendance-detail-value">{{ today }}</p>
+            </div>
+            <div>
+              <p class="attendance-detail-label">Check In</p>
+              <p class="attendance-detail-value">{{ today_record.check_in|default:"-" }}</p>
+            </div>
+            <div>
+              <p class="attendance-detail-label">Check Out</p>
+              <p class="attendance-detail-value">{{ today_record.check_out|default:"-" }}</p>
+            </div>
+          </div>
+          <form method="post" class="attendance-actions" style="margin-top: 1rem;">
+            {% csrf_token %}
+            <button type="submit" name="action" value="check_in" class="btn btn-primary">Check In</button>
+            <button type="submit" name="action" value="check_out" class="btn btn-danger">Check Out</button>
+          </form>
+        </article>
+
+        <article class="attendance-panel">
+          <header class="attendance-panel-head">
+            <h2>Recent Activity</h2>
+          </header>
+          <ul class="attendance-timeline">
+            {% for record in recent_records %}
+              <li>
+                <div class="timeline-dot timeline-{{ record.status }}"></div>
+                <div>
+                  <p><strong>{{ record.date }}</strong></p>
+                  <small>
+                    {{ record.status|title }}
+                    {% if record.check_in %}· In {{ record.check_in }}{% endif %}
+                    {% if record.check_out %}· Out {{ record.check_out }}{% endif %}
+                  </small>
+                </div>
+              </li>
+            {% empty %}
+              <li class="timeline-empty">No attendance history found yet.</li>
+            {% endfor %}
+          </ul>
+        </article>
+      </section>
+    {% else %}
+      <section class="attendance-panel">
+        <p class="attendance-empty-state">Your account is not linked to an employee profile. Contact HR admin.</p>
+      </section>
+    {% endif %}
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/checkin.js' %}"></script>
+{% endblock %}

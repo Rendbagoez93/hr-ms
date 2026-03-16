@@ -1,0 +1,115 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Admin Check In / Out{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
+{% endblock %}
+
+{% block breadcrumb %}
+  <nav class="attendance-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Dashboard</a>
+    <span>/</span>
+    <a href="{% url 'attendance:attendance-list' %}">Attendance</a>
+    <span>/</span>
+    <span aria-current="page">Admin Check In/Out</span>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <section class="attendance-shell">
+    <header class="attendance-hero" aria-labelledby="checkin-admin-heading">
+      <div>
+        <p class="attendance-eyebrow">Attendance Time Console</p>
+        <h1 id="checkin-admin-heading">Admin Check In / Check Out</h1>
+        <p class="attendance-subtitle">Fast attendance clock management for all employees, inspired by Jibble flow.</p>
+      </div>
+      <div class="attendance-clock-card" aria-live="polite">
+        <p>Current Office Time</p>
+        <strong id="attendance-live-time">--:--:--</strong>
+        <span id="attendance-live-date">--</span>
+      </div>
+    </header>
+
+    <section class="attendance-panel">
+      <header class="attendance-panel-head">
+        <h2>Select Employee</h2>
+      </header>
+      <form method="get" class="attendance-form-grid">
+        <div class="form-group attendance-span-2">
+          <label class="form-label" for="employee">Employee</label>
+          <select id="employee" name="employee" onchange="this.form.submit()">
+            <option value="">Choose employee</option>
+            {% for emp in employees %}
+              <option value="{{ emp.pk }}" {% if selected_employee and selected_employee.pk == emp.pk %}selected{% endif %}>
+                {{ emp.full_name }} ({{ emp.employee_id }})
+              </option>
+            {% endfor %}
+          </select>
+        </div>
+      </form>
+    </section>
+
+    {% if selected_employee %}
+      <section class="attendance-panel-wrap">
+        <article class="attendance-panel">
+          <header class="attendance-panel-head">
+            <h2>Today Summary</h2>
+            <span class="status-chip status-{{ today_record.status|default:'pending' }}">{{ today_record.status|default:"not_started"|title }}</span>
+          </header>
+          <div class="attendance-detail-grid">
+            <div>
+              <p class="attendance-detail-label">Employee</p>
+              <p class="attendance-detail-value">{{ selected_employee.full_name }}</p>
+            </div>
+            <div>
+              <p class="attendance-detail-label">Date</p>
+              <p class="attendance-detail-value">{{ today }}</p>
+            </div>
+            <div>
+              <p class="attendance-detail-label">Check In</p>
+              <p class="attendance-detail-value">{{ today_record.check_in|default:"-" }}</p>
+            </div>
+            <div>
+              <p class="attendance-detail-label">Check Out</p>
+              <p class="attendance-detail-value">{{ today_record.check_out|default:"-" }}</p>
+            </div>
+            <div>
+              <p class="attendance-detail-label">Late Minutes</p>
+              <p class="attendance-detail-value">{{ today_record.late_minutes|default:0 }}</p>
+            </div>
+            <div>
+              <p class="attendance-detail-label">Work Hours</p>
+              <p class="attendance-detail-value">{{ today_record.work_hours|default:"-" }}</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="attendance-panel">
+          <header class="attendance-panel-head">
+            <h2>Clock Actions</h2>
+          </header>
+          <form method="post" class="attendance-inline-form">
+            {% csrf_token %}
+            <input type="hidden" name="employee" value="{{ selected_employee.pk }}" />
+            <label class="form-label" for="notes">Notes (Optional)</label>
+            <textarea id="notes" name="notes" rows="3" placeholder="Add admin note for this clock event"></textarea>
+            <div class="attendance-actions">
+              <button type="submit" name="action" value="check_in" class="btn btn-primary">Check In</button>
+              <button type="submit" name="action" value="check_out" class="btn btn-danger">Check Out</button>
+            </div>
+          </form>
+        </article>
+      </section>
+    {% else %}
+      <section class="attendance-panel">
+        <p class="attendance-empty-state">Select an employee to use admin check in / check out.</p>
+      </section>
+    {% endif %}
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/checkin.js' %}"></script>
+{% endblock %}

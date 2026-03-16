@@ -6,6 +6,9 @@ from .views import (
     AttendanceDetailView,
     AttendanceListView,
     AttendanceUpdateView,
+    CheckInOutAdminView,
+    CheckInOutAdminSelfView,
+    CheckInOutEmployeeView,
     LeaveApproveView,
     LeaveCancelView,
     LeaveRejectView,
@@ -22,6 +25,10 @@ from .views import (
 app_name = "attendance"
 
 urlpatterns = [
+    # Check-in / check-out
+    path("checkin/admin/", CheckInOutAdminView.as_view(), name="checkin-admin"),
+    path("checkin/admin/me/", CheckInOutAdminSelfView.as_view(), name="checkin-admin-self"),
+    path("checkin/me/", CheckInOutEmployeeView.as_view(), name="checkin-me"),
     # Attendance records
     path("", AttendanceListView.as_view(), name="attendance-list"),
     path("new/", AttendanceCreateView.as_view(), name="attendance-create"),

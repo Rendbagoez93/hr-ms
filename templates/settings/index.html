@@ -56,5 +56,107 @@
     </div>
   </a>
 
+  <!-- Leave Requests -->
+  <a href="{% url 'attendance:leave-list' %}"
+     class="card p-6 hover:shadow-md hover:border-indigo-300 transition-all group">
+    <div class="flex items-start gap-4">
+      <div class="p-3 rounded-lg bg-amber-50 text-amber-600 group-hover:bg-amber-100 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+        </svg>
+      </div>
+      <div>
+        <h2 class="font-semibold text-slate-800 group-hover:text-indigo-700 transition-colors">Leave Requests</h2>
+        <p class="text-sm text-slate-500 mt-1">
+          Review pending leave applications, approval flow, and employee absence windows.
+        </p>
+        <p class="text-xs text-slate-400 mt-2">Attendance Module · Admin Workflow</p>
+      </div>
+    </div>
+  </a>
+
+  <!-- Work Schedules -->
+  <a href="{% url 'attendance:schedule-list' %}"
+     class="card p-6 hover:shadow-md hover:border-indigo-300 transition-all group">
+    <div class="flex items-start gap-4">
+      <div class="p-3 rounded-lg bg-cyan-50 text-cyan-600 group-hover:bg-cyan-100 transition-colors">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </div>
+      <div>
+        <h2 class="font-semibold text-slate-800 group-hover:text-indigo-700 transition-colors">Work Schedules</h2>
+        <p class="text-sm text-slate-500 mt-1">
+          Configure default schedules, expected clock-in/out windows, and effective periods per employee.
+        </p>
+        <p class="text-xs text-slate-400 mt-2">Attendance Module · Shift Planning</p>
+      </div>
+    </div>
+  </a>
+
+  {% if user.is_superuser or user.role == 'administrator' %}
+    <!-- Admin Check In / Out -->
+    <a href="{% url 'attendance:checkin-admin' %}"
+       class="card p-6 hover:shadow-md hover:border-indigo-300 transition-all group">
+      <div class="flex items-start gap-4">
+        <div class="p-3 rounded-lg bg-teal-50 text-teal-600 group-hover:bg-teal-100 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4l3 3m-9 3h12a2 2 0 002-2V8a2 2 0 00-2-2h-3.5l-1-1h-3l-1 1H6a2 2 0 00-2 2v8a2 2 0 002 2z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="font-semibold text-slate-800 group-hover:text-indigo-700 transition-colors">Admin Check In / Out</h2>
+          <p class="text-sm text-slate-500 mt-1">
+            Open the clock terminal to check in/out employees directly from the admin dashboard.
+          </p>
+          <p class="text-xs text-slate-400 mt-2">Attendance Module · Time Console</p>
+        </div>
+      </div>
+    </a>
+
+    <!-- Admin Self Check In / Out -->
+    <a href="{% url 'attendance:checkin-admin-self' %}"
+       class="card p-6 hover:shadow-md hover:border-indigo-300 transition-all group">
+      <div class="flex items-start gap-4">
+        <div class="p-3 rounded-lg bg-sky-50 text-sky-600 group-hover:bg-sky-100 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="font-semibold text-slate-800 group-hover:text-indigo-700 transition-colors">Admin Self Check In / Out</h2>
+          <p class="text-sm text-slate-500 mt-1">
+            Use personal clock-in/out as an admin employee, separate from the team admin console.
+          </p>
+          <p class="text-xs text-slate-400 mt-2">Attendance Module · Personal Admin Tracker</p>
+        </div>
+      </div>
+    </a>
+  {% else %}
+    <!-- My Check In / Out -->
+    <a href="{% url 'attendance:checkin-me' %}"
+       class="card p-6 hover:shadow-md hover:border-indigo-300 transition-all group">
+      <div class="flex items-start gap-4">
+        <div class="p-3 rounded-lg bg-blue-50 text-blue-600 group-hover:bg-blue-100 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+        </div>
+        <div>
+          <h2 class="font-semibold text-slate-800 group-hover:text-indigo-700 transition-colors">My Check In / Out</h2>
+          <p class="text-sm text-slate-500 mt-1">
+            Open your personal attendance clock to check in and check out for today.
+          </p>
+          <p class="text-xs text-slate-400 mt-2">Attendance Module · Personal Tracker</p>
+        </div>
+      </div>
+    </a>
+  {% endif %}
+
 </div>
 {% endblock %}
