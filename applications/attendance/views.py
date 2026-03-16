@@ -2,14 +2,19 @@ import structlog
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
+from django.shortcuts import get_object_or_404
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView, View
+
+from applications.employee.models import Employee
 
 from .constants import LeaveStatus
 from .forms import AttendanceRecordForm, LeaveRequestForm, WorkScheduleForm
 from .models import AttendanceRecord, LeaveRequest, WorkSchedule
 from .selectors import (
+    get_active_schedule_for_employee,
     get_attendance_list,
     get_attendance_record,
     get_leave_request,
@@ -31,6 +36,17 @@ from .services import (
 
 
 logger = structlog.get_logger(__name__)
+
+
+def _late_minutes_for_employee(*, employee_pk, check_in_time):
+    schedule = get_active_schedule_for_employee(employee_pk)
+    if not schedule:
+        return 0
+    if check_in_time <= schedule.expected_check_in:
+        return 0
+    actual_minutes = check_in_time.hour * 60 + check_in_time.minute
+    expected_minutes = schedule.expected_check_in.hour * 60 + schedule.expected_check_in.minute
+    return actual_minutes - expected_minutes
 
 # ---------------------------------------------------------------------------
 # Attendance record views
@@ -272,3 +288,189 @@ class WorkScheduleUpdateView(LoginRequiredMixin, UpdateView):
         )
         messages.success(self.request, "Work schedule updated successfully.")
         return redirect(self.success_url)
+
+
+# ---------------------------------------------------------------------------
+# Check-in / check-out views
+# ---------------------------------------------------------------------------
+
+
+class CheckInOutAdminView(LoginRequiredMixin, View):
+    template_name = "attendance/checkin_admin.html"
+
+    def get(self, request):
+        today = timezone.localdate()
+        employee_pk = request.GET.get("employee")
+        selected_employee = None
+        record = None
+        if employee_pk:
+            selected_employee = get_object_or_404(Employee.objects.with_user(), pk=employee_pk)
+            record = AttendanceRecord.objects.for_employee(selected_employee.pk).filter(date=today).first()
+        context = {
+            "employees": Employee.objects.with_user().order_by("first_name", "last_name"),
+            "selected_employee": selected_employee,
+            "today_record": record,
+            "today": today,
+        }
+        return self.render_to_response(request, context)
+
+    def post(self, request):
+        today = timezone.localdate()
+        now_time = timezone.localtime().time().replace(microsecond=0)
+        employee_pk = request.POST.get("employee")
+        action = request.POST.get("action")
+        notes = request.POST.get("notes", "").strip()
+        employee = get_object_or_404(Employee.objects.with_user(), pk=employee_pk)
+        record = AttendanceRecord.objects.for_employee(employee.pk).filter(date=today).first()
+
+        if action == "check_in":
+            if record and record.check_in:
+                messages.warning(request, "Employee already checked in today.")
+            elif record:
+                update_attendance_record(
+                    record.pk,
+                    status="present",
+                    check_in=now_time,
+                    late_minutes=_late_minutes_for_employee(employee_pk=employee.pk, check_in_time=now_time),
+                    notes=notes or record.notes,
+                )
+                messages.success(request, "Check-in recorded successfully.")
+            else:
+                create_attendance_record(
+                    employee=employee,
+                    date=today,
+                    status="present",
+                    check_in=now_time,
+                    late_minutes=_late_minutes_for_employee(employee_pk=employee.pk, check_in_time=now_time),
+                    notes=notes,
+                )
+                messages.success(request, "Check-in recorded successfully.")
+        elif action == "check_out":
+            if not record or not record.check_in:
+                messages.error(request, "Employee must check in before checking out.")
+            elif record.check_out:
+                messages.warning(request, "Employee already checked out today.")
+            else:
+                update_attendance_record(record.pk, check_out=now_time, notes=notes or record.notes)
+                messages.success(request, "Check-out recorded successfully.")
+
+        return redirect(f"{reverse_lazy('attendance:checkin-admin')}?employee={employee.pk}")
+
+    def render_to_response(self, request, context):
+        from django.shortcuts import render
+
+        return render(request, self.template_name, context)
+
+
+class CheckInOutEmployeeView(LoginRequiredMixin, View):
+    template_name = "attendance/checkin_employee.html"
+
+    def get(self, request):
+        employee = getattr(request.user, "employee_profile", None)
+        today = timezone.localdate()
+        if employee:
+            today_record = AttendanceRecord.objects.for_employee(employee.pk).filter(date=today).first()
+            recent_records = AttendanceRecord.objects.for_employee(employee.pk).order_by("-date")[:7]
+        else:
+            today_record = None
+            recent_records = []
+        context = {
+            "employee": employee,
+            "today": today,
+            "today_record": today_record,
+            "recent_records": recent_records,
+        }
+        return self.render_to_response(request, context)
+
+    def post(self, request):
+        employee = getattr(request.user, "employee_profile", None)
+        if employee is None:
+            messages.error(request, "Your account is not linked to an employee profile.")
+            return redirect(reverse_lazy("attendance:checkin-me"))
+
+        today = timezone.localdate()
+        now_time = timezone.localtime().time().replace(microsecond=0)
+        action = request.POST.get("action")
+        record = AttendanceRecord.objects.for_employee(employee.pk).filter(date=today).first()
+
+        if action == "check_in":
+            if record and record.check_in:
+                messages.warning(request, "You have already checked in today.")
+            elif record:
+                update_attendance_record(
+                    record.pk,
+                    status="present",
+                    check_in=now_time,
+                    late_minutes=_late_minutes_for_employee(employee_pk=employee.pk, check_in_time=now_time),
+                )
+                messages.success(request, "Check-in successful.")
+            else:
+                create_attendance_record(
+                    employee=employee,
+                    date=today,
+                    status="present",
+                    check_in=now_time,
+                    late_minutes=_late_minutes_for_employee(employee_pk=employee.pk, check_in_time=now_time),
+                )
+                messages.success(request, "Check-in successful.")
+        elif action == "check_out":
+            if not record or not record.check_in:
+                messages.error(request, "Check in first before check out.")
+            elif record.check_out:
+                messages.warning(request, "You have already checked out today.")
+            else:
+                update_attendance_record(record.pk, check_out=now_time)
+                messages.success(request, "Check-out successful.")
+
+        return redirect(reverse_lazy("attendance:checkin-me"))
+
+    def render_to_response(self, request, context):
+        from django.shortcuts import render
+
+        return render(request, self.template_name, context)
+
+
+class CheckInOutAdminSelfView(CheckInOutEmployeeView):
+    template_name = "attendance/checkin_admin_self.html"
+
+    def post(self, request):
+        employee = getattr(request.user, "employee_profile", None)
+        if employee is None:
+            messages.error(request, "Your account is not linked to an employee profile.")
+            return redirect(reverse_lazy("attendance:checkin-admin-self"))
+
+        today = timezone.localdate()
+        now_time = timezone.localtime().time().replace(microsecond=0)
+        action = request.POST.get("action")
+        record = AttendanceRecord.objects.for_employee(employee.pk).filter(date=today).first()
+
+        if action == "check_in":
+            if record and record.check_in:
+                messages.warning(request, "You have already checked in today.")
+            elif record:
+                update_attendance_record(
+                    record.pk,
+                    status="present",
+                    check_in=now_time,
+                    late_minutes=_late_minutes_for_employee(employee_pk=employee.pk, check_in_time=now_time),
+                )
+                messages.success(request, "Admin self check-in successful.")
+            else:
+                create_attendance_record(
+                    employee=employee,
+                    date=today,
+                    status="present",
+                    check_in=now_time,
+                    late_minutes=_late_minutes_for_employee(employee_pk=employee.pk, check_in_time=now_time),
+                )
+                messages.success(request, "Admin self check-in successful.")
+        elif action == "check_out":
+            if not record or not record.check_in:
+                messages.error(request, "Check in first before check out.")
+            elif record.check_out:
+                messages.warning(request, "You have already checked out today.")
+            else:
+                update_attendance_record(record.pk, check_out=now_time)
+                messages.success(request, "Admin self check-out successful.")
+
+        return redirect(reverse_lazy("attendance:checkin-admin-self"))

@@ -65,7 +65,13 @@
         </svg>
       </button>
       <div x-show="openGroup === 'attendance'" x-collapse class="pl-6 mt-1 space-y-1">
-        <a href="{% url 'attendance:attendance-list' %}" class="sidebar-link sidebar-link-sub {% if request.path|slice:':12' == '/attendance/' and request.path|slice:':18' != '/attendance/leave/' and request.path|slice:':22' != '/attendance/schedules/' %}active{% endif %}">Attendance Records</a>
+        {% if user.is_superuser or user.role == 'administrator' %}
+          <a href="{% url 'attendance:checkin-admin' %}" class="sidebar-link sidebar-link-sub {% if request.path|slice:':25' == '/attendance/checkin/admin/' %}active{% endif %}">Admin Check In/Out</a>
+          <a href="{% url 'attendance:checkin-admin-self' %}" class="sidebar-link sidebar-link-sub {% if request.path == '/attendance/checkin/admin/me/' %}active{% endif %}">Admin Self Check In/Out</a>
+        {% else %}
+          <a href="{% url 'attendance:checkin-me' %}" class="sidebar-link sidebar-link-sub {% if request.path|slice:':22' == '/attendance/checkin/me/' %}active{% endif %}">My Check In/Out</a>
+        {% endif %}
+        <a href="{% url 'attendance:attendance-list' %}" class="sidebar-link sidebar-link-sub {% if request.path|slice:':12' == '/attendance/' and request.path|slice:':18' != '/attendance/leave/' and request.path|slice:':22' != '/attendance/schedules/' and request.path|slice:':19' != '/attendance/checkin/' %}active{% endif %}">Attendance Records</a>
         <a href="{% url 'attendance:leave-list' %}" class="sidebar-link sidebar-link-sub {% if request.path|slice:':18' == '/attendance/leave/' %}active{% endif %}">Leave Requests</a>
         <a href="{% url 'attendance:schedule-list' %}" class="sidebar-link sidebar-link-sub {% if request.path|slice:':22' == '/attendance/schedules/' %}active{% endif %}">Work Schedules</a>
       </div>
