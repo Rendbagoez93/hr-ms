@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{% if form.instance.pk %}Edit Work Schedule{% else %}New Work Schedule{% endif %}{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
+{% endblock %}
+
+{% block breadcrumb %}
+  <nav class="attendance-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Dashboard</a>
+    <span>/</span>
+    <a href="{% url 'attendance:attendance-list' %}">Attendance</a>
+    <span>/</span>
+    <a href="{% url 'attendance:schedule-list' %}">Work Schedules</a>
+    <span>/</span>
+    <span aria-current="page">Form</span>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <section class="attendance-shell">
+    <header class="attendance-panel-head">
+      <div>
+        <p class="attendance-eyebrow">Attendance Admin</p>
+        <h1 class="page-title">{% if form.instance.pk %}Edit Work Schedule{% else %}Create Work Schedule{% endif %}</h1>
+        <p class="attendance-subtitle">Configure expected work time and active weekdays for each employee.</p>
+      </div>
+    </header>
+
+    <form method="post" class="attendance-panel attendance-form-grid">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="form-error attendance-span-2">{{ form.non_field_errors }}</div>
+      {% endif %}
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.employee.id_for_label }}">Employee <span class="text-red-600">*</span></label>
+        {{ form.employee }}
+        {% if form.employee.errors %}<p class="form-error">{{ form.employee.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.name.id_for_label }}">Schedule Name <span class="text-red-600">*</span></label>
+        {{ form.name }}
+        {% if form.name.errors %}<p class="form-error">{{ form.name.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.expected_check_in.id_for_label }}">Expected Check-in <span class="text-red-600">*</span></label>
+        {{ form.expected_check_in }}
+        {% if form.expected_check_in.errors %}<p class="form-error">{{ form.expected_check_in.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.expected_check_out.id_for_label }}">Expected Check-out <span class="text-red-600">*</span></label>
+        {{ form.expected_check_out }}
+        {% if form.expected_check_out.errors %}<p class="form-error">{{ form.expected_check_out.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.effective_from.id_for_label }}">Effective From <span class="text-red-600">*</span></label>
+        {{ form.effective_from }}
+        {% if form.effective_from.errors %}<p class="form-error">{{ form.effective_from.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.effective_to.id_for_label }}">Effective To</label>
+        {{ form.effective_to }}
+        {% if form.effective_to.errors %}<p class="form-error">{{ form.effective_to.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="attendance-span-2">
+        <p class="form-label">Work Days</p>
+        <div class="attendance-day-grid">
+          <label class="attendance-check-item">{{ form.monday }} Monday</label>
+          <label class="attendance-check-item">{{ form.tuesday }} Tuesday</label>
+          <label class="attendance-check-item">{{ form.wednesday }} Wednesday</label>
+          <label class="attendance-check-item">{{ form.thursday }} Thursday</label>
+          <label class="attendance-check-item">{{ form.friday }} Friday</label>
+          <label class="attendance-check-item">{{ form.saturday }} Saturday</label>
+          <label class="attendance-check-item">{{ form.sunday }} Sunday</label>
+        </div>
+      </div>
+
+      <div class="attendance-span-2">
+        <label class="attendance-check-item">{{ form.is_default }} Set as default schedule</label>
+      </div>
+
+      <div class="attendance-actions attendance-span-2">
+        <button type="submit" class="btn btn-primary">{% if form.instance.pk %}Save Changes{% else %}Create Schedule{% endif %}</button>
+        <a href="{% url 'attendance:schedule-list' %}" class="btn btn-outline">Back to Schedules</a>
+      </div>
+    </form>
+  </section>
+{% endblock %}

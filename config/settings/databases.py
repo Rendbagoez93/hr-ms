@@ -1,3 +1,4 @@
+import os
 from enum import StrEnum
 from pathlib import Path
 from typing import Any
@@ -52,6 +53,17 @@ class BaseDatabaseSettings(BaseSettings):
 class SqliteDatabaseSettings(BaseDatabaseSettings):
     engine: DBEngineEnum = DBEngineEnum.SQLITE
     name: str = str(_BASE_DIR / "db.sqlite3")
+
+    @field_validator("name", mode="before")
+    @classmethod
+    def resolve_sqlite_path(cls, v: Any) -> str:
+        s = str(v)
+        # A bare name (no path separators) is a Postgres-style DB name, not a file path.
+        # Fall back to the default SQLite file location in BASE_DIR.
+        if os.sep not in s and "/" not in s:
+            return str(_BASE_DIR / "db.sqlite3")
+        path = Path(s)
+        return s if path.is_absolute() else str(_BASE_DIR / path)
 
 
 class PostgresDatabaseSettings(BaseDatabaseSettings):

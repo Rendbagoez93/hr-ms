@@ -14,6 +14,7 @@
   <!-- App CSS -->
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/app.css' %}" />
+  {% block extra_css %}{% endblock %}
 </head>
 
 <body class="h-full" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data>

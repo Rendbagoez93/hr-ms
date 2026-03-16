@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Leave Request Form{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
+{% endblock %}
+
+{% block breadcrumb %}
+  <nav class="attendance-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Dashboard</a>
+    <span>/</span>
+    <a href="{% url 'attendance:attendance-list' %}">Attendance</a>
+    <span>/</span>
+    <a href="{% url 'attendance:leave-list' %}">Leave Requests</a>
+    <span>/</span>
+    <span aria-current="page">Form</span>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <section class="attendance-shell">
+    <header class="attendance-panel-head">
+      <div>
+        <p class="attendance-eyebrow">Attendance Admin</p>
+        <h1 class="page-title">Create Leave Request</h1>
+        <p class="attendance-subtitle">Submit and record employee leave plans with clear date range validation.</p>
+      </div>
+    </header>
+
+    <form method="post" class="attendance-panel attendance-form-grid">
+      {% csrf_token %}
+
+      {% if form.non_field_errors %}
+        <div class="form-error">{{ form.non_field_errors }}</div>
+      {% endif %}
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.employee.id_for_label }}">Employee <span class="text-red-600">*</span></label>
+        {{ form.employee }}
+        {% if form.employee.errors %}<p class="form-error">{{ form.employee.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.leave_type.id_for_label }}">Leave Type <span class="text-red-600">*</span></label>
+        {{ form.leave_type }}
+        {% if form.leave_type.errors %}<p class="form-error">{{ form.leave_type.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.start_date.id_for_label }}">Start Date <span class="text-red-600">*</span></label>
+        {{ form.start_date }}
+        {% if form.start_date.errors %}<p class="form-error">{{ form.start_date.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="{{ form.end_date.id_for_label }}">End Date <span class="text-red-600">*</span></label>
+        {{ form.end_date }}
+        {% if form.end_date.errors %}<p class="form-error">{{ form.end_date.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="form-group attendance-span-2">
+        <label class="form-label" for="{{ form.reason.id_for_label }}">Reason <span class="text-red-600">*</span></label>
+        {{ form.reason }}
+        {% if form.reason.errors %}<p class="form-error">{{ form.reason.errors.0 }}</p>{% endif %}
+      </div>
+
+      <div class="attendance-actions attendance-span-2">
+        <button type="submit" class="btn btn-primary">Submit Request</button>
+        <a href="{% url 'attendance:leave-list' %}" class="btn btn-outline">Back to Leave List</a>
+      </div>
+    </form>
+  </section>
+{% endblock %}

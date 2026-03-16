@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Work Schedule Detail{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
+{% endblock %}
+
+{% block breadcrumb %}
+  <nav class="attendance-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Dashboard</a>
+    <span>/</span>
+    <a href="{% url 'attendance:attendance-list' %}">Attendance</a>
+    <span>/</span>
+    <a href="{% url 'attendance:schedule-list' %}">Work Schedules</a>
+    <span>/</span>
+    <span aria-current="page">Detail</span>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <section class="attendance-shell">
+    <header class="attendance-panel-head">
+      <div>
+        <p class="attendance-eyebrow">Attendance Admin</p>
+        <h1 class="page-title">Work Schedule Detail</h1>
+        <p class="attendance-subtitle">Inspect schedule settings and validity window for this employee.</p>
+      </div>
+      <div class="attendance-actions">
+        <a href="{% url 'attendance:schedule-list' %}" class="btn btn-outline">Back to List</a>
+        <a href="{% url 'attendance:schedule-update' schedule.pk %}" class="btn btn-primary">Edit Schedule</a>
+      </div>
+    </header>
+
+    <section class="attendance-panel">
+      <div class="attendance-detail-grid">
+        <div>
+          <p class="attendance-detail-label">Employee</p>
+          <p class="attendance-detail-value">{{ schedule.employee.full_name }} ({{ schedule.employee.employee_id }})</p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Schedule Name</p>
+          <p class="attendance-detail-value">{{ schedule.name }}</p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Expected Check-in</p>
+          <p class="attendance-detail-value">{{ schedule.expected_check_in }}</p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Expected Check-out</p>
+          <p class="attendance-detail-value">{{ schedule.expected_check_out }}</p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Effective Period</p>
+          <p class="attendance-detail-value">
+            {{ schedule.effective_from }}
+            {% if schedule.effective_to %}
+              to {{ schedule.effective_to }}
+            {% else %}
+              to Open Ended
+            {% endif %}
+          </p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Default Schedule</p>
+          <p class="attendance-detail-value">
+            {% if schedule.is_default %}
+              <span class="status-chip status-present">Yes</span>
+            {% else %}
+              <span class="status-chip">No</span>
+            {% endif %}
+          </p>
+        </div>
+        <div class="attendance-span-2">
+          <p class="attendance-detail-label">Active Work Days</p>
+          <p class="attendance-detail-value">{{ schedule.work_days|join:", " }}</p>
+        </div>
+      </div>
+    </section>
+  </section>
+{% endblock %}

@@ -1,4 +1,4 @@
-<aside class="w-60 bg-white border-r border-slate-200 flex-shrink-0 min-h-full" x-data="{ openGroup: '{{ active_group|default:'' }}' }">
+<aside class="w-60 bg-white border-r border-slate-200 flex-shrink-0 min-h-full" x-data="{ openGroup: '{% if request.path|slice:":12" == "/attendance/" %}attendance{% else %}{{ active_group|default:"" }}{% endif %}' }">
   <nav class="p-4 space-y-1">
 
     <!-- Dashboard -->
@@ -47,6 +47,27 @@
       <div x-show="openGroup === 'employment'" x-collapse class="pl-6 mt-1 space-y-1">
         <a href="{% url 'employment:employment-list' %}" class="sidebar-link sidebar-link-sub">All Records</a>
         <a href="{% url 'employment:employment-create' %}" class="sidebar-link sidebar-link-sub">New Record</a>
+      </div>
+    </div>
+
+    <!-- Attendance -->
+    <div>
+      <button @click="openGroup = openGroup === 'attendance' ? '' : 'attendance'"
+              class="sidebar-group-btn w-full flex items-center justify-between">
+        <span class="flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="sidebar-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          Attendance
+        </span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" :class="openGroup === 'attendance' ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      <div x-show="openGroup === 'attendance'" x-collapse class="pl-6 mt-1 space-y-1">
+        <a href="{% url 'attendance:attendance-list' %}" class="sidebar-link sidebar-link-sub {% if request.path|slice:':12' == '/attendance/' and request.path|slice:':18' != '/attendance/leave/' and request.path|slice:':22' != '/attendance/schedules/' %}active{% endif %}">Attendance Records</a>
+        <a href="{% url 'attendance:leave-list' %}" class="sidebar-link sidebar-link-sub {% if request.path|slice:':18' == '/attendance/leave/' %}active{% endif %}">Leave Requests</a>
+        <a href="{% url 'attendance:schedule-list' %}" class="sidebar-link sidebar-link-sub {% if request.path|slice:':22' == '/attendance/schedules/' %}active{% endif %}">Work Schedules</a>
       </div>
     </div>
 

@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Attendance Hub{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
+{% endblock %}
+
+{% block breadcrumb %}
+  <nav class="attendance-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Dashboard</a>
+    <span>/</span>
+    <span aria-current="page">Attendance</span>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <section class="attendance-shell" id="attendance-app">
+    <header class="attendance-hero" aria-labelledby="attendance-heading">
+      <div>
+        <p class="attendance-eyebrow">Attendance Command Center</p>
+        <h1 id="attendance-heading">Ringkasan Kehadiran Tim</h1>
+        <p class="attendance-subtitle">
+          Monitor clock-ins, work hours, and attendance status in one workspace inspired by operational dashboards.
+        </p>
+      </div>
+      <div class="attendance-clock-card" aria-live="polite">
+        <p>Live Office Time</p>
+        <strong id="attendance-live-time">--:--:--</strong>
+        <span id="attendance-live-date">--</span>
+      </div>
+    </header>
+
+    <section class="attendance-grid" aria-label="Attendance summary">
+      <article class="attendance-kpi">
+        <p>Total Records</p>
+        <strong>{{ page_obj.paginator.count|default:0 }}</strong>
+        <span>Data Kehadiran</span>
+      </article>
+      <article class="attendance-kpi">
+        <p>Current Page</p>
+        <strong>{{ page_obj.number|default:1 }}</strong>
+        <span>Halaman Aktif</span>
+      </article>
+      <article class="attendance-kpi">
+        <p>Per Page</p>
+        <strong>{{ page_obj.paginator.per_page|default:25 }}</strong>
+        <span>Records per batch</span>
+      </article>
+      <article class="attendance-kpi attendance-kpi-accent">
+        <p>Track Shift Quality</p>
+        <strong>Realtime</strong>
+        <span>Jadwal, Telat, Jam Kerja</span>
+      </article>
+    </section>
+
+    <section class="attendance-panel-wrap">
+      <article class="attendance-panel">
+        <header class="attendance-panel-head">
+          <h2>Quick Timeline</h2>
+          <a href="{% url 'attendance:attendance-create' %}" class="btn btn-primary">New Record</a>
+        </header>
+        <div class="attendance-actions" style="margin-bottom: 0.75rem;">
+          <a href="{% url 'attendance:attendance-list' %}" class="btn btn-primary btn-sm">Attendance Records</a>
+          <a href="{% url 'attendance:leave-list' %}" class="btn btn-outline btn-sm">Leave Requests</a>
+          <a href="{% url 'attendance:schedule-list' %}" class="btn btn-outline btn-sm">Work Schedules</a>
+        </div>
+        <ul class="attendance-timeline" id="attendance-timeline">
+          {% for record in records|slice:":5" %}
+            <li>
+              <div class="timeline-dot timeline-{{ record.status }}"></div>
+              <div>
+                <p>
+                  <strong>{{ record.employee.full_name }}</strong>
+                  <span>{{ record.date }}</span>
+                </p>
+                <small>
+                  {{ record.status|title }}
+                  {% if record.check_in %}· In {{ record.check_in }}{% endif %}
+                  {% if record.check_out %}· Out {{ record.check_out }}{% endif %}
+                </small>
+              </div>
+            </li>
+          {% empty %}
+            <li class="timeline-empty">No attendance data yet. Tambahkan data kehadiran pertama.</li>
+          {% endfor %}
+        </ul>
+      </article>
+
+      <article class="attendance-panel attendance-filter-panel">
+        <header class="attendance-panel-head">
+          <h2>Search and Filter</h2>
+        </header>
+        <form method="get" class="attendance-filter-form" id="attendance-filter-form">
+          <label for="q">Employee Name</label>
+          <input
+            id="q"
+            name="q"
+            type="search"
+            value="{{ search_query }}"
+            placeholder="Search by first or last name"
+            autocomplete="off"
+          />
+
+          <label for="status-filter">Status Cepat</label>
+          <select id="status-filter" name="status_local" aria-label="Local status filter">
+            <option value="">All status</option>
+            <option value="present">Present</option>
+            <option value="late">Late</option>
+            <option value="absent">Absent</option>
+            <option value="half_day">Half Day</option>
+            <option value="on_leave">On Leave</option>
+          </select>
+
+          <div class="attendance-filter-actions">
+            <button type="submit" class="btn btn-primary">Apply</button>
+            <a href="{% url 'attendance:attendance-list' %}" class="btn btn-outline">Reset</a>
+          </div>
+        </form>
+      </article>
+    </section>
+
+    <section class="attendance-table-panel" aria-label="Attendance table">
+      <header class="attendance-panel-head">
+        <h2>Attendance Records</h2>
+      </header>
+      <div class="attendance-table-wrap">
+        <table class="attendance-table" id="attendance-table">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Date</th>
+              <th>Status</th>
+              <th>Check-in</th>
+              <th>Check-out</th>
+              <th>Work Hours</th>
+              <th>Late (min)</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in records %}
+              <tr data-status="{{ record.status }}">
+                <td>
+                  <strong>{{ record.employee.full_name }}</strong>
+                  <small>{{ record.employee.employee_id }}</small>
+                </td>
+                <td>{{ record.date }}</td>
+                <td>
+                  <span class="status-chip status-{{ record.status }}">{{ record.status|title }}</span>
+                </td>
+                <td>{{ record.check_in|default:"-" }}</td>
+                <td>{{ record.check_out|default:"-" }}</td>
+                <td>{{ record.work_hours|default:"-" }}</td>
+                <td>{{ record.late_minutes|default:0 }}</td>
+                <td class="attendance-actions">
+                  <a href="{% url 'attendance:attendance-detail' record.pk %}" class="btn btn-ghost btn-sm">View</a>
+                  <a href="{% url 'attendance:attendance-update' record.pk %}" class="btn btn-outline btn-sm">Edit</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="8" class="attendance-empty-state">
+                  <h3>No records found</h3>
+                  <p>Belum ada data attendance yang cocok dengan filter saat ini.</p>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% if is_paginated %}
+        <nav class="attendance-pagination" aria-label="Pagination">
+          {% if page_obj.has_previous %}
+            <a href="?q={{ search_query }}&page={{ page_obj.previous_page_number }}">Previous</a>
+          {% endif %}
+          <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+          {% if page_obj.has_next %}
+            <a href="?q={{ search_query }}&page={{ page_obj.next_page_number }}">Next</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    </section>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/attendance.js' %}"></script>
+{% endblock %}

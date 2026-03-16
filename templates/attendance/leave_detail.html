@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Leave Request Detail{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
+{% endblock %}
+
+{% block breadcrumb %}
+  <nav class="attendance-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Dashboard</a>
+    <span>/</span>
+    <a href="{% url 'attendance:attendance-list' %}">Attendance</a>
+    <span>/</span>
+    <a href="{% url 'attendance:leave-list' %}">Leave Requests</a>
+    <span>/</span>
+    <span aria-current="page">Detail</span>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <section class="attendance-shell">
+    <header class="attendance-panel-head">
+      <div>
+        <p class="attendance-eyebrow">Attendance Admin</p>
+        <h1 class="page-title">Leave Request Detail</h1>
+        <p class="attendance-subtitle">Review request details and take approval actions.</p>
+      </div>
+      <div class="attendance-actions">
+        <a href="{% url 'attendance:leave-list' %}" class="btn btn-outline">Back to List</a>
+      </div>
+    </header>
+
+    <section class="attendance-panel">
+      <div class="attendance-detail-grid">
+        <div>
+          <p class="attendance-detail-label">Employee</p>
+          <p class="attendance-detail-value">{{ leave_request.employee.full_name }} ({{ leave_request.employee.employee_id }})</p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Leave Type</p>
+          <p class="attendance-detail-value">{{ leave_request.leave_type|title }}</p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Period</p>
+          <p class="attendance-detail-value">{{ leave_request.start_date }} to {{ leave_request.end_date }}</p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Total Days</p>
+          <p class="attendance-detail-value">{{ leave_request.total_days }}</p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Status</p>
+          <p class="attendance-detail-value"><span class="status-chip status-{{ leave_request.status }}">{{ leave_request.status|title }}</span></p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Reviewed At</p>
+          <p class="attendance-detail-value">{{ leave_request.reviewed_at|default:"-" }}</p>
+        </div>
+        <div class="attendance-span-2">
+          <p class="attendance-detail-label">Reason</p>
+          <p class="attendance-detail-value">{{ leave_request.reason }}</p>
+        </div>
+        <div class="attendance-span-2">
+          <p class="attendance-detail-label">Approval Notes</p>
+          <p class="attendance-detail-value">{{ leave_request.approval_notes|default:"-" }}</p>
+        </div>
+      </div>
+    </section>
+
+    {% if leave_request.is_pending %}
+      <section class="attendance-panel">
+        <header class="attendance-panel-head">
+          <h2>Review Actions</h2>
+        </header>
+        <div class="attendance-action-grid">
+          <form method="post" action="{% url 'attendance:leave-approve' leave_request.pk %}" class="attendance-inline-form">
+            {% csrf_token %}
+            <label class="form-label" for="approve-notes">Approval Notes</label>
+            <textarea id="approve-notes" name="notes" rows="3" placeholder="Optional notes for approval"></textarea>
+            <button type="submit" class="btn btn-primary">Approve</button>
+          </form>
+
+          <form method="post" action="{% url 'attendance:leave-reject' leave_request.pk %}" class="attendance-inline-form">
+            {% csrf_token %}
+            <label class="form-label" for="reject-notes">Rejection Notes</label>
+            <textarea id="reject-notes" name="notes" rows="3" placeholder="Reason for rejection"></textarea>
+            <button type="submit" class="btn btn-danger">Reject</button>
+          </form>
+
+          <form method="post" action="{% url 'attendance:leave-cancel' leave_request.pk %}" class="attendance-inline-form">
+            {% csrf_token %}
+            <p class="attendance-detail-label">Need to withdraw this request?</p>
+            <button type="submit" class="btn btn-outline">Cancel Request</button>
+          </form>
+        </div>
+      </section>
+    {% endif %}
+  </section>
+{% endblock %}
