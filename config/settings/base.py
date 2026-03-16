@@ -57,6 +57,7 @@ INTERNAL_APPS = [
     "applications.employment",
     "applications.imports",
     "applications.company_profile",
+    "applications.attendance",
     "shared",
 ]
 

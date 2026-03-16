@@ -8,6 +8,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 from applications.employee.models import Employee
 from applications.organization.models import Department, JobTitle
 
+from .forms import ContractForm, EmploymentForm, EmploymentUpdateForm, SalaryForm
 from .models import Contract, Employment, Salary
 from .selectors import (
     get_contract,
@@ -70,7 +71,7 @@ class EmploymentDetailView(LoginRequiredMixin, DetailView):
 class EmploymentCreateView(LoginRequiredMixin, CreateView):
     model = Employment
     template_name = "employment/employment_form.html"
-    fields = ["employee", "department", "job_title", "reporting_manager", "work_location", "status", "hire_date", "end_date"]
+    form_class = EmploymentForm
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -91,7 +92,7 @@ class EmploymentCreateView(LoginRequiredMixin, CreateView):
 
 class EmploymentUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "employment/employment_form.html"
-    fields = ["department", "job_title", "reporting_manager", "work_location", "status", "hire_date", "end_date"]
+    form_class = EmploymentUpdateForm
 
     def get_object(self, queryset=None):
         return get_employment(self.kwargs["pk"])
@@ -121,7 +122,7 @@ class EmploymentUpdateView(LoginRequiredMixin, UpdateView):
 class ContractCreateView(LoginRequiredMixin, CreateView):
     model = Contract
     template_name = "employment/contract_form.html"
-    fields = ["contract_type", "start_date", "end_date", "terms", "document"]
+    form_class = ContractForm
 
     def _get_employment(self) -> Employment:
         return get_employment(self.kwargs["pk"])
@@ -145,7 +146,7 @@ class ContractCreateView(LoginRequiredMixin, CreateView):
 
 class ContractUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "employment/contract_form.html"
-    fields = ["contract_type", "start_date", "end_date", "terms", "document"]
+    form_class = ContractForm
 
     def get_object(self, queryset=None):
         return get_contract(pk=self.kwargs["c_pk"], employment_pk=self.kwargs["pk"])
@@ -193,7 +194,7 @@ class ContractDeleteView(LoginRequiredMixin, DeleteView):
 class SalaryCreateView(LoginRequiredMixin, CreateView):
     model = Salary
     template_name = "employment/salary_form.html"
-    fields = ["pay_grade", "amount", "currency", "payment_frequency", "effective_date", "end_date", "notes"]
+    form_class = SalaryForm
 
     def _get_employment(self) -> Employment:
         return get_employment(self.kwargs["pk"])
@@ -217,7 +218,7 @@ class SalaryCreateView(LoginRequiredMixin, CreateView):
 
 class SalaryUpdateView(LoginRequiredMixin, UpdateView):
     template_name = "employment/salary_form.html"
-    fields = ["pay_grade", "amount", "currency", "payment_frequency", "effective_date", "end_date", "notes"]
+    form_class = SalaryForm
 
     def get_object(self, queryset=None):
         return get_salary(pk=self.kwargs["s_pk"], employment_pk=self.kwargs["pk"])

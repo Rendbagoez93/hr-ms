@@ -74,6 +74,11 @@ addopts = [
     "--dist=loadscope",     # group tests by module to share DB state
 ]
 
+filterwarnings = [
+    # WhiteNoise emits this during tests because collectstatic hasn't been run
+    "ignore:No directory at.*staticfiles:UserWarning",
+]
+
 # Custom markers (pytest-django and project-specific)
 markers = [
     "slow: marks test as slow — deselect with '-m \"not slow\"'",

@@ -75,7 +75,7 @@ def test_sqlite_settings_default_engine(monkeypatch):
 def test_sqlite_settings_default_name_ends_with_db_sqlite3(monkeypatch):
     monkeypatch.delenv("DATABASE_NAME", raising=False)
     settings = SqliteDatabaseSettings()
-    assert settings.name == "hr_ms"
+    assert settings.name.endswith("db.sqlite3")
 
 
 # ─── PostgresDatabaseSettings ─────────────────────────────────────────────────
