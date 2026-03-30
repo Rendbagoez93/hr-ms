@@ -3,6 +3,10 @@
 
 {% block title %}Import Job — {{ job.file_name }}{% endblock %}
 
+{% block meta %}
+  <meta name="description" content="Details and status for bulk import job {{ job.file_name }}." />
+{% endblock %}
+
 {% block breadcrumb %}
   {% include "components/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
 {% endblock %}

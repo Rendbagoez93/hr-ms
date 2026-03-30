@@ -3,6 +3,10 @@
 
 {% block title %}Field Mapping — {{ job.file_name }}{% endblock %}
 
+{% block meta %}
+  <meta name="description" content="Map columns from {{ job.file_name }} to data fields for import." />
+{% endblock %}
+
 {% block breadcrumb %}
   {% include "components/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
 {% endblock %}
