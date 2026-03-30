@@ -1,9 +1,9 @@
 import structlog
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView, View
@@ -295,7 +295,10 @@ class WorkScheduleUpdateView(LoginRequiredMixin, UpdateView):
 # ---------------------------------------------------------------------------
 
 
-class CheckInOutAdminView(LoginRequiredMixin, View):
+class CheckInOutAdminView(LoginRequiredMixin, UserPassesTestMixin, View):
+    def test_func(self):
+        return self.request.user.is_staff
+
     template_name = "pages/attendance/checkin_admin.html"
 
     def get(self, request):
@@ -357,8 +360,6 @@ class CheckInOutAdminView(LoginRequiredMixin, View):
         return redirect(f"{reverse_lazy('attendance:checkin-admin')}?employee={employee.pk}")
 
     def render_to_response(self, request, context):
-        from django.shortcuts import render
-
         return render(request, self.template_name, context)
 
 
@@ -430,8 +431,12 @@ class CheckInOutEmployeeView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-class CheckInOutAdminSelfView(CheckInOutEmployeeView):
+class CheckInOutAdminSelfView(LoginRequiredMixin, UserPassesTestMixin, CheckInOutEmployeeView):
     template_name = "pages/attendance/checkin_admin_self.html"
+
+    def test_func(self):
+        return self.request.user.is_staff
+
 
     def post(self, request):
         employee = getattr(request.user, "employee_profile", None)
