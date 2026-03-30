@@ -45,7 +45,7 @@ _PROFILE_FIELDS = [
 
 
 class SettingsIndexView(LoginRequiredMixin, View):
-    template_name = "settings/index.html"
+    template_name = "pages/settings/index.html"
 
     def get(self, request: HttpRequest) -> HttpResponse:
         profile = get_or_create_company_profile()
@@ -61,7 +61,7 @@ class SettingsIndexView(LoginRequiredMixin, View):
 
 
 class CompanyProfileUpdateView(LoginRequiredMixin, View):
-    template_name = "settings/company_profile.html"
+    template_name = "pages/settings/company_profile.html"
 
     def get(self, request: HttpRequest) -> HttpResponse:
         profile = get_or_create_company_profile()

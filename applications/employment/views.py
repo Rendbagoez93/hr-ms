@@ -29,7 +29,7 @@ logger = structlog.get_logger(__name__)
 
 
 class EmploymentListView(LoginRequiredMixin, ListView):
-    template_name = "employment/employment_list.html"
+    template_name = "pages/employment/employment_list.html"
     context_object_name = "employments"
     paginate_by = 25
 
@@ -55,7 +55,7 @@ class EmploymentListView(LoginRequiredMixin, ListView):
 
 
 class EmploymentDetailView(LoginRequiredMixin, DetailView):
-    template_name = "employment/employment_detail.html"
+    template_name = "pages/employment/employment_detail.html"
     context_object_name = "employment"
 
     def get_object(self, queryset=None):
@@ -70,7 +70,7 @@ class EmploymentDetailView(LoginRequiredMixin, DetailView):
 
 class EmploymentCreateView(LoginRequiredMixin, CreateView):
     model = Employment
-    template_name = "employment/employment_form.html"
+    template_name = "pages/employment/employment_form.html"
     form_class = EmploymentForm
 
     def get_context_data(self, **kwargs):
@@ -91,7 +91,7 @@ class EmploymentCreateView(LoginRequiredMixin, CreateView):
 
 
 class EmploymentUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = "employment/employment_form.html"
+    template_name = "pages/employment/employment_form.html"
     form_class = EmploymentUpdateForm
 
     def get_object(self, queryset=None):
@@ -121,7 +121,7 @@ class EmploymentUpdateView(LoginRequiredMixin, UpdateView):
 
 class ContractCreateView(LoginRequiredMixin, CreateView):
     model = Contract
-    template_name = "employment/contract_form.html"
+    template_name = "pages/employment/contract_form.html"
     form_class = ContractForm
 
     def _get_employment(self) -> Employment:
@@ -145,7 +145,7 @@ class ContractCreateView(LoginRequiredMixin, CreateView):
 
 
 class ContractUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = "employment/contract_form.html"
+    template_name = "pages/employment/contract_form.html"
     form_class = ContractForm
 
     def get_object(self, queryset=None):
@@ -167,7 +167,7 @@ class ContractUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class ContractDeleteView(LoginRequiredMixin, DeleteView):
-    template_name = "employment/contract_confirm_delete.html"
+    template_name = "pages/employment/contract_confirm_delete.html"
 
     def get_object(self, queryset=None):
         return get_contract(pk=self.kwargs["c_pk"], employment_pk=self.kwargs["pk"])
@@ -193,7 +193,7 @@ class ContractDeleteView(LoginRequiredMixin, DeleteView):
 
 class SalaryCreateView(LoginRequiredMixin, CreateView):
     model = Salary
-    template_name = "employment/salary_form.html"
+    template_name = "pages/employment/salary_form.html"
     form_class = SalaryForm
 
     def _get_employment(self) -> Employment:
@@ -217,7 +217,7 @@ class SalaryCreateView(LoginRequiredMixin, CreateView):
 
 
 class SalaryUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = "employment/salary_form.html"
+    template_name = "pages/employment/salary_form.html"
     form_class = SalaryForm
 
     def get_object(self, queryset=None):
@@ -239,7 +239,7 @@ class SalaryUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class SalaryDeleteView(LoginRequiredMixin, DeleteView):
-    template_name = "employment/salary_confirm_delete.html"
+    template_name = "pages/employment/salary_confirm_delete.html"
 
     def get_object(self, queryset=None):
         return get_salary(pk=self.kwargs["s_pk"], employment_pk=self.kwargs["pk"])

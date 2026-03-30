@@ -293,6 +293,57 @@ logger.info("User logged in", user_id=user.id, path=request.path)
 - Log errors with contextual metadata
 - Avoid logging sensitive information (e.g., passwords, personal data)
 
+### Pydantic Serialization
+- **Usage**: Pydantic is used for data validation and serialization, especially in API layers.
+- **Request Validation**: Serializers should use Pydantic models to define expected request payloads, ensuring all incoming data is validated against a strict schema.
+- **Response Formatting**: API endpoints should serialize outgoing data using Pydantic models to guarantee consistent and well-formed responses.
+- **Separation of Concerns**: Pydantic models used for serialization should be kept separate from Django ORM models. They define the API contract, not the database schema.
+
+### API Response Wrapper
+All API responses, whether successful or not, must be wrapped in a consistent JSON structure. This ensures a predictable contract for clients.
+
+**Success Response:**
+```json
+{
+    "status": "success",
+    "code": 200,
+    "data": {
+        "key": "value"
+    },
+    "message": "Operation completed successfully."
+}
+```
+
+**Error Response:**
+```json
+{
+    "status": "error",
+    "code": 400,
+    "errors": {
+        "field_name": ["Error message 1.", "Error message 2."]
+    },
+    "message": "A validation error occurred."
+}
+```
+
+### Debugging
+- **No `print()`**: As stated in the general restrictions, `print()` is forbidden. Use the configured `structlog` logger.
+- **Debugger**: Use a proper debugger like `ipdb`, `pudb`, or the integrated VS Code debugger.
+- **Log Levels**: For debugging, use the `DEBUG` log level. Ensure sensitive information is not logged.
+- **Django Debug Toolbar**: The Django Debug Toolbar should be enabled in local development for inspecting requests, database queries, and other runtime information.
+
+### Styling
+- **Framework**: Use a utility-first CSS approach. While not yet integrated, the preferred framework would be **Tailwind CSS**.
+- **Custom CSS**: Any custom, non-utility CSS should be placed in the `assets/css/` directory.
+- **Component-Based**: Styles should be component-based where possible, corresponding to reusable template partials.
+- **No Inline Styles**: Avoid using inline `style` attributes in HTML templates.
+
+### JavaScript
+- **HTMX**: Use HTMX for server-driven, partial page updates to create dynamic interfaces with minimal custom JavaScript.
+- **AlpineJS**: Use AlpineJS for small, client-side interactions and state management directly within the HTML. It is the preferred tool for UI element toggling, simple form handling, and other minor interactive features.
+- **No Large Frameworks**: Avoid heavy client-side frameworks like React, Vue, or Angular. The project philosophy is to keep the frontend simple and server-rendered.
+- **Custom Scripts**: Any necessary custom JavaScript files should be placed in the `assets/js/` directory.
+
 ### Auth User Model Patterns
 The system must define a custom Django User model from the start. This allows for future extensibility (e.g., adding fields like `employee_id`, `role`, etc.) without needing a disruptive migration later. Guidelines:
 - Define a custom User model that inherits from `AbstractBaseUser` and `PermissionsMixin`

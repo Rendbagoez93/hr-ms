@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}{% if form.instance.pk %}Edit Emergency Contact{% else %}Add Emergency Contact{% endif %}{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Form to add or edit an emergency contact for an employee." />
+{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto">
+  <h1 class="page-title mb-1">
+    {% if form.instance.pk %}Edit Contact{% else %}Add Emergency Contact{% endif %}
+  </h1>
+  <p class="text-sm text-slate-500 mb-6">
+    For: <a href="{% url 'employee:employee-detail' employee.pk %}" class="text-indigo-600 hover:underline">{{ employee.full_name }}</a>
+  </p>
+
+  <form method="post" class="card p-6 space-y-5">
+    {% csrf_token %}
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="form-group sm:col-span-2">
+        <label class="form-label" for="{{ form.name.id_for_label }}">Full Name <span class="text-red-500">*</span></label>
+        {{ form.name }}
+        {% if form.name.errors %}<p class="form-error">{{ form.name.errors.0 }}</p>{% endif %}
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="{{ form.relationship.id_for_label }}">Relationship <span class="text-red-500">*</span></label>
+        {{ form.relationship }}
+        {% if form.relationship.errors %}<p class="form-error">{{ form.relationship.errors.0 }}</p>{% endif %}
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="{{ form.phone.id_for_label }}">Phone <span class="text-red-500">*</span></label>
+        {{ form.phone }}
+        {% if form.phone.errors %}<p class="form-error">{{ form.phone.errors.0 }}</p>{% endif %}
+      </div>
+      <div class="form-group sm:col-span-2">
+        <label class="form-label" for="{{ form.email.id_for_label }}">Email</label>
+        {{ form.email }}
+      </div>
+      <div class="form-group sm:col-span-2">
+        <label class="form-label" for="{{ form.address.id_for_label }}">Address</label>
+        {{ form.address }}
+      </div>
+      <div class="form-group sm:col-span-2 flex items-center gap-2">
+        {{ form.is_primary }}
+        <label class="text-sm text-slate-700" for="{{ form.is_primary.id_for_label }}">Set as primary contact</label>
+      </div>
+    </div>
+
+    {% if form.non_field_errors %}
+      <div class="form-error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="flex items-center gap-3 pt-2">
+      <button type="submit" class="btn btn-primary">
+        {% if form.instance.pk %}Save Changes{% else %}Add Contact{% endif %}
+      </button>
+      <a href="{% url 'employee:employee-detail' employee.pk %}" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

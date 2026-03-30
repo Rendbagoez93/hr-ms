@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% load dict_extras %}
+
+{% block title %}New Bulk Import — Settings{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Upload a new file for bulk data import." />
+{% endblock %}
+
+{% block breadcrumb %}
+  {% include "components/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+  <h1 class="page-title mb-6">New Bulk Import</h1>
+
+  {% include "components/_messages.html" %}
+
+  <div class="card p-6 space-y-6">
+
+    <!-- Info banner -->
+    <div class="rounded-lg bg-blue-50 border border-blue-200 p-4 text-sm text-blue-800">
+      <p class="font-medium mb-1">How it works</p>
+      <ol class="list-decimal ml-4 space-y-1">
+        <li>Select the data type you want to import.</li>
+        <li>Upload your CSV or Excel (.xlsx) file.</li>
+        <li>Map the file's column headers to the correct model fields.</li>
+        <li>Run the import — records will be created or updated automatically.</li>
+      </ol>
+    </div>
+
+    <form method="post" enctype="multipart/form-data" class="space-y-5">
+      {% csrf_token %}
+
+      <div class="form-group">
+        <label class="form-label" for="id_import_type">
+          Import Type <span class="text-red-500">*</span>
+        </label>
+        <select id="id_import_type" name="import_type" class="form-input" required>
+          <option value="">— Select import type —</option>
+          {% for value, label in import_types %}
+            <option value="{{ value }}">{{ label }}</option>
+          {% endfor %}
+        </select>
+        <p class="text-xs text-slate-400 mt-1">
+          <strong>Employee</strong>, <strong>Emergency Contact</strong>, <strong>Employment</strong>,
+          <strong>Contract</strong>, <strong>Salary</strong>, <strong>Department</strong>, or <strong>Job Title</strong>.
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_file">
+          Upload File <span class="text-red-500">*</span>
+        </label>
+        <input id="id_file" type="file" name="file" accept=".csv,.xlsx,.xls"
+               class="form-input py-1.5 file:mr-3 file:py-1 file:px-3 file:rounded file:border-0
+                      file:text-sm file:font-medium file:bg-indigo-50 file:text-indigo-700
+                      hover:file:bg-indigo-100" required>
+        <p class="text-xs text-slate-400 mt-1">Accepted formats: <code>.csv</code> or <code>.xlsx</code></p>
+      </div>
+
+      <div class="flex items-center gap-3 pt-2">
+        <button type="submit" class="btn btn-primary">Upload &amp; Continue</button>
+        <a href="{% url 'imports:list' %}" class="btn btn-ghost">Cancel</a>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Supported fields reference -->
+  <div class="mt-6 card p-6" x-data="{ open: false }">
+    <button type="button" @click="open = !open"
+            class="flex items-center justify-between w-full text-sm font-medium text-slate-700 hover:text-indigo-600">
+      <span>View expected columns for each import type</span>
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transition-transform" :class="open ? 'rotate-180' : ''"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </button>
+
+    <div x-show="open" x-collapse class="mt-4 space-y-4 text-sm">
+      {% for value, label in import_types %}
+        <div>
+          <p class="font-semibold text-slate-700 mb-1">{{ label }}</p>
+          <div class="flex flex-wrap gap-1.5">
+            {% if value == "employee" %}
+              {% for col in "employee_id,first_name,last_name,date_of_birth,gender,nationality,national_id,phone,personal_email,address_line_1,city,country"|split:"," %}
+                <span class="badge badge-neutral font-mono">{{ col }}</span>
+              {% endfor %}
+            {% elif value == "emergency_contact" %}
+              {% for col in "employee_id,name,relationship,phone,email,address,is_primary"|split:"," %}
+                <span class="badge badge-neutral font-mono">{{ col }}</span>
+              {% endfor %}
+            {% elif value == "employment" %}
+              {% for col in "employee_id,department_code,job_title_code,hire_date,status,work_location,end_date"|split:"," %}
+                <span class="badge badge-neutral font-mono">{{ col }}</span>
+              {% endfor %}
+            {% elif value == "contract" %}
+              {% for col in "employee_id,contract_type,start_date,end_date,terms"|split:"," %}
+                <span class="badge badge-neutral font-mono">{{ col }}</span>
+              {% endfor %}
+            {% elif value == "salary" %}
+              {% for col in "employee_id,amount,currency,payment_frequency,effective_date,pay_grade,end_date,notes"|split:"," %}
+                <span class="badge badge-neutral font-mono">{{ col }}</span>
+              {% endfor %}
+            {% elif value == "department" %}
+              {% for col in "name,code,description,parent_code"|split:"," %}
+                <span class="badge badge-neutral font-mono">{{ col }}</span>
+              {% endfor %}
+            {% elif value == "job_title" %}
+              {% for col in "name,code,description,department_code"|split:"," %}
+                <span class="badge badge-neutral font-mono">{{ col }}</span>
+              {% endfor %}
+            {% endif %}
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+</div>
+{% endblock %}

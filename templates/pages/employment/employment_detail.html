@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% block title %}{{ employment.employee.full_name }} — Employment{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Employment details for {{ employment.employee.full_name }}, including contracts and salary history." />
+{% endblock %}
+
+{% block content %}
+
+<!-- Header -->
+<div class="flex items-start justify-between mb-6">
+  <div>
+    <h1 class="page-title">{{ employment.employee.full_name }}</h1>
+    <p class="text-slate-500 text-sm mt-1">
+      {{ employment.job_title }} ·
+      <a href="{% url 'organization:department-detail' employment.department.pk %}" class="text-indigo-600 hover:underline">{{ employment.department }}</a>
+    </p>
+    <span class="mt-1 badge badge-{{ employment.status }} inline-flex">{{ employment.status }}</span>
+  </div>
+  <div class="flex items-center gap-2">
+    <a href="{% url 'employee:employee-detail' employment.employee.pk %}" class="btn btn-ghost">← Employee Profile</a>
+    <a href="{% url 'employment:employment-update' employment.pk %}" class="btn btn-outline">Edit</a>
+  </div>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+  <!-- Employment Details -->
+  <section class="card lg:col-span-1">
+    <div class="card-header"><h2 class="card-title">Details</h2></div>
+    <dl class="detail-grid">
+      <dt>Hire Date</dt><dd>{{ employment.hire_date }}</dd>
+      <dt>End Date</dt><dd>{{ employment.end_date|default:"—" }}</dd>
+      <dt>Work Location</dt><dd>{{ employment.work_location }}</dd>
+      <dt>Reporting Manager</dt>
+      <dd>
+        {% if employment.reporting_manager %}
+          <a href="{% url 'employee:employee-detail' employment.reporting_manager.pk %}" class="text-indigo-600 hover:underline">
+            {{ employment.reporting_manager.full_name }}
+          </a>
+        {% else %}—{% endif %}
+      </dd>
+    </dl>
+  </section>
+
+  <!-- Contracts -->
+  <section class="card lg:col-span-2">
+    <div class="card-header flex items-center justify-between">
+      <h2 class="card-title">Contracts</h2>
+      <a href="{% url 'employment:contract-create' employment.pk %}" class="btn btn-sm btn-outline">+ Add Contract</a>
+    </div>
+    {% if contracts %}
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Start</th>
+            <th>End</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for contract in contracts %}
+            <tr>
+              <td>{{ contract.contract_type }}</td>
+              <td>{{ contract.start_date }}</td>
+              <td>{{ contract.end_date|default:"Open-ended" }}</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-2">
+                  <a href="{% url 'employment:contract-update' employment.pk contract.pk %}" class="action-link">Edit</a>
+                  <a href="{% url 'employment:contract-delete' employment.pk contract.pk %}" class="action-link text-red-600 hover:text-red-800">Delete</a>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="px-4 py-6 text-center text-slate-400">No contracts on file.</p>
+    {% endif %}
+  </section>
+
+  <!-- Salary History -->
+  <section class="card lg:col-span-3">
+    <div class="card-header flex items-center justify-between">
+      <h2 class="card-title">Salary History</h2>
+      <a href="{% url 'employment:salary-create' employment.pk %}" class="btn btn-sm btn-outline">+ Add Salary</a>
+    </div>
+    {% if salary_history %}
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Grade</th>
+            <th>Amount</th>
+            <th>Currency</th>
+            <th>Frequency</th>
+            <th>Effective</th>
+            <th>End</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for salary in salary_history %}
+            <tr>
+              <td>{{ salary.pay_grade|default:"—" }}</td>
+              <td class="font-mono font-medium">{{ salary.amount }}</td>
+              <td>{{ salary.currency }}</td>
+              <td>{{ salary.payment_frequency }}</td>
+              <td>{{ salary.effective_date }}</td>
+              <td>{{ salary.end_date|default:"Current" }}</td>
+              <td class="text-right">
+                <div class="flex items-center justify-end gap-2">
+                  <a href="{% url 'employment:salary-update' employment.pk salary.pk %}" class="action-link">Edit</a>
+                  <a href="{% url 'employment:salary-delete' employment.pk salary.pk %}" class="action-link text-red-600 hover:text-red-800">Delete</a>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="px-4 py-6 text-center text-slate-400">No salary records on file.</p>
+    {% endif %}
+  </section>
+
+</div>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}{% if form.instance.pk %}Edit Contract{% else %}Add Contract{% endif %}{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Form to add or edit an employment contract." />
+{% endblock %}
+
+{% block content %}
+<div class="max-w-xl mx-auto">
+  <h1 class="page-title mb-1">{% if form.instance.pk %}Edit Contract{% else %}Add Contract{% endif %}</h1>
+  <p class="text-sm text-slate-500 mb-6">
+    For: <a href="{% url 'employment:employment-detail' employment.pk %}" class="text-indigo-600 hover:underline">{{ employment.employee.full_name }}</a>
+  </p>
+
+  <form method="post" enctype="multipart/form-data" class="card p-6 space-y-5">
+    {% csrf_token %}
+    <div class="form-group">
+      <label class="form-label" for="{{ form.contract_type.id_for_label }}">Contract Type <span class="text-red-500">*</span></label>
+      {{ form.contract_type }}
+      {% if form.contract_type.errors %}<p class="form-error">{{ form.contract_type.errors.0 }}</p>{% endif %}
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div class="form-group">
+        <label class="form-label" for="{{ form.start_date.id_for_label }}">Start Date <span class="text-red-500">*</span></label>
+        {{ form.start_date }}
+        {% if form.start_date.errors %}<p class="form-error">{{ form.start_date.errors.0 }}</p>{% endif %}
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="{{ form.end_date.id_for_label }}">End Date</label>
+        {{ form.end_date }}
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="{{ form.terms.id_for_label }}">Terms</label>
+      {{ form.terms }}
+    </div>
+    <div class="form-group">
+      <label class="form-label" for="{{ form.document.id_for_label }}">Document</label>
+      {{ form.document }}
+    </div>
+
+    {% if form.non_field_errors %}<div class="form-error">{{ form.non_field_errors }}</div>{% endif %}
+
+    <div class="flex items-center gap-3 pt-2">
+      <button type="submit" class="btn btn-primary">
+        {% if form.instance.pk %}Save Changes{% else %}Add Contract{% endif %}
+      </button>
+      <a href="{% url 'employment:employment-detail' employment.pk %}" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

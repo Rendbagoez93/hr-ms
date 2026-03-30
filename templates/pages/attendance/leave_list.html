@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Leave Requests{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Approve, reject, and monitor cuti requests from all employees." />
+{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
+{% endblock %}
+
+{% block breadcrumb %}
+  <nav class="attendance-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Dashboard</a>
+    <span>/</span>
+    <a href="{% url 'attendance:attendance-list' %}">Attendance</a>
+    <span>/</span>
+    <span aria-current="page">Leave Requests</span>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <section class="attendance-shell">
+    <header class="attendance-panel-head">
+      <div>
+        <p class="attendance-eyebrow">Attendance Admin</p>
+        <h1 class="page-title">Leave Request Management</h1>
+        <p class="attendance-subtitle">Approve, reject, and monitor cuti requests from all employees.</p>
+      </div>
+      <a href="{% url 'attendance:leave-create' %}" class="btn btn-primary">Create Leave Request</a>
+    </header>
+
+    <section class="attendance-panel">
+      <div class="attendance-actions">
+        <a href="{% url 'attendance:attendance-list' %}" class="btn btn-outline">Attendance Records</a>
+        <a href="{% url 'attendance:leave-list' %}" class="btn btn-primary">Leave Requests</a>
+        <a href="{% url 'attendance:schedule-list' %}" class="btn btn-outline">Work Schedules</a>
+      </div>
+
+      <form method="get" class="attendance-filter-form leave-filter-form">
+        <div>
+          <label for="q">Employee Name</label>
+          <input id="q" name="q" type="search" value="{{ search_query }}" placeholder="Search employee" autocomplete="off" />
+        </div>
+        <div>
+          <label for="status">Status</label>
+          <select id="status" name="status">
+            <option value="">All status</option>
+            {% for value, label in leave_statuses %}
+              <option value="{{ value }}" {% if status_filter == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="attendance-filter-actions" style="justify-content: flex-end;">
+          <button type="submit" class="btn btn-primary">Filter</button>
+          <a href="{% url 'attendance:leave-list' %}" class="btn btn-outline">Reset</a>
+        </div>
+      </form>
+    </section>
+
+    <section class="attendance-table-panel">
+      <header class="attendance-panel-head">
+        <h2>All Leave Requests</h2>
+      </header>
+      <div class="attendance-table-wrap">
+        <table class="attendance-table">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Leave Type</th>
+              <th>Period</th>
+              <th>Total Days</th>
+              <th>Status</th>
+              <th>Reviewed By</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for leave in leave_requests %}
+              <tr>
+                <td>
+                  <strong>{{ leave.employee.full_name }}</strong>
+                  <small>{{ leave.employee.employee_id }}</small>
+                </td>
+                <td>{{ leave.leave_type|title }}</td>
+                <td>{{ leave.start_date }} to {{ leave.end_date }}</td>
+                <td>{{ leave.total_days }}</td>
+                <td>
+                  <span class="status-chip status-{{ leave.status }}">{{ leave.status|title }}</span>
+                </td>
+                <td>
+                  {% if leave.approved_by %}
+                    {{ leave.approved_by.full_name }}
+                  {% else %}
+                    -
+                  {% endif %}
+                </td>
+                <td class="attendance-actions">
+                  <a href="{% url 'attendance:leave-detail' leave.pk %}" class="btn btn-ghost btn-sm">View</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="7" class="attendance-empty-state">
+                  <h3>No leave requests</h3>
+                  <p>Belum ada request cuti untuk ditampilkan.</p>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% if is_paginated %}
+        <nav class="attendance-pagination" aria-label="Pagination">
+          {% if page_obj.has_previous %}
+            <a href="?q={{ search_query }}&status={{ status_filter }}&page={{ page_obj.previous_page_number }}">Previous</a>
+          {% endif %}
+          <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+          {% if page_obj.has_next %}
+            <a href="?q={{ search_query }}&status={{ status_filter }}&page={{ page_obj.next_page_number }}">Next</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    </section>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/attendance.js' %}"></script>
+{% endblock %}

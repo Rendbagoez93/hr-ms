@@ -338,6 +338,7 @@
   display: flex;
   gap: 0.4rem;
   flex-wrap: wrap;
+  margin-bottom: 0.75rem;
 }
 
 .attendance-empty-state {
@@ -445,6 +446,19 @@
   background: #fbfdfb;
   display: grid;
   gap: 0.5rem;
+}
+
+.leave-filter-form {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+}
+
+.leave-filter-form .attendance-filter-actions {
+  justify-content: flex-end;
+}
+
+.checkin-form {
+  margin-top: 1rem;
 }
 
 @media (max-width: 1080px) {

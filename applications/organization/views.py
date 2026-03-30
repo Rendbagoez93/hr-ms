@@ -20,7 +20,7 @@ _HTMX_HEADER = "HX-Request"
 
 
 class DepartmentListView(LoginRequiredMixin, ListView):
-    template_name = "organization/department_list.html"
+    template_name = "pages/organization/department_list.html"
     context_object_name = "departments"
     paginate_by = 20
 
@@ -29,7 +29,7 @@ class DepartmentListView(LoginRequiredMixin, ListView):
 
 
 class DepartmentDetailView(LoginRequiredMixin, DetailView):
-    template_name = "organization/department_detail.html"
+    template_name = "pages/organization/department_detail.html"
     context_object_name = "department"
 
     def get_object(self, queryset=None):
@@ -44,7 +44,7 @@ class DepartmentDetailView(LoginRequiredMixin, DetailView):
 
 class DepartmentCreateView(LoginRequiredMixin, CreateView):
     model = Department
-    template_name = "organization/department_form.html"
+    template_name = "pages/organization/department_form.html"
     fields = ["name", "code", "description", "parent"]
     success_url = reverse_lazy("organization:department-list")
 
@@ -56,7 +56,7 @@ class DepartmentCreateView(LoginRequiredMixin, CreateView):
 
 
 class DepartmentUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = "organization/department_form.html"
+    template_name = "pages/organization/department_form.html"
     fields = ["name", "code", "description", "parent"]
 
     def get_object(self, queryset=None):
@@ -73,7 +73,7 @@ class DepartmentUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class DepartmentDeleteView(LoginRequiredMixin, DeleteView):
-    template_name = "organization/department_confirm_delete.html"
+    template_name = "pages/organization/department_confirm_delete.html"
     success_url = reverse_lazy("organization:department-list")
 
     def get_object(self, queryset=None):
@@ -91,7 +91,7 @@ class DepartmentDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class JobTitleListView(LoginRequiredMixin, ListView):
-    template_name = "organization/jobtitle_list.html"
+    template_name = "pages/organization/jobtitle_list.html"
     context_object_name = "job_titles"
     paginate_by = 20
 
@@ -111,7 +111,7 @@ class JobTitleListView(LoginRequiredMixin, ListView):
 
 class JobTitleCreateView(LoginRequiredMixin, CreateView):
     model = JobTitle
-    template_name = "organization/jobtitle_form.html"
+    template_name = "pages/organization/jobtitle_form.html"
     fields = ["name", "code", "description", "department"]
     success_url = reverse_lazy("organization:jobtitle-list")
 
@@ -128,7 +128,7 @@ class JobTitleCreateView(LoginRequiredMixin, CreateView):
 
 
 class JobTitleUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = "organization/jobtitle_form.html"
+    template_name = "pages/organization/jobtitle_form.html"
     fields = ["name", "code", "description", "department"]
     success_url = reverse_lazy("organization:jobtitle-list")
 
@@ -148,7 +148,7 @@ class JobTitleUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class JobTitleDeleteView(LoginRequiredMixin, DeleteView):
-    template_name = "organization/jobtitle_confirm_delete.html"
+    template_name = "pages/organization/jobtitle_confirm_delete.html"
     success_url = reverse_lazy("organization:jobtitle-list")
 
     def get_object(self, queryset=None):

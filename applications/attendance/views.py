@@ -54,7 +54,7 @@ def _late_minutes_for_employee(*, employee_pk, check_in_time):
 
 
 class AttendanceListView(LoginRequiredMixin, ListView):
-    template_name = "attendance/attendance_list.html"
+    template_name = "pages/attendance/attendance_list.html"
     context_object_name = "records"
     paginate_by = 25
 
@@ -76,7 +76,7 @@ class AttendanceListView(LoginRequiredMixin, ListView):
 class AttendanceCreateView(LoginRequiredMixin, CreateView):
     model = AttendanceRecord
     form_class = AttendanceRecordForm
-    template_name = "attendance/attendance_form.html"
+    template_name = "pages/attendance/attendance_form.html"
     success_url = reverse_lazy("attendance:attendance-list")
 
     def form_valid(self, form):
@@ -95,7 +95,7 @@ class AttendanceCreateView(LoginRequiredMixin, CreateView):
 
 
 class AttendanceDetailView(LoginRequiredMixin, DetailView):
-    template_name = "attendance/attendance_detail.html"
+    template_name = "pages/attendance/attendance_detail.html"
     context_object_name = "record"
 
     def get_object(self, queryset=None):
@@ -105,7 +105,7 @@ class AttendanceDetailView(LoginRequiredMixin, DetailView):
 class AttendanceUpdateView(LoginRequiredMixin, UpdateView):
     model = AttendanceRecord
     form_class = AttendanceRecordForm
-    template_name = "attendance/attendance_form.html"
+    template_name = "pages/attendance/attendance_form.html"
     success_url = reverse_lazy("attendance:attendance-list")
 
     def get_object(self, queryset=None):
@@ -127,7 +127,7 @@ class AttendanceUpdateView(LoginRequiredMixin, UpdateView):
 
 class AttendanceDeleteView(LoginRequiredMixin, DeleteView):
     model = AttendanceRecord
-    template_name = "attendance/attendance_confirm_delete.html"
+    template_name = "pages/attendance/attendance_confirm_delete.html"
     success_url = reverse_lazy("attendance:attendance-list")
 
     def get_object(self, queryset=None):
@@ -145,7 +145,7 @@ class AttendanceDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class LeaveRequestListView(LoginRequiredMixin, ListView):
-    template_name = "attendance/leave_list.html"
+    template_name = "pages/attendance/leave_list.html"
     context_object_name = "leave_requests"
     paginate_by = 25
 
@@ -172,7 +172,7 @@ class LeaveRequestListView(LoginRequiredMixin, ListView):
 class LeaveRequestCreateView(LoginRequiredMixin, CreateView):
     model = LeaveRequest
     form_class = LeaveRequestForm
-    template_name = "attendance/leave_form.html"
+    template_name = "pages/attendance/leave_form.html"
     success_url = reverse_lazy("attendance:leave-list")
 
     def form_valid(self, form):
@@ -189,7 +189,7 @@ class LeaveRequestCreateView(LoginRequiredMixin, CreateView):
 
 
 class LeaveRequestDetailView(LoginRequiredMixin, DetailView):
-    template_name = "attendance/leave_detail.html"
+    template_name = "pages/attendance/leave_detail.html"
     context_object_name = "leave_request"
 
     def get_object(self, queryset=None):
@@ -227,7 +227,7 @@ class LeaveCancelView(LoginRequiredMixin, View):
 
 
 class WorkScheduleListView(LoginRequiredMixin, ListView):
-    template_name = "attendance/schedule_list.html"
+    template_name = "pages/attendance/schedule_list.html"
     context_object_name = "schedules"
     paginate_by = 25
 
@@ -238,7 +238,7 @@ class WorkScheduleListView(LoginRequiredMixin, ListView):
 class WorkScheduleCreateView(LoginRequiredMixin, CreateView):
     model = WorkSchedule
     form_class = WorkScheduleForm
-    template_name = "attendance/schedule_form.html"
+    template_name = "pages/attendance/schedule_form.html"
     success_url = reverse_lazy("attendance:schedule-list")
 
     def form_valid(self, form):
@@ -258,7 +258,7 @@ class WorkScheduleCreateView(LoginRequiredMixin, CreateView):
 
 
 class WorkScheduleDetailView(LoginRequiredMixin, DetailView):
-    template_name = "attendance/schedule_detail.html"
+    template_name = "pages/attendance/schedule_detail.html"
     context_object_name = "schedule"
 
     def get_object(self, queryset=None):
@@ -268,7 +268,7 @@ class WorkScheduleDetailView(LoginRequiredMixin, DetailView):
 class WorkScheduleUpdateView(LoginRequiredMixin, UpdateView):
     model = WorkSchedule
     form_class = WorkScheduleForm
-    template_name = "attendance/schedule_form.html"
+    template_name = "pages/attendance/schedule_form.html"
     success_url = reverse_lazy("attendance:schedule-list")
 
     def get_object(self, queryset=None):
@@ -296,7 +296,7 @@ class WorkScheduleUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class CheckInOutAdminView(LoginRequiredMixin, View):
-    template_name = "attendance/checkin_admin.html"
+    template_name = "pages/attendance/checkin_admin.html"
 
     def get(self, request):
         today = timezone.localdate()
@@ -363,7 +363,7 @@ class CheckInOutAdminView(LoginRequiredMixin, View):
 
 
 class CheckInOutEmployeeView(LoginRequiredMixin, View):
-    template_name = "attendance/checkin_employee.html"
+    template_name = "pages/attendance/checkin_employee.html"
 
     def get(self, request):
         employee = getattr(request.user, "employee_profile", None)
@@ -431,7 +431,7 @@ class CheckInOutEmployeeView(LoginRequiredMixin, View):
 
 
 class CheckInOutAdminSelfView(CheckInOutEmployeeView):
-    template_name = "attendance/checkin_admin_self.html"
+    template_name = "pages/attendance/checkin_admin_self.html"
 
     def post(self, request):
         employee = getattr(request.user, "employee_profile", None)

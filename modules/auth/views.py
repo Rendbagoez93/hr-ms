@@ -6,6 +6,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .serializers import LoginSerializer, UserProfileSerializer
+from django.contrib.auth.views import LoginView as DjangoLoginView
+from django.urls import reverse_lazy
 
 
 # --- SimpleJWT integration point -------------------------------------------
@@ -27,20 +29,12 @@ def _token_pair(_user) -> dict:
     return {}
 
 
-class LoginView(APIView):
-    permission_classes: ClassVar[list] = [AllowAny]
+class LoginView(DjangoLoginView):
+    template_name = "pages/registration/login.html"
+    redirect_authenticated_user = True
 
-    def post(self, request):
-        serializer = LoginSerializer(data=request.data, context={"request": request})
-        serializer.is_valid(raise_exception=True)
-        user = serializer.validated_data["user"]
-        return Response(
-            {
-                "user": UserProfileSerializer(user).data,
-                **_token_pair(user),
-            },
-            status=status.HTTP_200_OK,
-        )
+    def get_success_url(self):
+        return reverse_lazy("employee:employee-list")
 
 
 class LogoutView(APIView):

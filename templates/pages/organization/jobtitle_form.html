@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}{% if form.instance.pk %}Edit Job Title{% else %}New Job Title{% endif %}{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Form to create or edit a job title." />
+{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto">
+  <h1 class="page-title mb-6">
+    {% if form.instance.pk %}Edit "{{ form.instance.name }}"{% else %}New Job Title{% endif %}
+  </h1>
+
+  <form method="post" class="card p-6 space-y-5">
+    {% csrf_token %}
+
+    <div class="form-group">
+      <label class="form-label" for="{{ form.name.id_for_label }}">Title Name <span class="text-red-500">*</span></label>
+      {{ form.name }}
+      {% if form.name.errors %}<p class="form-error">{{ form.name.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="{{ form.code.id_for_label }}">Code <span class="text-red-500">*</span></label>
+      {{ form.code }}
+      {% if form.code.errors %}<p class="form-error">{{ form.code.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="{{ form.department.id_for_label }}">Department</label>
+      {{ form.department }}
+      {% if form.department.errors %}<p class="form-error">{{ form.department.errors.0 }}</p>{% endif %}
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="{{ form.description.id_for_label }}">Description</label>
+      {{ form.description }}
+      {% if form.description.errors %}<p class="form-error">{{ form.description.errors.0 }}</p>{% endif %}
+    </div>
+
+    {% if form.non_field_errors %}
+      <div class="form-error">{{ form.non_field_errors }}</div>
+    {% endif %}
+
+    <div class="flex items-center gap-3 pt-2">
+      <button type="submit" class="btn btn-primary">
+        {% if form.instance.pk %}Save Changes{% else %}Create Job Title{% endif %}
+      </button>
+      <a href="{% url 'organization:jobtitle-list' %}" class="btn btn-ghost">Cancel</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

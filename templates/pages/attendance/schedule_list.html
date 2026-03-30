@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Work Schedules{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Maintain employee schedules for shift compliance and late-minute tracking." />
+{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
+{% endblock %}
+
+{% block breadcrumb %}
+  <nav class="attendance-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Dashboard</a>
+    <span>/</span>
+    <a href="{% url 'attendance:attendance-list' %}">Attendance</a>
+    <span>/</span>
+    <span aria-current="page">Work Schedules</span>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <section class="attendance-shell">
+    <header class="attendance-panel-head">
+      <div>
+        <p class="attendance-eyebrow">Attendance Admin</p>
+        <h1 class="page-title">Work Schedule Management</h1>
+        <p class="attendance-subtitle">Maintain employee schedules for shift compliance and late-minute tracking.</p>
+      </div>
+      <a href="{% url 'attendance:schedule-create' %}" class="btn btn-primary">Create Schedule</a>
+    </header>
+
+    <section class="attendance-panel">
+      <div class="attendance-actions">
+        <a href="{% url 'attendance:attendance-list' %}" class="btn btn-outline">Attendance Records</a>
+        <a href="{% url 'attendance:leave-list' %}" class="btn btn-outline">Leave Requests</a>
+        <a href="{% url 'attendance:schedule-list' %}" class="btn btn-primary">Work Schedules</a>
+      </div>
+      <p class="text-slate-500 text-sm">Default schedule and active period are shown for each employee.</p>
+    </section>
+
+    <section class="attendance-table-panel">
+      <header class="attendance-panel-head">
+        <h2>All Work Schedules</h2>
+      </header>
+      <div class="attendance-table-wrap">
+        <table class="attendance-table">
+          <thead>
+            <tr>
+              <th>Employee</th>
+              <th>Schedule Name</th>
+              <th>Check-in / Check-out</th>
+              <th>Work Days</th>
+              <th>Effective Period</th>
+              <th>Default</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for schedule in schedules %}
+              <tr>
+                <td>
+                  <strong>{{ schedule.employee.full_name }}</strong>
+                  <small>{{ schedule.employee.employee_id }}</small>
+                </td>
+                <td>{{ schedule.name }}</td>
+                <td>{{ schedule.expected_check_in }} to {{ schedule.expected_check_out }}</td>
+                <td>{{ schedule.work_days|join:", " }}</td>
+                <td>
+                  {{ schedule.effective_from }}
+                  {% if schedule.effective_to %}
+                    to {{ schedule.effective_to }}
+                  {% else %}
+                    to Open Ended
+                  {% endif %}
+                </td>
+                <td>
+                  {% if schedule.is_default %}
+                    <span class="status-chip status-present">Yes</span>
+                  {% else %}
+                    <span class="status-chip">No</span>
+                  {% endif %}
+                </td>
+                <td class="attendance-actions">
+                  <a href="{% url 'attendance:schedule-detail' schedule.pk %}" class="btn btn-ghost btn-sm">View</a>
+                  <a href="{% url 'attendance:schedule-update' schedule.pk %}" class="btn btn-outline btn-sm">Edit</a>
+                </td>
+              </tr>
+            {% empty %}
+              <tr>
+                <td colspan="7" class="attendance-empty-state">
+                  <h3>No work schedules</h3>
+                  <p>Belum ada jadwal kerja yang terdaftar.</p>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      {% if is_paginated %}
+        <nav class="attendance-pagination" aria-label="Pagination">
+          {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+          {% endif %}
+          <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+          {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+          {% endif %}
+        </nav>
+      {% endif %}
+    </section>
+  </section>
+{% endblock %}
+
+{% block extra_js %}
+  <script src="{% static 'js/attendance.js' %}"></script>
+{% endblock %}

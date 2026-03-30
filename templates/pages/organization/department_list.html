@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Departments{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Manage all organizational departments." />
+{% endblock %}
+
+{% block breadcrumb %}
+  {% with breadcrumbs=breadcrumbs|default:None %}
+    {% include "components/_breadcrumb.html" with breadcrumbs='[{"label":"Organization"},{"label":"Departments","url":""}]'|safe %}
+  {% endwith %}
+{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-between mb-6">
+  <h1 class="page-title">Departments</h1>
+  <a href="{% url 'organization:department-create' %}" class="btn btn-primary">
+    + New Department
+  </a>
+</div>
+
+<!-- Table -->
+<div class="card overflow-hidden">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Code</th>
+        <th>Parent</th>
+        <th>Sub-departments</th>
+        <th>Job Titles</th>
+        <th class="text-right">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for dept in departments %}
+        <tr>
+          <td>
+            <a href="{% url 'organization:department-detail' dept.pk %}" class="font-medium text-indigo-600 hover:underline">
+              {{ dept.name }}
+            </a>
+          </td>
+          <td class="font-mono text-slate-500 text-sm">{{ dept.code }}</td>
+          <td>{{ dept.parent.name|default:"—" }}</td>
+          <td>{{ dept.children.count }}</td>
+          <td>{{ dept.job_titles.count }}</td>
+          <td class="text-right">
+            <div class="flex items-center justify-end gap-2">
+              <a href="{% url 'organization:department-update' dept.pk %}" class="action-link">Edit</a>
+              <a href="{% url 'organization:department-delete' dept.pk %}"
+                 class="action-link text-red-600 hover:text-red-800">Delete</a>
+            </div>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="6" class="text-center py-12 text-slate-400">No departments found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% include "components/_pagination.html" %}
+{% endblock %}

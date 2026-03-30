@@ -1,0 +1,247 @@
+{% extends "base.html" %}
+
+{% block title %}Company Profile — Settings{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Manage your company's identity, branding, and HR configuration." />
+{% endblock %}
+
+{% block breadcrumb %}
+  {% include "components/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
+{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-between mb-6">
+  <div>
+    <h1 class="page-title">Company Profile</h1>
+    <p class="text-slate-500 mt-1">Manage your company's identity, branding, and HR configuration.</p>
+  </div>
+  {% if profile.logo %}
+    <img src="{{ profile.logo.url }}" alt="Company Logo" class="h-14 w-auto rounded-lg border border-slate-200 shadow-sm">
+  {% endif %}
+</div>
+
+{% include "components/_messages.html" %}
+
+<form method="post" enctype="multipart/form-data" class="space-y-6">
+  {% csrf_token %}
+
+  <!-- Identity -->
+  <section class="card p-6 space-y-5">
+    <h2 class="text-base font-semibold text-slate-700 border-b border-slate-100 pb-3">Identity</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+      <div class="form-group">
+        <label class="form-label" for="id_name">Company Name <span class="text-red-500">*</span></label>
+        <input id="id_name" type="text" name="name" value="{{ profile.name }}"
+               class="form-input" required maxlength="200">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_legal_name">Legal Name</label>
+        <input id="id_legal_name" type="text" name="legal_name" value="{{ profile.legal_name }}"
+               class="form-input" maxlength="200">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_tax_id">Tax ID (NPWP)</label>
+        <input id="id_tax_id" type="text" name="tax_id" value="{{ profile.tax_id }}"
+               class="form-input" maxlength="50">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_registration_number">Registration Number</label>
+        <input id="id_registration_number" type="text" name="registration_number"
+               value="{{ profile.registration_number }}" class="form-input" maxlength="100">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_industry">Industry</label>
+        <input id="id_industry" type="text" name="industry" value="{{ profile.industry }}"
+               class="form-input" maxlength="100">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_founded">Founded Year</label>
+        <input id="id_founded" type="text" name="founded" value="{{ profile.founded }}"
+               class="form-input" maxlength="10" placeholder="e.g. 2010">
+      </div>
+
+    </div>
+
+    <!-- Logo -->
+    <div class="form-group" x-data="{ hasLogo: {% if profile.logo %}true{% else %}false{% endif %} }">
+      <label class="form-label">Company Logo</label>
+      <input type="file" name="logo" accept="image/*" class="form-input py-1.5"
+             @change="hasLogo = $event.target.files.length > 0">
+      {% if profile.logo %}
+        <div class="mt-2 flex items-center gap-3">
+          <img src="{{ profile.logo.url }}" alt="Current logo" class="h-10 rounded border border-slate-200">
+          <label class="text-sm text-slate-500 flex items-center gap-1 cursor-pointer">
+            <input type="checkbox" name="logo_clear" value="1" @change="hasLogo = !$event.target.checked">
+            <span>Remove current logo</span>
+          </label>
+        </div>
+      {% endif %}
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="card p-6 space-y-5">
+    <h2 class="text-base font-semibold text-slate-700 border-b border-slate-100 pb-3">Contact</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+      <div class="form-group">
+        <label class="form-label" for="id_email">Email</label>
+        <input id="id_email" type="email" name="email" value="{{ profile.email }}"
+               class="form-input" maxlength="254">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_phone">Phone</label>
+        <input id="id_phone" type="text" name="phone" value="{{ profile.phone }}"
+               class="form-input" maxlength="50">
+      </div>
+
+      <div class="form-group md:col-span-2">
+        <label class="form-label" for="id_website">Website</label>
+        <input id="id_website" type="url" name="website" value="{{ profile.website }}"
+               class="form-input" placeholder="https://example.com">
+      </div>
+
+    </div>
+
+    <h3 class="text-sm font-medium text-slate-600 pt-2">Social Media</h3>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+      <div class="form-group">
+        <label class="form-label" for="id_linkedin">LinkedIn</label>
+        <input id="id_linkedin" type="url" name="linkedin" value="{{ profile.linkedin }}"
+               class="form-input" placeholder="https://linkedin.com/company/...">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_instagram">Instagram</label>
+        <input id="id_instagram" type="url" name="instagram" value="{{ profile.instagram }}"
+               class="form-input" placeholder="https://instagram.com/...">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_twitter">Twitter / X</label>
+        <input id="id_twitter" type="url" name="twitter" value="{{ profile.twitter }}"
+               class="form-input" placeholder="https://twitter.com/...">
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Address -->
+  <section class="card p-6 space-y-5">
+    <h2 class="text-base font-semibold text-slate-700 border-b border-slate-100 pb-3">Address</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+      <div class="form-group md:col-span-2">
+        <label class="form-label" for="id_address_street">Street Address</label>
+        <input id="id_address_street" type="text" name="address_street"
+               value="{{ profile.address_street }}" class="form-input" maxlength="255">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_address_city">City</label>
+        <input id="id_address_city" type="text" name="address_city"
+               value="{{ profile.address_city }}" class="form-input" maxlength="100">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_address_state">State / Province</label>
+        <input id="id_address_state" type="text" name="address_state"
+               value="{{ profile.address_state }}" class="form-input" maxlength="100">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_address_postal_code">Postal Code</label>
+        <input id="id_address_postal_code" type="text" name="address_postal_code"
+               value="{{ profile.address_postal_code }}" class="form-input" maxlength="20">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_address_country">Country</label>
+        <input id="id_address_country" type="text" name="address_country"
+               value="{{ profile.address_country }}" class="form-input" maxlength="100">
+      </div>
+
+    </div>
+  </section>
+
+  <!-- HR Configuration -->
+  <section class="card p-6 space-y-5">
+    <h2 class="text-base font-semibold text-slate-700 border-b border-slate-100 pb-3">HR Configuration</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+
+      <div class="form-group">
+        <label class="form-label" for="id_work_hours_per_week">Work Hours / Week</label>
+        <input id="id_work_hours_per_week" type="number" name="work_hours_per_week"
+               value="{{ profile.work_hours_per_week }}" class="form-input" min="1" max="168">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_probation_days">Probation Period (days)</label>
+        <input id="id_probation_days" type="number" name="probation_days"
+               value="{{ profile.probation_days }}" class="form-input" min="0">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_annual_leave_days">Annual Leave Days</label>
+        <input id="id_annual_leave_days" type="number" name="annual_leave_days"
+               value="{{ profile.annual_leave_days }}" class="form-input" min="0">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_sick_leave_days">Sick Leave Days</label>
+        <input id="id_sick_leave_days" type="number" name="sick_leave_days"
+               value="{{ profile.sick_leave_days }}" class="form-input" min="0">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_default_currency">Default Currency</label>
+        <input id="id_default_currency" type="text" name="default_currency"
+               value="{{ profile.default_currency }}" class="form-input" maxlength="10"
+               placeholder="IDR">
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_payroll_cycle">Payroll Cycle</label>
+        <select id="id_payroll_cycle" name="payroll_cycle" class="form-input">
+          {% for value, label in payroll_choices %}
+            <option value="{{ value }}" {% if profile.payroll_cycle == value %}selected{% endif %}>{{ label }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="form-group md:col-span-2">
+        <label class="form-label" for="id_employee_id_format">Employee ID Format</label>
+        <input id="id_employee_id_format" type="text" name="employee_id_format"
+               value="{{ profile.employee_id_format }}" class="form-input" maxlength="50">
+        <p class="text-xs text-slate-400 mt-1">Use <code>{YEAR}</code> and <code>{SEQ:04d}</code> as placeholders.</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="id_timezone">Timezone</label>
+        <input id="id_timezone" type="text" name="timezone" value="{{ profile.timezone }}"
+               class="form-input" maxlength="50" placeholder="Asia/Jakarta">
+      </div>
+
+    </div>
+  </section>
+
+  <div class="flex items-center gap-3">
+    <button type="submit" class="btn btn-primary">Save Changes</button>
+    <a href="{% url 'settings:index' %}" class="btn btn-ghost">Cancel</a>
+  </div>
+
+</form>
+{% endblock %}
