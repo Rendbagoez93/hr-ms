@@ -1,5 +1,6 @@
 import structlog
 from django.contrib import messages
+from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
@@ -437,6 +438,13 @@ class CheckInOutAdminSelfView(UserPassesTestMixin, CheckInOutEmployeeView):
     def test_func(self):
         return self.request.user.is_staff
 
+    def dispatch(self, request, *args, **kwargs):
+        # Superusers may have been created or promoted outside of create_superuser(),
+        # so their employee profile might not have been auto-created yet. Ensure it exists.
+        if request.user.is_authenticated and request.user.is_superuser:
+            if getattr(request.user, "employee_profile", None) is None:
+                get_user_model().objects._ensure_superuser_employee_profile(user=request.user)
+        return super().dispatch(request, *args, **kwargs)
 
     def post(self, request):
         employee = getattr(request.user, "employee_profile", None)
