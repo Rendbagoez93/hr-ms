@@ -16,7 +16,7 @@ logger = structlog.get_logger(__name__)
 
 
 class ImportJobListView(LoginRequiredMixin, ListView):
-    template_name = "settings/bulk_import_list.html"
+    template_name = "pages/settings/bulk_import_list.html"
     context_object_name = "jobs"
     paginate_by = 20
 
@@ -35,7 +35,7 @@ class ImportJobListView(LoginRequiredMixin, ListView):
 
 
 class ImportJobCreateView(LoginRequiredMixin, View):
-    template_name = "settings/bulk_import_create.html"
+    template_name = "pages/settings/bulk_import_create.html"
 
     def get(self, request: HttpRequest) -> HttpResponse:
         return self._render(request)
@@ -92,7 +92,7 @@ class ImportJobCreateView(LoginRequiredMixin, View):
 
 
 class ImportJobMappingView(LoginRequiredMixin, View):
-    template_name = "settings/bulk_import_mapping.html"
+    template_name = "pages/settings/bulk_import_mapping.html"
 
     def get(self, request: HttpRequest, pk: str) -> HttpResponse:
         job = get_object_or_404(ImportJob, pk=pk)
@@ -183,7 +183,7 @@ class ImportJobProcessView(LoginRequiredMixin, View):
 
 
 class ImportJobDetailView(LoginRequiredMixin, DetailView):
-    template_name = "settings/bulk_import_detail.html"
+    template_name = "pages/settings/bulk_import_detail.html"
     context_object_name = "job"
 
     def get_object(self, queryset=None):  # noqa: ARG002

@@ -29,7 +29,7 @@ logger = structlog.get_logger(__name__)
 
 
 class EmploymentListView(LoginRequiredMixin, ListView):
-    template_name = "employment/employment_list.html"
+    template_name = "pages/employment/employment_list.html"
     context_object_name = "employments"
     paginate_by = 25
 
@@ -55,7 +55,7 @@ class EmploymentListView(LoginRequiredMixin, ListView):
 
 
 class EmploymentDetailView(LoginRequiredMixin, DetailView):
-    template_name = "employment/employment_detail.html"
+    template_name = "pages/employment/employment_detail.html"
     context_object_name = "employment"
 
     def get_object(self, queryset=None):
@@ -70,7 +70,7 @@ class EmploymentDetailView(LoginRequiredMixin, DetailView):
 
 class EmploymentCreateView(LoginRequiredMixin, CreateView):
     model = Employment
-    template_name = "employment/employment_form.html"
+    template_name = "pages/employment/employment_form.html"
     form_class = EmploymentForm
 
     def get_context_data(self, **kwargs):
@@ -91,7 +91,7 @@ class EmploymentCreateView(LoginRequiredMixin, CreateView):
 
 
 class EmploymentUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = "employment/employment_form.html"
+    template_name = "pages/employment/employment_form.html"
     form_class = EmploymentUpdateForm
 
     def get_object(self, queryset=None):
