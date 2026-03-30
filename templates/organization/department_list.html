@@ -2,6 +2,10 @@
 
 {% block title %}Departments{% endblock %}
 
+{% block meta %}
+  <meta name="description" content="Manage all organizational departments." />
+{% endblock %}
+
 {% block breadcrumb %}
   {% with breadcrumbs=breadcrumbs|default:None %}
     {% include "components/_breadcrumb.html" with breadcrumbs='[{"label":"Organization"},{"label":"Departments","url":""}]'|safe %}

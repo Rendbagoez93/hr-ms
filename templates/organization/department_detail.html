@@ -2,6 +2,10 @@
 
 {% block title %}{{ department.name }}{% endblock %}
 
+{% block meta %}
+  <meta name="description" content="Details for the {{ department.name }} department." />
+{% endblock %}
+
 {% block content %}
 <div class="mb-6 flex items-start justify-between">
   <div>

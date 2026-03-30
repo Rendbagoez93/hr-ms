@@ -2,6 +2,10 @@
 
 {% block title %}{% if form.instance.pk %}Edit Department{% else %}New Department{% endif %}{% endblock %}
 
+{% block meta %}
+  <meta name="description" content="Form to create or edit an organizational department." />
+{% endblock %}
+
 {% block content %}
 <div class="max-w-2xl mx-auto">
   <h1 class="page-title mb-6">
