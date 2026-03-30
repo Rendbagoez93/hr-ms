@@ -431,7 +431,7 @@ class CheckInOutEmployeeView(LoginRequiredMixin, View):
         return render(request, self.template_name, context)
 
 
-class CheckInOutAdminSelfView(LoginRequiredMixin, UserPassesTestMixin, CheckInOutEmployeeView):
+class CheckInOutAdminSelfView(UserPassesTestMixin, CheckInOutEmployeeView):
     template_name = "pages/attendance/checkin_admin_self.html"
 
     def test_func(self):
