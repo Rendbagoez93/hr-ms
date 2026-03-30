@@ -57,7 +57,7 @@
               <p class="attendance-detail-value">{{ today_record.check_out|default:"-" }}</p>
             </div>
           </div>
-          <form method="post" class="attendance-actions" style="margin-top: 1rem;">
+          <form method="post" class="attendance-actions checkin-form">
             {% csrf_token %}
             <button type="submit" name="action" value="check_in" class="btn btn-primary">Check In</button>
             <button type="submit" name="action" value="check_out" class="btn btn-danger">Check Out</button>
