@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "layouts/base.html" %}
 {% load dict_extras %}
 
 {% block title %}Field Mapping — {{ job.file_name }}{% endblock %}
@@ -8,7 +8,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
-  {% include "components/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
+  {% include "partials/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,6 @@
     </p>
   </div>
 
-  {% include "components/_messages.html" %}
 
   <div class="card p-6">
     <div class="flex items-center gap-3 p-3 rounded-lg bg-slate-50 border border-slate-200 mb-6 text-sm">

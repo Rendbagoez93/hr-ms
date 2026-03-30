@@ -1,0 +1,104 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %}Attendance Record Detail{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="View the attendance record details for an employee." />
+{% endblock %}
+
+{% block styles %}
+  <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
+{% endblock %}
+
+{% block breadcrumb %}
+  <nav class="attendance-breadcrumb" aria-label="Breadcrumb">
+    <a href="/">Dashboard</a>
+    <span>/</span>
+    <a href="{% url 'attendance:attendance-list' %}">Attendance</a>
+    <span>/</span>
+    <span aria-current="page">Record Detail</span>
+  </nav>
+{% endblock %}
+
+{% block content %}
+  <section class="attendance-shell">
+    <header class="attendance-panel-head">
+      <div>
+        <p class="attendance-eyebrow">Attendance Management</p>
+        <h1 class="page-title">Detail Kehadiran</h1>
+        <p class="attendance-subtitle">View the full attendance record for this employee on the selected date.</p>
+      </div>
+      <div class="attendance-actions">
+        <a href="{% url 'attendance:attendance-list' %}" class="btn btn-outline">Back to List</a>
+        <a href="{% url 'attendance:attendance-update' record.pk %}" class="btn btn-primary">Edit Record</a>
+        <a href="{% url 'attendance:attendance-delete' record.pk %}" class="btn btn-danger">Delete</a>
+      </div>
+    </header>
+
+    <section class="attendance-panel">
+      <div class="attendance-detail-grid">
+        <div>
+          <p class="attendance-detail-label">Employee</p>
+          <p class="attendance-detail-value">{{ record.employee.full_name }} ({{ record.employee.employee_id }})</p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Date</p>
+          <p class="attendance-detail-value">{{ record.date }}</p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Status</p>
+          <p class="attendance-detail-value">
+            <span class="status-chip status-{{ record.status|lower }}">{{ record.get_status_display }}</span>
+          </p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Check-in</p>
+          <p class="attendance-detail-value">
+            {% if record.check_in %}
+              {{ record.check_in }}
+            {% else %}
+              <span class="text-slate-400">—</span>
+            {% endif %}
+          </p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Check-out</p>
+          <p class="attendance-detail-value">
+            {% if record.check_out %}
+              {{ record.check_out }}
+            {% else %}
+              <span class="text-slate-400">—</span>
+            {% endif %}
+          </p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Work Hours</p>
+          <p class="attendance-detail-value">
+            {% if record.work_hours %}
+              {{ record.work_hours }} jam
+            {% else %}
+              <span class="text-slate-400">—</span>
+            {% endif %}
+          </p>
+        </div>
+        <div>
+          <p class="attendance-detail-label">Late Minutes</p>
+          <p class="attendance-detail-value">
+            {% if record.late_minutes %}
+              {{ record.late_minutes }} menit
+            {% else %}
+              <span class="text-slate-400">—</span>
+            {% endif %}
+          </p>
+        </div>
+        {% if record.notes %}
+          <div class="attendance-span-2">
+            <p class="attendance-detail-label">Notes</p>
+            <p class="attendance-detail-value">{{ record.notes }}</p>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  </section>
+{% endblock %}

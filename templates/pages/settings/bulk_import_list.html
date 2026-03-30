@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "layouts/base.html" %}
 
 {% block title %}Bulk Import — Settings{% endblock %}
 
@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
-  {% include "components/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
+  {% include "partials/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,6 @@
   </a>
 </div>
 
-{% include "components/_messages.html" %}
 
 <!-- Import Jobs Table -->
 <div class="card overflow-hidden">
@@ -100,5 +99,5 @@
   </table>
 </div>
 
-{% include "components/_pagination.html" %}
+{% include "partials/_pagination.html" %}
 {% endblock %}

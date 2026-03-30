@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "layouts/base.html" %}
 {% load static %}
 
 {% block title %}Attendance Hub{% endblock %}
@@ -190,6 +190,6 @@
   </section>
 {% endblock %}
 
-{% block extra_js %}
+{% block scripts %}
   <script src="{% static 'js/attendance.js' %}"></script>
 {% endblock %}

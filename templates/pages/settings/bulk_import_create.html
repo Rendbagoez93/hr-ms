@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "layouts/base.html" %}
 {% load dict_extras %}
 
 {% block title %}New Bulk Import — Settings{% endblock %}
@@ -8,14 +8,13 @@
 {% endblock %}
 
 {% block breadcrumb %}
-  {% include "components/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
+  {% include "partials/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
 {% endblock %}
 
 {% block content %}
 <div class="max-w-2xl mx-auto">
   <h1 class="page-title mb-6">New Bulk Import</h1>
 
-  {% include "components/_messages.html" %}
 
   <div class="card p-6 space-y-6">
 

@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+﻿{% extends "layouts/base.html" %}
 {% load static %}
 
 {% block title %}Admin Self Check In / Out{% endblock %}
 
-{% block extra_css %}
+{% block styles %}
   <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
 {% endblock %}
 
@@ -96,6 +96,6 @@
   </section>
 {% endblock %}
 
-{% block extra_js %}
+{% block scripts %}
   <script src="{% static 'js/checkin.js' %}"></script>
 {% endblock %}

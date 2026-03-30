@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "layouts/base.html" %}
 {% load static %}
 
 {% block title %}Admin Check In / Out{% endblock %}
@@ -114,6 +114,6 @@
   </section>
 {% endblock %}
 
-{% block extra_js %}
+{% block scripts %}
   <script src="{% static 'js/checkin.js' %}"></script>
 {% endblock %}
