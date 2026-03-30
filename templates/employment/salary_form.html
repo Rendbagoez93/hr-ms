@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{% if form.instance.pk %}Edit Salary{% else %}Add Salary Record{% endif %}{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Form to add or edit a salary record." />
+{% endblock %}
+
 {% block content %}
 <div class="max-w-xl mx-auto">
   <h1 class="page-title mb-1">{% if form.instance.pk %}Edit Salary{% else %}Add Salary Record{% endif %}</h1>

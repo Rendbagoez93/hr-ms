@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{% if form.instance.pk %}Edit Employment Record{% else %}New Employment Record{% endif %}{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Form to create or edit an employee's employment record." />
+{% endblock %}
+
 {% block content %}
 <div class="max-w-2xl mx-auto">
   <h1 class="page-title mb-6">

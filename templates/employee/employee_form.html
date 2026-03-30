@@ -2,6 +2,10 @@
 
 {% block title %}{% if form.instance.pk %}Edit {{ form.instance.full_name }}{% else %}New Employee{% endif %}{% endblock %}
 
+{% block meta %}
+  <meta name="description" content="Form to create or edit an employee's profile and personal information." />
+{% endblock %}
+
 {% block content %}
 <div class="max-w-3xl mx-auto">
   <h1 class="page-title mb-6">

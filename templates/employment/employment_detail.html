@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% block title %}{{ employment.employee.full_name }} — Employment{% endblock %}
+
+{% block meta %}
+  <meta name="description" content="Employment details for {{ employment.employee.full_name }}, including contracts and salary history." />
+{% endblock %}
+
 {% block content %}
 
 <!-- Header -->
