@@ -3,7 +3,11 @@
 
 {% block title %}Attendance Hub{% endblock %}
 
-{% block extra_css %}
+{% block meta %}
+  <meta name="description" content="Monitor clock-ins, work hours, and attendance status in one workspace." />
+{% endblock %}
+
+{% block styles %}
   <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
 {% endblock %}
 
@@ -61,7 +65,7 @@
           <h2>Quick Timeline</h2>
           <a href="{% url 'attendance:attendance-create' %}" class="btn btn-primary">New Record</a>
         </header>
-        <div class="attendance-actions" style="margin-bottom: 0.75rem;">
+        <div class="attendance-actions">
           <a href="{% url 'attendance:attendance-list' %}" class="btn btn-primary btn-sm">Attendance Records</a>
           <a href="{% url 'attendance:leave-list' %}" class="btn btn-outline btn-sm">Leave Requests</a>
           <a href="{% url 'attendance:schedule-list' %}" class="btn btn-outline btn-sm">Work Schedules</a>

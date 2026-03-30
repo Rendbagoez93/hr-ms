@@ -3,7 +3,11 @@
 
 {% block title %}My Check In / Out{% endblock %}
 
-{% block extra_css %}
+{% block meta %}
+  <meta name="description" content="Clock your workday with one tap, and monitor your latest attendance records." />
+{% endblock %}
+
+{% block styles %}
   <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
 {% endblock %}
 
@@ -57,7 +61,7 @@
               <p class="attendance-detail-value">{{ today_record.check_out|default:"-" }}</p>
             </div>
           </div>
-          <form method="post" class="attendance-actions" style="margin-top: 1rem;">
+          <form method="post" class="attendance-actions checkin-form">
             {% csrf_token %}
             <button type="submit" name="action" value="check_in" class="btn btn-primary">Check In</button>
             <button type="submit" name="action" value="check_out" class="btn btn-danger">Check Out</button>
@@ -95,6 +99,6 @@
   </section>
 {% endblock %}
 
-{% block extra_js %}
+{% block scripts %}
   <script src="{% static 'js/checkin.js' %}"></script>
 {% endblock %}

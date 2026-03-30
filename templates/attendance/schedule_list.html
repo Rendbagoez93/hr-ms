@@ -3,7 +3,11 @@
 
 {% block title %}Work Schedules{% endblock %}
 
-{% block extra_css %}
+{% block meta %}
+  <meta name="description" content="Maintain employee schedules for shift compliance and late-minute tracking." />
+{% endblock %}
+
+{% block styles %}
   <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
 {% endblock %}
 
@@ -29,7 +33,7 @@
     </header>
 
     <section class="attendance-panel">
-      <div class="attendance-actions" style="margin-bottom: 0.75rem;">
+      <div class="attendance-actions">
         <a href="{% url 'attendance:attendance-list' %}" class="btn btn-outline">Attendance Records</a>
         <a href="{% url 'attendance:leave-list' %}" class="btn btn-outline">Leave Requests</a>
         <a href="{% url 'attendance:schedule-list' %}" class="btn btn-primary">Work Schedules</a>

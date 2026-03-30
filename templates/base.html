@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{% block title %}HR-MS{% endblock %} — HR Management System</title>
+  {% block meta %}{% endblock %}
 
   <!-- HTMX -->
   <script src="https://unpkg.com/htmx.org@1.9.12" defer></script>
@@ -14,7 +15,7 @@
   <!-- App CSS -->
   {% load static %}
   <link rel="stylesheet" href="{% static 'css/app.css' %}" />
-  {% block extra_css %}{% endblock %}
+  {% block styles %}{% endblock %}
 </head>
 
 <body class="h-full" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}' x-data>
@@ -41,7 +42,7 @@
 
   <!-- App JS -->
   <script src="{% static 'js/app.js' %}"></script>
-  {% block extra_js %}{% endblock %}
+  {% block scripts %}{% endblock %}
 </body>
 </html>
 

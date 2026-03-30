@@ -3,7 +3,11 @@
 
 {% block title %}Leave Requests{% endblock %}
 
-{% block extra_css %}
+{% block meta %}
+  <meta name="description" content="Approve, reject, and monitor cuti requests from all employees." />
+{% endblock %}
+
+{% block styles %}
   <link rel="stylesheet" href="{% static 'css/attendance.css' %}" />
 {% endblock %}
 
@@ -29,13 +33,13 @@
     </header>
 
     <section class="attendance-panel">
-      <div class="attendance-actions" style="margin-bottom: 0.75rem;">
+      <div class="attendance-actions">
         <a href="{% url 'attendance:attendance-list' %}" class="btn btn-outline">Attendance Records</a>
         <a href="{% url 'attendance:leave-list' %}" class="btn btn-primary">Leave Requests</a>
         <a href="{% url 'attendance:schedule-list' %}" class="btn btn-outline">Work Schedules</a>
       </div>
 
-      <form method="get" class="attendance-filter-form" style="grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: end;">
+      <form method="get" class="attendance-filter-form leave-filter-form">
         <div>
           <label for="q">Employee Name</label>
           <input id="q" name="q" type="search" value="{{ search_query }}" placeholder="Search employee" autocomplete="off" />
