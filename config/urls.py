@@ -21,6 +21,8 @@ from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import RedirectView
 
+from modules.auth.views import LoginView
+
 
 urlpatterns = [
     path("", RedirectView.as_view(url="/employees/", permanent=False)),
@@ -28,6 +30,7 @@ urlpatterns = [
     # API
     path("api/auth/", include("modules.auth.urls")),
     # Session auth for template UI (Django built-in)
+    path("accounts/login/", LoginView.as_view(), name="login"),
     path("accounts/", include("django.contrib.auth.urls")),
     # Template-based UI
     path("org/", include("applications.organization.urls")),

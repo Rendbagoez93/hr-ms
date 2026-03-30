@@ -26,7 +26,7 @@ logger = structlog.get_logger(__name__)
 
 
 class EmployeeListView(LoginRequiredMixin, ListView):
-    template_name = "employee/employee_list.html"
+    template_name = "pages/employee/employee_list.html"
     context_object_name = "employees"
     paginate_by = 25
 
@@ -51,7 +51,7 @@ class EmployeeListView(LoginRequiredMixin, ListView):
 
 
 class EmployeeDetailView(LoginRequiredMixin, DetailView):
-    template_name = "employee/employee_detail.html"
+    template_name = "pages/employee/employee_detail.html"
     context_object_name = "employee"
 
     def get_object(self, queryset=None):
@@ -65,7 +65,7 @@ class EmployeeDetailView(LoginRequiredMixin, DetailView):
 
 class EmployeeCreateView(LoginRequiredMixin, CreateView):
     model = Employee
-    template_name = "employee/employee_form.html"
+    template_name = "pages/employee/employee_form.html"
     fields = [
         "employee_id",
         "first_name",
@@ -96,7 +96,7 @@ class EmployeeCreateView(LoginRequiredMixin, CreateView):
 
 
 class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = "employee/employee_form.html"
+    template_name = "pages/employee/employee_form.html"
     fields = [
         "first_name",
         "last_name",
@@ -129,7 +129,7 @@ class EmployeeUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
-    template_name = "employee/employee_confirm_delete.html"
+    template_name = "pages/employee/employee_confirm_delete.html"
     success_url = reverse_lazy("employee:employee-list")
 
     def get_object(self, queryset=None):
@@ -148,7 +148,7 @@ class EmployeeDeleteView(LoginRequiredMixin, DeleteView):
 
 class EmergencyContactCreateView(LoginRequiredMixin, CreateView):
     model = EmergencyContact
-    template_name = "employee/emergencycontact_form.html"
+    template_name = "pages/employee/emergencycontact_form.html"
     fields = ["name", "relationship", "phone", "email", "address", "is_primary"]
 
     def _get_employee(self) -> Employee:
@@ -172,7 +172,7 @@ class EmergencyContactCreateView(LoginRequiredMixin, CreateView):
 
 
 class EmergencyContactUpdateView(LoginRequiredMixin, UpdateView):
-    template_name = "employee/emergencycontact_form.html"
+    template_name = "pages/employee/emergencycontact_form.html"
     fields = ["name", "relationship", "phone", "email", "address", "is_primary"]
 
     def get_object(self, queryset=None):
@@ -194,7 +194,7 @@ class EmergencyContactUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class EmergencyContactDeleteView(LoginRequiredMixin, DeleteView):
-    template_name = "employee/emergencycontact_confirm_delete.html"
+    template_name = "pages/employee/emergencycontact_confirm_delete.html"
 
     def get_object(self, queryset=None):
         return get_emergency_contact(pk=self.kwargs["ec_pk"], employee_pk=self.kwargs["pk"])

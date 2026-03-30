@@ -22,14 +22,14 @@
 
   <div class="min-h-full flex flex-col">
 
-    {% include "components/_navbar.html" %}
+    {% include "partials/_navbar.html" %}
 
     <div class="flex flex-1">
-      {% include "components/_sidebar.html" %}
+      {% include "partials/_sidebar.html" %}
 
       <main class="flex-1 p-6 overflow-auto">
 
-        {% include "components/_messages.html" %}
+        {% include "partials/_messages.html" %}
 
         {% block breadcrumb %}{% endblock %}
 
