@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "layouts/base.html" %}
 
 {% block title %}Settings{% endblock %}
 
@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
-  {% include "components/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
+  {% include "partials/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
 {% endblock %}
 
 {% block content %}

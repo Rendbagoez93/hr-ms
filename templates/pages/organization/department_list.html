@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "layouts/base.html" %}
 
 {% block title %}Departments{% endblock %}
 
@@ -8,7 +8,7 @@
 
 {% block breadcrumb %}
   {% with breadcrumbs=breadcrumbs|default:None %}
-    {% include "components/_breadcrumb.html" with breadcrumbs='[{"label":"Organization"},{"label":"Departments","url":""}]'|safe %}
+    {% include "partials/_breadcrumb.html" with breadcrumbs='[{"label":"Organization"},{"label":"Departments","url":""}]'|safe %}
   {% endwith %}
 {% endblock %}
 
@@ -62,5 +62,5 @@
   </table>
 </div>
 
-{% include "components/_pagination.html" %}
+{% include "partials/_pagination.html" %}
 {% endblock %}

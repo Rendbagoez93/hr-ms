@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+﻿{% extends "layouts/base.html" %}
 
 {% block title %}Company Profile — Settings{% endblock %}
 
@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block breadcrumb %}
-  {% include "components/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
+  {% include "partials/_breadcrumb.html" with breadcrumbs=breadcrumbs %}
 {% endblock %}
 
 {% block content %}
@@ -21,7 +21,6 @@
   {% endif %}
 </div>
 
-{% include "components/_messages.html" %}
 
 <form method="post" enctype="multipart/form-data" class="space-y-6">
   {% csrf_token %}
